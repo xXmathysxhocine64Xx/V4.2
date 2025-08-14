@@ -1,8 +1,8 @@
 module.exports = {
   apps: [{
     name: 'getyoursite',
-    script: 'yarn',
-    args: 'start',
+    script: 'node',
+    args: 'start-server.js',
     cwd: '/app',
     instances: 1,
     autorestart: true,
