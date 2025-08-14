@@ -10,7 +10,7 @@ module.exports = {
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'production',
-      PORT: 3000,
+      PORT: '3000',
       HOSTNAME: '0.0.0.0'
     },
     error_file: '/var/log/pm2/getyoursite-error.log',
