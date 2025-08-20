@@ -91,7 +91,7 @@ export function middleware(request) {
       "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Next.js a besoin d'inline scripts
       "style-src 'self' 'unsafe-inline' fonts.googleapis.com",
       "font-src 'self' fonts.gstatic.com",
-      "img-src 'self' data: https://images.unsplash.com https://unsplash.com",
+      "img-src 'self' data: https://images.unsplash.com https://unsplash.com https://images.pexels.com https://pexels.com",
       "connect-src 'self' https://getyoursite.fr",
       "frame-ancestors 'none'",
       "object-src 'none'",
