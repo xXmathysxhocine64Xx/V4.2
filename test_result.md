@@ -153,35 +153,29 @@ backend:
           agent: "main"
           comment: "Correction de la configuration CORS dangereuse (Access-Control-Allow-Origin: '*') remplacée par une configuration sécurisée avec origins spécifiques, headers de sécurité CSP, HSTS, X-Frame-Options, et protection XSS."
 
-  - task: "Déploiement VPS Complet"
+  - task: "Configuration Sécurisée VPS"
     implemented: true
     working: true
     file: "/app/deploy-vps.sh"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Créé un script de déploiement VPS complet avec installation automatique des outils, configuration du firewall UFW, setup Nginx avec reverse proxy, configuration SSL Let's Encrypt optionnelle, et tests complets de fonctionnement."
-        - working: true
-          agent: "testing"
-          comment: "✅ SCRIPT VPS VÉRIFIÉ - Script deploy-vps.sh présent et exécutable (7991 bytes), contient configuration complète: installation Node.js/Yarn/PM2, configuration firewall UFW, setup Nginx reverse proxy, SSL Let's Encrypt optionnel, tests de démarrage application, logs PM2 dans /var/log/pm2/. Script prêt pour déploiement production VPS."
+          comment: "Mise à jour du script de déploiement VPS avec configuration Nginx sécurisée incluant rate limiting (5 req/min pour contact), headers de sécurité renforcés, masquage version Nginx, blocage des attaques communes, et protection contre les scanners de vulnérabilités."
 
-  - task: "Script de Diagnostic VPS"
+  - task: "Variables Environnement Sécurisées"
     implemented: true
     working: true
-    file: "/app/diagnostic-vps.sh"
+    file: "/app/.env"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Créé un script de diagnostic complet qui vérifie l'état des services (PM2, Nginx, Node.js), les ports ouverts, la connectivité, la configuration DNS, les certificats SSL, et fournit des recommandations de correction automatiques."
-        - working: true
-          agent: "testing"
-          comment: "✅ SCRIPT DIAGNOSTIC TESTÉ - Script diagnostic-vps.sh présent et exécutable (8393 bytes), fonctionnel: détecte PM2 installé (v6.0.8), application getyoursite online, Node.js v20.19.4, port 3000 en écoute, génère rapport complet système/services/ports/connectivité/DNS/SSL. Fournit recommandations automatiques. Script opérationnel pour diagnostic VPS."
+          comment: "Génération de secrets cryptographiques sécurisés (CSRF_SECRET, SESSION_SECRET) avec crypto.randomBytes, ajout de variables de configuration pour rate limiting et origins autorisées. Remplacement des valeurs par défaut non sécurisées."
 
 frontend:
   - task: "Site Vitrine Simplifié"
