@@ -1,1 +1,1 @@
-user_problem_statement: "Création d'un site vitrine GetYourSite avec formulaire de contact Gmail pour une agence de développement web. Site avec sections: Hero, Services (conception/déploiement/refonte), Portfolio, Contact avec envoi d'emails via Gmail SMTP."
+user_problem_statement: "L'utilisateur avait des problèmes avec son site GetYourSite qui affichait des erreurs 404 quand il redémarrait le VPN. Il demandait de simplifier totalement le code pour qu'il soit le moins compliqué possible et très stable, et adapter le script de déploiement aux modifications."
