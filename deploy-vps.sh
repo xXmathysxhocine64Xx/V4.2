@@ -37,41 +37,22 @@ if [[ ! -f "package.json" || ! -f "next.config.js" ]]; then
 fi
 
 # Sélection du domaine
-echo -e "${BLUE}🌐 Sélection du domaine de déploiement${NC}"
-echo "Domaines disponibles :"
-echo "1) getyoursite.fr (site principal)"
-echo "2) pizza.getyoursite.fr (démo pizzeria)"
-echo "3) Autre domaine (personnalisé)"
-echo ""
-read -p "Choisissez votre option (1-3): " domain_choice
+echo -e "${BLUE}🌐 Déploiement du site principal GetYourSite${NC}"
+DOMAIN="getyoursite.fr"
+DEPLOY_TYPE="main"
+PROJECT_NAME="getyoursite"
 
-case $domain_choice in
-    1)
-        DOMAIN="getyoursite.fr"
-        DEPLOY_TYPE="main"
-        PROJECT_NAME="getyoursite"
-        echo -e "${GREEN}✅ Déploiement du site principal GetYourSite${NC}"
-        ;;
-    2)
-        DOMAIN="pizza.getyoursite.fr"
-        DEPLOY_TYPE="pizza"
-        PROJECT_NAME="pizza-getyoursite"
-        echo -e "${GREEN}✅ Déploiement de la démo pizzeria${NC}"
-        ;;
-    3)
-        read -p "Entrez le domaine personnalisé: " custom_domain
-        DOMAIN="$custom_domain"
-        DEPLOY_TYPE="custom"
-        PROJECT_NAME="custom-$(echo $custom_domain | sed 's/[^a-zA-Z0-9]/-/g')"
-        echo -e "${GREEN}✅ Déploiement sur domaine personnalisé: $DOMAIN${NC}"
-        ;;
-    *)
-        echo -e "${YELLOW}Option non reconnue, utilisation du domaine par défaut: $DEFAULT_DOMAIN${NC}"
-        DOMAIN="$DEFAULT_DOMAIN"
-        DEPLOY_TYPE="main"
-        PROJECT_NAME="getyoursite"
-        ;;
-esac
+echo ""
+echo -e "${YELLOW}➕ Souhaitez-vous également déployer la démo pizzeria sur pizza.getyoursite.fr ?${NC}"
+read -p "Déployer aussi pizza.getyoursite.fr ? (o/n): " pizza_choice
+
+if [[ $pizza_choice =~ ^[Oo]$ ]]; then
+    DEPLOY_PIZZA="true"
+    echo -e "${GREEN}✅ Déploiement du site principal + démo pizzeria${NC}"
+else
+    DEPLOY_PIZZA="false"
+    echo -e "${GREEN}✅ Déploiement du site principal uniquement${NC}"
+fi
 
 echo -e "${BLUE}📍 Répertoire du projet: ${PROJECT_DIR}${NC}"
 echo -e "${BLUE}🌐 Domaine de déploiement: ${DOMAIN}${NC}"
