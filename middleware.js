@@ -22,6 +22,7 @@ const ALLOWED_ORIGINS = [
   'https://getyoursite.fr',
   'https://www.getyoursite.fr',
   'https://pizza.getyoursite.fr',
+  'https://mairie.getyoursite.fr',
   'http://localhost:3000', // Pour le développement
   'http://127.0.0.1:3000'  // Pour le développement
 ];
