@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
     name: 'getyoursite',
-    script: 'npm',
+    script: 'yarn',
     args: 'start',
     cwd: '/app',
     instances: 1,
