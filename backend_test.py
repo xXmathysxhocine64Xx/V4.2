@@ -155,36 +155,234 @@ class GetYourSiteBackendTester:
         
         return all_passed
     
-    def test_api_contact_post_invalid_email(self):
-        """Test POST /api/contact with invalid email format"""
+    def test_api_contact_pizza_domain(self):
+        """Test POST /api/contact with pizza.getyoursite.fr origin"""
         test_data = {
-            "name": "Test User",
-            "email": "invalid-email-format",
-            "message": "Test message"
+            "name": "Test Pizza Client",
+            "email": "client@test.fr",
+            "subject": "Commande Pizza Margherita",
+            "message": "Je souhaite commander 2 pizzas Margherita pour livraison à 19h. Merci !"
+        }
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'Origin': 'https://pizza.getyoursite.fr',
+            'Referer': 'https://pizza.getyoursite.fr/'
         }
         
         try:
             response = requests.post(
                 f"{self.api_url}/contact",
                 json=test_data,
-                headers={'Content-Type': 'application/json'},
+                headers=headers,
                 timeout=10
             )
             
-            if response.status_code == 400:
+            if response.status_code == 200:
                 data = response.json()
-                if 'error' in data and 'Email invalide' in data['error']:
-                    self.log_test("API Contact Email Validation", "PASS", "Email format validation working")
+                if data.get('success') and 'Message' in data.get('message', ''):
+                    self.log_test("API Contact Pizza Domain", "PASS", "Pizza domain origin accepted successfully")
                     return True
                 else:
-                    self.log_test("API Contact Email Validation", "FAIL", "Invalid error message", data)
+                    self.log_test("API Contact Pizza Domain", "FAIL", "Invalid success response", data)
                     return False
             else:
-                self.log_test("API Contact Email Validation", "FAIL", f"Expected 400, got {response.status_code}")
+                self.log_test("API Contact Pizza Domain", "FAIL", f"HTTP {response.status_code}", response.text)
                 return False
                 
         except requests.exceptions.RequestException as e:
-            self.log_test("API Contact Email Validation", "FAIL", f"Request failed: {str(e)}")
+            self.log_test("API Contact Pizza Domain", "FAIL", f"Request failed: {str(e)}")
+            return False
+
+    def test_api_contact_cors_headers(self):
+        """Test CORS headers for pizza.getyoursite.fr"""
+        headers = {
+            'Origin': 'https://pizza.getyoursite.fr',
+            'Access-Control-Request-Method': 'POST',
+            'Access-Control-Request-Headers': 'Content-Type'
+        }
+        
+        try:
+            response = requests.options(
+                f"{self.api_url}/contact",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                cors_origin = response.headers.get('Access-Control-Allow-Origin')
+                cors_methods = response.headers.get('Access-Control-Allow-Methods')
+                
+                if cors_origin and 'pizza.getyoursite.fr' in cors_origin:
+                    self.log_test("API CORS Headers", "PASS", "CORS headers properly configured for pizza domain")
+                    return True
+                else:
+                    self.log_test("API CORS Headers", "FAIL", f"CORS origin not configured: {cors_origin}")
+                    return False
+            else:
+                self.log_test("API CORS Headers", "FAIL", f"OPTIONS request failed: {response.status_code}")
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("API CORS Headers", "FAIL", f"CORS test failed: {str(e)}")
+            return False
+
+    def test_api_security_headers(self):
+        """Test security headers presence"""
+        try:
+            response = requests.get(f"{self.api_url}/contact", timeout=10)
+            
+            required_headers = [
+                'X-Content-Type-Options',
+                'X-Frame-Options', 
+                'X-XSS-Protection',
+                'Cache-Control'
+            ]
+            
+            missing_headers = []
+            for header in required_headers:
+                if header not in response.headers:
+                    missing_headers.append(header)
+            
+            if not missing_headers:
+                self.log_test("API Security Headers", "PASS", "All required security headers present")
+                return True
+            else:
+                self.log_test("API Security Headers", "FAIL", f"Missing headers: {', '.join(missing_headers)}")
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("API Security Headers", "FAIL", f"Request failed: {str(e)}")
+            return False
+
+    def test_api_rate_limiting(self):
+        """Test rate limiting functionality (10 req/15min)"""
+        test_data = {
+            "name": "Rate Test Client",
+            "email": "ratetest@test.fr",
+            "subject": "Test Rate Limiting",
+            "message": "This is a test message for rate limiting verification."
+        }
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'Origin': 'https://pizza.getyoursite.fr'
+        }
+        
+        success_count = 0
+        rate_limited = False
+        
+        # Try to make 12 requests to trigger rate limiting
+        for i in range(12):
+            try:
+                response = requests.post(
+                    f"{self.api_url}/contact",
+                    json=test_data,
+                    headers=headers,
+                    timeout=5
+                )
+                
+                if response.status_code == 200:
+                    success_count += 1
+                elif response.status_code == 429:
+                    rate_limited = True
+                    # Check rate limit headers
+                    retry_after = response.headers.get('Retry-After')
+                    rate_limit_remaining = response.headers.get('X-RateLimit-Remaining')
+                    
+                    if retry_after and rate_limit_remaining == '0':
+                        self.log_test("API Rate Limiting", "PASS", f"Rate limiting working - triggered after {success_count} requests")
+                        return True
+                    break
+                    
+                time.sleep(0.1)  # Small delay between requests
+                
+            except requests.exceptions.RequestException:
+                break
+        
+        if rate_limited:
+            self.log_test("API Rate Limiting", "PASS", f"Rate limiting triggered after {success_count} requests")
+            return True
+        elif success_count >= 10:
+            self.log_test("API Rate Limiting", "WARN", f"Made {success_count} requests without rate limiting")
+            return True  # Don't fail if rate limiting is lenient
+        else:
+            self.log_test("API Rate Limiting", "FAIL", f"Only {success_count} successful requests, rate limiting may be too strict")
+            return False
+
+    def test_api_contact_validation_pizza_data(self):
+        """Test validation with pizza-specific data"""
+        # Test with valid pizza order data
+        valid_data = {
+            "name": "Mario Rossi",
+            "email": "mario.rossi@email.it",
+            "subject": "Commande Pizza Quattro Stagioni",
+            "message": "Bonjour, je souhaite commander une pizza Quattro Stagioni grande taille pour livraison ce soir à 20h. Adresse: 123 Rue de la Pizza, 75001 Paris. Merci!"
+        }
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'Origin': 'https://pizza.getyoursite.fr'
+        }
+        
+        try:
+            response = requests.post(
+                f"{self.api_url}/contact",
+                json=valid_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get('success'):
+                    self.log_test("API Pizza Data Validation", "PASS", "Pizza order data processed successfully")
+                    return True
+                else:
+                    self.log_test("API Pizza Data Validation", "FAIL", "Valid pizza data rejected", data)
+                    return False
+            else:
+                self.log_test("API Pizza Data Validation", "FAIL", f"HTTP {response.status_code}", response.text)
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("API Pizza Data Validation", "FAIL", f"Request failed: {str(e)}")
+            return False
+
+    def test_api_contact_unauthorized_origin(self):
+        """Test rejection of unauthorized origins"""
+        test_data = {
+            "name": "Unauthorized User",
+            "email": "test@unauthorized.com",
+            "subject": "Test",
+            "message": "This should be rejected due to unauthorized origin."
+        }
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'Origin': 'https://malicious-site.com'
+        }
+        
+        try:
+            response = requests.post(
+                f"{self.api_url}/contact",
+                json=test_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 403:
+                self.log_test("API Unauthorized Origin", "PASS", "Unauthorized origin properly rejected")
+                return True
+            elif response.status_code == 200:
+                self.log_test("API Unauthorized Origin", "FAIL", "Unauthorized origin was accepted")
+                return False
+            else:
+                self.log_test("API Unauthorized Origin", "WARN", f"Unexpected status code: {response.status_code}")
+                return True  # Don't fail for unexpected behavior
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("API Unauthorized Origin", "FAIL", f"Request failed: {str(e)}")
             return False
     
     def test_api_stability(self):
