@@ -27,6 +27,15 @@ const ALLOWED_ORIGINS = [
 ];
 
 export function middleware(request) {
+  const { hostname, pathname } = request.nextUrl;
+  
+  // Redirection vers la page pizza si sur le sous-domaine pizza
+  if (hostname === 'pizza.getyoursite.fr' && pathname === '/') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/pizza';
+    return NextResponse.rewrite(url);
+  }
+  
   const response = NextResponse.next();
   const requestId = uuidv4();
   
