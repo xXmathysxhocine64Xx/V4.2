@@ -165,7 +165,144 @@ class GetYourSiteBackendTester:
         
         return all_passed
     
-    def test_api_contact_pizza_domain(self):
+    def test_api_contact_mairie_domain(self):
+        """Test POST /api/contact with mairie.getyoursite.fr origin"""
+        test_data = {
+            "name": "Marie Dubois",
+            "email": "marie.dubois@email.fr",
+            "subject": "Demande d'acte de naissance",
+            "message": "Bonjour, je souhaite obtenir un acte de naissance pour ma fille née en 2020. Merci de me faire savoir les documents nécessaires."
+        }
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'Origin': 'https://mairie.getyoursite.fr',
+            'Referer': 'https://mairie.getyoursite.fr/'
+        }
+        
+        try:
+            response = requests.post(
+                f"{self.api_url}/contact",
+                json=test_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get('success') and 'Message' in data.get('message', ''):
+                    self.log_test("API Contact Mairie Domain", "PASS", "Mairie domain origin accepted successfully")
+                    return True
+                else:
+                    self.log_test("API Contact Mairie Domain", "FAIL", "Invalid success response", data)
+                    return False
+            else:
+                self.log_test("API Contact Mairie Domain", "FAIL", f"HTTP {response.status_code}", response.text)
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("API Contact Mairie Domain", "FAIL", f"Request failed: {str(e)}")
+            return False
+
+    def test_api_contact_getyoursite_domain(self):
+        """Test POST /api/contact with getyoursite.fr origin"""
+        test_data = {
+            "name": "Pierre Martin",
+            "email": "pierre.martin@email.fr",
+            "subject": "Demande d'information",
+            "message": "Bonjour, je souhaite obtenir plus d'informations sur vos services de création de sites web."
+        }
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'Origin': 'https://getyoursite.fr',
+            'Referer': 'https://getyoursite.fr/'
+        }
+        
+        try:
+            response = requests.post(
+                f"{self.api_url}/contact",
+                json=test_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get('success') and 'Message' in data.get('message', ''):
+                    self.log_test("API Contact GetYourSite Domain", "PASS", "GetYourSite domain origin accepted successfully")
+                    return True
+                else:
+                    self.log_test("API Contact GetYourSite Domain", "FAIL", "Invalid success response", data)
+                    return False
+            else:
+                self.log_test("API Contact GetYourSite Domain", "FAIL", f"HTTP {response.status_code}", response.text)
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("API Contact GetYourSite Domain", "FAIL", f"Request failed: {str(e)}")
+            return False
+
+    def test_api_contact_mairie_form_types(self):
+        """Test mairie form with specific municipal request types"""
+        test_cases = [
+            {
+                "name": "Jean Citoyen",
+                "email": "jean.citoyen@email.fr",
+                "subject": "Demande d'état civil",
+                "message": "Demande d'extrait d'acte de naissance pour démarches administratives."
+            },
+            {
+                "name": "Sophie Résidente",
+                "email": "sophie.residente@email.fr", 
+                "subject": "Urbanisme - Permis de construire",
+                "message": "Demande d'information sur les démarches pour un permis de construire pour extension de maison."
+            },
+            {
+                "name": "Marc Parent",
+                "email": "marc.parent@email.fr",
+                "subject": "Inscription scolaire",
+                "message": "Demande d'inscription de mon enfant à l'école primaire pour la rentrée prochaine."
+            }
+        ]
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'Origin': 'https://mairie.getyoursite.fr'
+        }
+        
+        all_passed = True
+        for i, test_data in enumerate(test_cases):
+            try:
+                response = requests.post(
+                    f"{self.api_url}/contact",
+                    json=test_data,
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if not data.get('success'):
+                        self.log_test(f"Mairie Form Type {i+1}", "FAIL", "Request not successful", data)
+                        all_passed = False
+                elif response.status_code == 429:
+                    # Rate limited - this is expected behavior, don't fail
+                    self.log_test(f"Mairie Form Type {i+1}", "WARN", "Rate limited - expected behavior")
+                else:
+                    self.log_test(f"Mairie Form Type {i+1}", "FAIL", f"HTTP {response.status_code}", response.text)
+                    all_passed = False
+                    
+                time.sleep(1)  # Small delay between requests
+                    
+            except requests.exceptions.RequestException as e:
+                self.log_test(f"Mairie Form Type {i+1}", "FAIL", f"Request failed: {str(e)}")
+                all_passed = False
+        
+        if all_passed:
+            self.log_test("Mairie Form Types", "PASS", "All mairie form types processed successfully")
+        
+        return all_passed
         """Test POST /api/contact with pizza.getyoursite.fr origin"""
         test_data = {
             "name": "Test Pizza Client",
