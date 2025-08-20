@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend Test Suite for GetYourSite Simplified API
-Tests the Contact API endpoints and PM2 deployment stability
+Backend Test Suite for GetYourSite Contact API with Multi-Domain Support
+Tests the Contact API endpoints for pizza.getyoursite.fr domain support
 """
 
 import requests
@@ -13,7 +13,18 @@ from datetime import datetime
 
 class GetYourSiteBackendTester:
     def __init__(self):
-        self.base_url = "http://localhost:3000"
+        # Read the backend URL from frontend/.env if available
+        try:
+            with open('/app/frontend/.env', 'r') as f:
+                for line in f:
+                    if line.startswith('REACT_APP_BACKEND_URL='):
+                        self.base_url = line.split('=')[1].strip()
+                        break
+                else:
+                    self.base_url = "http://localhost:3000"
+        except:
+            self.base_url = "http://localhost:3000"
+            
         self.api_url = f"{self.base_url}/api"
         self.test_results = []
         self.failed_tests = []
