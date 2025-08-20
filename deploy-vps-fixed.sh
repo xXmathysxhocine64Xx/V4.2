@@ -359,6 +359,15 @@ if [ "$SUCCESS" = true ]; then
             echo -e "${YELLOW}⚠️  Site pizza configuré mais test échoué${NC}"
         fi
     fi
+    
+    # Test mairie si déployé
+    if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
+        if curl -s -H "Host: mairie.getyoursite.fr" http://localhost > /dev/null 2>&1; then
+            echo -e "${GREEN}✅ Site mairie accessible${NC}"
+        else
+            echo -e "${YELLOW}⚠️  Site mairie configuré mais test échoué${NC}"
+        fi
+    fi
 else
     echo -e "${RED}❌ Problème de démarrage de l'application${NC}"
     echo "Logs PM2:"
