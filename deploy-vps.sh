@@ -204,7 +204,7 @@ server {
         limit_req zone=general_limit burst=10 nodelay;
         
         # Redirection interne vers /pizza pour le sous-domaine pizza
-        if ($host = pizza.getyoursite.fr) {
+        if ($host = "pizza.getyoursite.fr") {
             rewrite ^/$ /pizza last;
         }
         
