@@ -490,18 +490,20 @@ class GetYourSiteBackendTester:
         self.test_api_contact_get()
         self.test_api_contact_post_valid()
         
+        # Validation tests (before rate limiting kicks in)
+        self.test_api_contact_post_missing_fields()
+        
         # Pizza domain specific tests
         self.test_api_contact_pizza_domain()
         self.test_api_contact_cors_headers()
         self.test_api_contact_validation_pizza_data()
         
-        # Security and rate limiting tests
+        # Security tests
         self.test_api_security_headers()
-        self.test_api_rate_limiting()
         self.test_api_contact_unauthorized_origin()
         
-        # Validation tests
-        self.test_api_contact_post_missing_fields()
+        # Rate limiting test (last as it may affect other tests)
+        self.test_api_rate_limiting()
         
         # Final summary
         print("\n" + "=" * 70)
