@@ -303,6 +303,8 @@ class GetYourSiteBackendTester:
             self.log_test("Mairie Form Types", "PASS", "All mairie form types processed successfully")
         
         return all_passed
+
+    def test_api_contact_pizza_domain(self):
         """Test POST /api/contact with pizza.getyoursite.fr origin"""
         test_data = {
             "name": "Test Pizza Client",
