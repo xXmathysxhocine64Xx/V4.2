@@ -237,9 +237,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Site Pizza Bella Vita"
-    - "Route Pizza Dédiée"
-    - "Script Déploiement Multi-Domaines"
+    - "Site Mairie de Brest"
+    - "Route Mairie Dédiée"
+    - "Script Déploiement Multi-Domaines Complet"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
