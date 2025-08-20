@@ -56,6 +56,7 @@ for site in "${SITES[@]}"; do
         # Corrections multiples
         # 1. Condition if avec guillemets
         sed -i 's/if ($host = pizza\.getyoursite\.fr)/if ($host = "pizza.getyoursite.fr")/' "$site"
+        sed -i 's/if ($host = mairie\.getyoursite\.fr)/if ($host = "mairie.getyoursite.fr")/' "$site"
         
         # 2. Corriger les variables non-escapées si nécessaires
         sed -i 's/\$http_upgrade/\\$http_upgrade/g' "$site"
