@@ -82,6 +82,13 @@ if [[ -f "/etc/nginx/sites-enabled/pizza.getyoursite.fr" ]]; then
     echo -e "${GREEN}   ✅ Site pizza séparé supprimé${NC}"
 fi
 
+if [[ -f "/etc/nginx/sites-enabled/mairie.getyoursite.fr" ]]; then
+    echo -e "${YELLOW}   Suppression du site mairie séparé (géré par site principal)${NC}"
+    rm -f /etc/nginx/sites-enabled/mairie.getyoursite.fr
+    rm -f /etc/nginx/sites-available/mairie.getyoursite.fr
+    echo -e "${GREEN}   ✅ Site mairie séparé supprimé${NC}"
+fi
+
 # 4. Vérifier les permissions
 echo -e "${BLUE}4️⃣ Vérification des permissions...${NC}"
 chown -R root:root /etc/nginx/sites-available/
