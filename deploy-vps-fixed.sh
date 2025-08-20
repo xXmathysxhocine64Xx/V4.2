@@ -168,12 +168,14 @@ if ! grep -q "contact_limit" /etc/nginx/nginx.conf; then
 fi
 
 # Configuration différenciée selon le déploiement
+SERVER_NAMES="${DOMAIN} www.${DOMAIN}"
+
 if [[ "$DEPLOY_PIZZA" == "true" ]]; then
-    # Configuration avec support pizza
-    SERVER_NAMES="${DOMAIN} www.${DOMAIN} pizza.getyoursite.fr"
-else
-    # Configuration site principal uniquement
-    SERVER_NAMES="${DOMAIN} www.${DOMAIN}"
+    SERVER_NAMES="${SERVER_NAMES} pizza.getyoursite.fr"
+fi
+
+if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
+    SERVER_NAMES="${SERVER_NAMES} mairie.getyoursite.fr"
 fi
 
 cat > /etc/nginx/sites-available/${DOMAIN} << EOF
