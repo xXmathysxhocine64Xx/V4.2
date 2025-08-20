@@ -44,7 +44,7 @@ fi
 echo -e "${BLUE}2️⃣ Correction des configurations de sites...${NC}"
 
 # Sites à vérifier
-SITES=("/etc/nginx/sites-enabled/getyoursite.fr" "/etc/nginx/sites-available/getyoursite.fr" "/etc/nginx/sites-enabled/pizza.getyoursite.fr" "/etc/nginx/sites-available/pizza.getyoursite.fr")
+SITES=("/etc/nginx/sites-enabled/getyoursite.fr" "/etc/nginx/sites-available/getyoursite.fr" "/etc/nginx/sites-enabled/pizza.getyoursite.fr" "/etc/nginx/sites-available/pizza.getyoursite.fr" "/etc/nginx/sites-enabled/mairie.getyoursite.fr" "/etc/nginx/sites-available/mairie.getyoursite.fr")
 
 for site in "${SITES[@]}"; do
     if [[ -f "$site" ]]; then
