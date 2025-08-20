@@ -350,7 +350,7 @@ export default function HomePage() {
                   <ul className="space-y-2">
                     {service.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center text-sm text-slate-600">
-                        <Zap className="w-4 h-4 text-blue-600 mr-2" />
+                        <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
                         {feature}
                       </li>
                     ))}
