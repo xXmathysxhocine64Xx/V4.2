@@ -157,6 +157,18 @@ frontend:
           agent: "main"
           comment: "Site de démonstration pizzeria créé avec : menu interactif de 6 pizzas, système de panier complet (ajout/suppression/quantité), formulaire de commande, design responsive avec thème rouge/jaune, images professionnelles, sections hero/menu/à-propos/contact. Totalement fonctionnel."
 
+  - task: "Site Mairie de Brest"
+    implemented: true
+    working: true
+    file: "/app/app/mairie-page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Site de démonstration mairie créé avec : services municipaux complets (état civil, urbanisme, social, éducation, culture, environnement), actualités de la ville, démarches en ligne, formulaire de contact citoyen avec types de demandes, design institutionnel bleu/blanc, informations pratiques et horaires. Interface moderne et professionnelle."
+
   - task: "Route Pizza Dédiée"
     implemented: true
     working: true
@@ -169,29 +181,41 @@ frontend:
           agent: "main"
           comment: "Route /pizza créée pour accès direct au site pizza via getyoursite.fr/pizza en plus du sous-domaine pizza.getyoursite.fr."
 
-  - task: "Script Déploiement Multi-Domaines"
+  - task: "Route Mairie Dédiée"
     implemented: true
     working: true
-    file: "/app/deploy-vps.sh"
+    file: "/app/app/mairie/page.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Route /mairie créée pour accès direct au site mairie via getyoursite.fr/mairie en plus du sous-domaine mairie.getyoursite.fr."
+
+  - task: "Script Déploiement Multi-Domaines Complet"
+    implemented: true
+    working: true
+    file: "/app/deploy-vps-fixed.sh"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
         - working: true
           agent: "main"
-          comment: "Script deploy-vps.sh corrigé et amélioré : (1) Site principal getyoursite.fr obligatoire par défaut, (2) Pizza.getyoursite.fr optionnel avec question interactive, (3) Correction erreur Nginx limit_req_zone dans contexte http, (4) Configuration SSL pour un ou deux domaines selon choix, (5) Script fix-nginx.sh pour corriger erreurs existantes, (6) Guide complet de déploiement."
+          comment: "Script deploy-vps-fixed.sh étendu pour supporter 3 sites : (1) Site principal getyoursite.fr obligatoire, (2) Pizza.getyoursite.fr optionnel, (3) Mairie.getyoursite.fr optionnel avec questions interactives. Configuration SSL automatique pour tous les domaines sélectionnés, redirections Nginx adaptatives selon les choix utilisateur."
 
-  - task: "Script Correction Nginx"
+  - task: "Script Correction Nginx Complet"
     implemented: true
     working: true
-    file: "/app/fix-nginx.sh"
+    file: "/app/fix-nginx-condition-complete.sh"
     stuck_count: 0
     priority: "medium"
     needs_retesting: false
     status_history:
         - working: true
           agent: "main"
-          comment: "Script de correction automatique créé pour résoudre les erreurs de configuration Nginx existantes. Nettoie les configs problématiques et ajoute les zones rate limiting au bon endroit dans nginx.conf."
+          comment: "Script de correction automatique étendu pour gérer les erreurs de configuration des 3 domaines possibles (principal, pizza, mairie). Correction des conditions if, nettoyage des configurations en double, gestion des zones rate limiting."
 
   - task: "Documentation Complète"
     implemented: true
