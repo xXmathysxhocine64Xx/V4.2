@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Backend Test Suite for GetYourSite Contact API with Multi-Domain Support
-Tests the Contact API endpoints for pizza.getyoursite.fr domain support
+Tests the Contact API endpoints for pizza.getyoursite.fr and mairie.getyoursite.fr domain support
 """
 
 import requests
