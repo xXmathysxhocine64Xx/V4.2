@@ -124,14 +124,35 @@ pm2 startup systemd -u root --hp /root >/dev/null 2>&1 || true
 pm2 save >/dev/null
 
 # 6. Test rapide
-sleep 3
-if curl -s http://localhost:3000 >/dev/null; then
+echo -e "${BLUE}🔍 Test de l'application...${NC}"
+sleep 5
+
+# Test plus robuste avec plusieurs tentatives
+SUCCESS=false
+for i in {1..10}; do
+    if curl -s http://localhost:3000 >/dev/null 2>&1; then
+        SUCCESS=true
+        break
+    fi
+    echo -e "${YELLOW}⏳ Tentative $i/10 - Attente du démarrage...${NC}"
+    sleep 2
+done
+
+if [ "$SUCCESS" = true ]; then
     echo -e "${GREEN}✅ Application déployée avec succès!${NC}"
     echo -e "${GREEN}🌐 Site accessible sur http://localhost:3000${NC}"
+    
+    # Test API
+    if curl -s http://localhost:3000/api/contact | grep -q "API Contact"; then
+        echo -e "${GREEN}✅ API de contact fonctionnelle${NC}"
+    fi
 else
     echo -e "${RED}❌ Problème de déploiement${NC}"
-    echo "Logs PM2:"
-    pm2 logs "$PROJECT_NAME" --lines 5
+    echo -e "${YELLOW}📋 Diagnostic:${NC}"
+    echo "PM2 Status:"
+    pm2 status
+    echo -e "\nLogs PM2 récents:"
+    pm2 logs "$PROJECT_NAME" --lines 10 --raw 2>/dev/null || echo "Pas de logs disponibles"
     exit 1
 fi
 
