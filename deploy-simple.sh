@@ -72,7 +72,12 @@ fi
 # 1. Installer les dépendances
 echo -e "${BLUE}📦 Installation des dépendances...${NC}"
 cd "$PROJECT_DIR"
-yarn install --silent
+
+if [[ "$PACKAGE_MANAGER" == "yarn" ]]; then
+    yarn install --silent
+else
+    npm install --silent
+fi
 
 # 2. Build de l'application
 echo -e "${BLUE}🔨 Build de l'application...${NC}"
