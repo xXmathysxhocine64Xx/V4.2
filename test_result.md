@@ -217,7 +217,7 @@ frontend:
           agent: "main"
           comment: "Script de correction automatique étendu pour gérer les erreurs de configuration des 3 domaines possibles (principal, pizza, mairie). Correction des conditions if, nettoyage des configurations en double, gestion des zones rate limiting."
 
-  - task: "Documentation Complète"
+  - task: "Documentation Complète Multi-Sites"
     implemented: true
     working: true
     file: "/app/README_PIZZA_DEMO.md"
@@ -227,7 +227,7 @@ frontend:
     status_history:
         - working: true
           agent: "main"
-          comment: "Documentation complète créée : (1) README_PIZZA_DEMO.md avec fonctionnalités détaillées, (2) GUIDE_DEPLOIEMENT_PIZZA.md avec instructions pas-à-pas pour déploiement et dépannage, (3) Explications pour présentation investisseurs et utilisation commerciale."
+          comment: "Documentation complète mise à jour : (1) README_PIZZA_DEMO.md avec fonctionnalités pizza et mairie détaillées, (2) GUIDE_DEPLOIEMENT_PIZZA.md avec instructions pas-à-pas pour déploiement triple domaine et dépannage, (3) Explications pour présentation investisseurs avec exemples concrets de sites sectoriels."
 
 metadata:
   created_by: "main_agent"
