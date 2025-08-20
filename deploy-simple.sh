@@ -8,7 +8,7 @@ set -e  # Arrêter en cas d'erreur
 
 # Variables
 PROJECT_NAME="getyoursite"
-PROJECT_DIR="/app"
+PROJECT_DIR="$(pwd)"
 
 # Couleurs
 GREEN='\033[0;32m'
