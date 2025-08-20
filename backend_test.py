@@ -13,18 +13,8 @@ from datetime import datetime
 
 class GetYourSiteBackendTester:
     def __init__(self):
-        # Read the backend URL from frontend/.env if available
-        try:
-            with open('/app/frontend/.env', 'r') as f:
-                for line in f:
-                    if line.startswith('REACT_APP_BACKEND_URL='):
-                        self.base_url = line.split('=')[1].strip()
-                        break
-                else:
-                    self.base_url = "http://localhost:3000"
-        except:
-            self.base_url = "http://localhost:3000"
-            
+        # This is a Next.js application, so we use localhost:3000 directly
+        self.base_url = "http://localhost:3000"
         self.api_url = f"{self.base_url}/api"
         self.test_results = []
         self.failed_tests = []
