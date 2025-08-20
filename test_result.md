@@ -203,7 +203,7 @@ frontend:
     status_history:
         - working: true
           agent: "main"
-          comment: "Documentation complète créée expliquant l'utilisation du système multi-domaines, fonctionnalités de la démo pizza, et objectifs pour présentation investisseurs."
+          comment: "Documentation complète créée : (1) README_PIZZA_DEMO.md avec fonctionnalités détaillées, (2) GUIDE_DEPLOIEMENT_PIZZA.md avec instructions pas-à-pas pour déploiement et dépannage, (3) Explications pour présentation investisseurs et utilisation commerciale."
 
 metadata:
   created_by: "main_agent"
