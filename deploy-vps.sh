@@ -288,15 +288,132 @@ else
     exit 1
 fi
 
-# 13. Configuration SSL (optionnelle)
-echo -e "${BLUE}🔐 Configuration SSL avec Let's Encrypt...${NC}"
+# 13. Déploiement optionnel du site Pizza
+if [[ "$DEPLOY_PIZZA" == "true" ]]; then
+    echo -e "\n${BLUE}🍕 Configuration du site Pizza Bella Vita...${NC}"
+    
+    PIZZA_DOMAIN="pizza.getyoursite.fr"
+    PIZZA_PROJECT_NAME="pizza-getyoursite"
+    
+    # Configuration Nginx pour le site pizza
+    cat > /etc/nginx/sites-available/${PIZZA_DOMAIN} << EOF
+server {
+    listen 80;
+    server_name ${PIZZA_DOMAIN};
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()" always;
+
+    # Hide Nginx version
+    server_tokens off;
+
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1000;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+    # Block common attacks
+    location ~* \.(sql|bak|log|ini|conf|sh|bat|cmd)$ {
+        deny all;
+        return 404;
+    }
+
+    # API rate limiting
+    location /api/contact {
+        limit_req zone=contact_limit burst=3 nodelay;
+        proxy_pass http://127.0.0.1:${APP_PORT};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
+        
+        # Additional security for API
+        proxy_hide_header X-Powered-By;
+        proxy_set_header X-Forwarded-Host \$server_name;
+        
+        # Timeout settings
+        proxy_connect_timeout 30s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+    }
+
+    location / {
+        limit_req zone=general_limit burst=10 nodelay;
+        proxy_pass http://127.0.0.1:${APP_PORT};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
+        
+        # Timeout settings
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+
+    # Optimisation pour les assets statiques
+    location /_next/static {
+        proxy_pass http://127.0.0.1:${APP_PORT};
+        expires 365d;
+        add_header Cache-Control "public, immutable";
+        add_header X-Content-Type-Options "nosniff" always;
+    }
+
+    # Gestion des erreurs
+    error_page 502 503 504 /50x.html;
+    location = /50x.html {
+        root /var/www/html;
+    }
+
+    # Bloquer les scanners de vulnérabilités
+    location ~ /\\.ht {
+        deny all;
+    }
+    
+    location ~ /\\.(git|svn) {
+        deny all;
+    }
+}
+EOF
+
+    # Activer le site pizza
+    ln -sf /etc/nginx/sites-available/${PIZZA_DOMAIN} /etc/nginx/sites-enabled/
+    
+    echo -e "${GREEN}✅ Configuration Pizza déployée${NC}"
+fi
+
+# 14. Configuration SSL (optionnelle)
+echo -e "\n${BLUE}🔐 Configuration SSL avec Let's Encrypt...${NC}"
 read -p "Voulez-vous configurer SSL automatiquement ? (o/n): " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Oo]$ ]]; then
-    if certbot --nginx -d ${DOMAIN} -d www.${DOMAIN} --non-interactive --agree-tos --email admin@${DOMAIN} --redirect; then
-        echo -e "${GREEN}✅ SSL configuré avec succès${NC}"
+    if [[ "$DEPLOY_PIZZA" == "true" ]]; then
+        # SSL pour les deux domaines
+        if certbot --nginx -d ${DOMAIN} -d www.${DOMAIN} -d pizza.getyoursite.fr --non-interactive --agree-tos --email admin@${DOMAIN} --redirect; then
+            echo -e "${GREEN}✅ SSL configuré pour les deux sites${NC}"
+        else
+            echo -e "${YELLOW}⚠️  SSL non configuré - vous pouvez le faire manuellement plus tard${NC}"
+        fi
     else
-        echo -e "${YELLOW}⚠️  SSL non configuré - vous pouvez le faire manuellement plus tard${NC}"
+        # SSL pour le site principal uniquement
+        if certbot --nginx -d ${DOMAIN} -d www.${DOMAIN} --non-interactive --agree-tos --email admin@${DOMAIN} --redirect; then
+            echo -e "${GREEN}✅ SSL configuré avec succès${NC}"
+        else
+            echo -e "${YELLOW}⚠️  SSL non configuré - vous pouvez le faire manuellement plus tard${NC}"
+        fi
     fi
 fi
 
