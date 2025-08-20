@@ -430,8 +430,8 @@ ufw status | head -5
 echo -e "\n${BLUE}🛠️  Commandes utiles:${NC}"
 echo "• pm2 status - Statut des applications"
 echo "• pm2 logs ${PROJECT_NAME} - Logs du site principal"
-if [[ "$DEPLOY_PIZZA" == "true" ]]; then
-    echo "• Site pizza accessible via même instance PM2"
+if [[ "$DEPLOY_PIZZA" == "true" || "$DEPLOY_MAIRIE" == "true" ]]; then
+    echo "• Sites démo accessibles via même instance PM2"
 fi
 echo "• pm2 restart ${PROJECT_NAME} - Redémarrer l'application"
 echo "• systemctl status nginx - Statut Nginx"
