@@ -94,6 +94,28 @@ pm2 delete "$PROJECT_NAME" 2>/dev/null || true
 
 # 4. Démarrer avec PM2
 echo -e "${BLUE}▶️  Démarrage de l'application...${NC}"
+
+# Créer une configuration PM2 dynamique
+cat > ecosystem.config.js << EOF
+module.exports = {
+  apps: [{
+    name: '${PROJECT_NAME}',
+    script: '$([[ "$PACKAGE_MANAGER" == "yarn" ]] && echo "yarn" || echo "npm")',
+    args: 'start',
+    cwd: '${PROJECT_DIR}',
+    instances: 1,
+    autorestart: true,
+    watch: false,
+    max_memory_restart: '500M',
+    env: {
+      NODE_ENV: 'production',
+      PORT: 3000,
+      HOSTNAME: '0.0.0.0'
+    }
+  }]
+}
+EOF
+
 pm2 start ecosystem.config.js
 
 # 5. Configuration du démarrage automatique
