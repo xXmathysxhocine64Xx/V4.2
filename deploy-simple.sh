@@ -81,7 +81,12 @@ fi
 
 # 2. Build de l'application
 echo -e "${BLUE}🔨 Build de l'application...${NC}"
-yarn build
+
+if [[ "$PACKAGE_MANAGER" == "yarn" ]]; then
+    yarn build
+else
+    npm run build
+fi
 
 # 3. Arrêter PM2 si nécessaire
 echo -e "${BLUE}⏹️  Arrêt de l'application...${NC}"
