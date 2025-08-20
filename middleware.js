@@ -27,22 +27,6 @@ const ALLOWED_ORIGINS = [
 ];
 
 export function middleware(request) {
-  const { hostname, pathname } = request.nextUrl;
-  
-  // Routage pour le sous-domaine pizza
-  if (hostname === 'pizza.getyoursite.fr') {
-    // Si c'est une route API, la laisser passer normalement
-    if (pathname.startsWith('/api/')) {
-      // Continue avec la logique normale
-    }
-    // Si c'est la racine ou toute autre route, rediriger vers /pizza
-    else if (pathname === '/' || (!pathname.startsWith('/_next/') && !pathname.startsWith('/favicon'))) {
-      const url = request.nextUrl.clone();
-      url.pathname = '/pizza';
-      return NextResponse.rewrite(url);
-    }
-  }
-  
   const response = NextResponse.next();
   const requestId = uuidv4();
   
