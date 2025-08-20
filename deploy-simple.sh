@@ -29,6 +29,46 @@ fi
 
 echo -e "${BLUE}📍 Répertoire du projet: ${PROJECT_DIR}${NC}"
 
+# Vérification et installation des outils nécessaires
+echo -e "${BLUE}🔍 Vérification des outils...${NC}"
+
+# Vérifier Node.js
+if ! command -v node &> /dev/null; then
+    echo -e "${RED}❌ Node.js non installé${NC}"
+    echo "Installation requise: curl -fsSL https://deb.nodesource.com/setup_18.x | sudo bash - && sudo apt-get install -y nodejs"
+    exit 1
+fi
+
+# Vérifier et installer Yarn si nécessaire
+if ! command -v yarn &> /dev/null; then
+    echo -e "${YELLOW}⚠️  Yarn non trouvé, installation...${NC}"
+    npm install -g yarn
+    if ! command -v yarn &> /dev/null; then
+        echo -e "${RED}❌ Impossible d'installer Yarn, utilisation de npm${NC}"
+        PACKAGE_MANAGER="npm"
+    else
+        echo -e "${GREEN}✅ Yarn installé avec succès${NC}"
+        PACKAGE_MANAGER="yarn"
+    fi
+else
+    echo -e "${GREEN}✅ Yarn trouvé${NC}"
+    PACKAGE_MANAGER="yarn"
+fi
+
+# Vérifier et installer PM2 si nécessaire
+if ! command -v pm2 &> /dev/null; then
+    echo -e "${YELLOW}⚠️  PM2 non trouvé, installation...${NC}"
+    npm install -g pm2
+    if ! command -v pm2 &> /dev/null; then
+        echo -e "${RED}❌ Impossible d'installer PM2${NC}"
+        exit 1
+    else
+        echo -e "${GREEN}✅ PM2 installé avec succès${NC}"
+    fi
+else
+    echo -e "${GREEN}✅ PM2 trouvé${NC}"
+fi
+
 # 1. Installer les dépendances
 echo -e "${BLUE}📦 Installation des dépendances...${NC}"
 cd "$PROJECT_DIR"
