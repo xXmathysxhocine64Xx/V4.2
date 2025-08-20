@@ -417,12 +417,18 @@ if [[ $REPLY =~ ^[Oo]$ ]]; then
     fi
 fi
 
-# 14. Statut final
+# 15. Statut final
 echo -e "\n${GREEN}🎉 Déploiement VPS terminé avec succès!${NC}"
 echo -e "${BLUE}===========================================${NC}"
-echo -e "${GREEN}🌐 Site accessible sur: http://${DOMAIN}${NC}"
+echo -e "${GREEN}🌐 Site principal: http://${DOMAIN}${NC}"
+if [[ "$DEPLOY_PIZZA" == "true" ]]; then
+    echo -e "${GREEN}🍕 Site pizza: http://pizza.getyoursite.fr${NC}"
+fi
 if [[ -f /etc/letsencrypt/live/${DOMAIN}/fullchain.pem ]]; then
     echo -e "${GREEN}🔒 SSL activé: https://${DOMAIN}${NC}"
+    if [[ "$DEPLOY_PIZZA" == "true" ]]; then
+        echo -e "${GREEN}🔒 SSL pizza: https://pizza.getyoursite.fr${NC}"
+    fi
 fi
 echo -e "\n${BLUE}📊 Statut des services:${NC}"
 echo "• Application PM2:"
