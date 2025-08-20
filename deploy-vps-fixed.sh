@@ -379,21 +379,23 @@ fi
 echo -e "\n${BLUE}🔐 Configuration SSL avec Let's Encrypt...${NC}"
 read -p "Voulez-vous configurer SSL automatiquement ? (o/n): " -n 1 -r
 echo
+
 if [[ $REPLY =~ ^[Oo]$ ]]; then
+    # Construire la liste des domaines pour SSL
+    SSL_DOMAINS="-d ${DOMAIN} -d www.${DOMAIN}"
+    
     if [[ "$DEPLOY_PIZZA" == "true" ]]; then
-        # SSL pour les deux domaines
-        if certbot --nginx -d ${DOMAIN} -d www.${DOMAIN} -d pizza.getyoursite.fr --non-interactive --agree-tos --email admin@${DOMAIN} --redirect; then
-            echo -e "${GREEN}✅ SSL configuré pour les deux sites${NC}"
-        else
-            echo -e "${YELLOW}⚠️  SSL non configuré - vous pouvez le faire manuellement plus tard${NC}"
-        fi
+        SSL_DOMAINS="${SSL_DOMAINS} -d pizza.getyoursite.fr"
+    fi
+    
+    if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
+        SSL_DOMAINS="${SSL_DOMAINS} -d mairie.getyoursite.fr"
+    fi
+    
+    if certbot --nginx ${SSL_DOMAINS} --non-interactive --agree-tos --email admin@${DOMAIN} --redirect; then
+        echo -e "${GREEN}✅ SSL configuré pour tous les domaines sélectionnés${NC}"
     else
-        # SSL pour le site principal uniquement
-        if certbot --nginx -d ${DOMAIN} -d www.${DOMAIN} --non-interactive --agree-tos --email admin@${DOMAIN} --redirect; then
-            echo -e "${GREEN}✅ SSL configuré avec succès${NC}"
-        else
-            echo -e "${YELLOW}⚠️  SSL non configuré - vous pouvez le faire manuellement plus tard${NC}"
-        fi
+        echo -e "${YELLOW}⚠️  SSL non configuré - vous pouvez le faire manuellement plus tard${NC}"
     fi
 fi
 
