@@ -439,11 +439,17 @@ echo -e "\n• Firewall UFW:"
 ufw status | head -5
 
 echo -e "\n${BLUE}🛠️  Commandes utiles:${NC}"
-echo "• pm2 status - Statut de l'application"
-echo "• pm2 logs ${PROJECT_NAME} - Logs de l'application"
+echo "• pm2 status - Statut des applications"
+echo "• pm2 logs ${PROJECT_NAME} - Logs du site principal"
+if [[ "$DEPLOY_PIZZA" == "true" ]]; then
+    echo "• pm2 logs pizza-getyoursite - Logs du site pizza (même instance)"
+fi
 echo "• pm2 restart ${PROJECT_NAME} - Redémarrer l'application"
 echo "• systemctl status nginx - Statut Nginx"
 echo "• nginx -t - Tester la configuration Nginx"
 echo "• certbot renew --dry-run - Tester le renouvellement SSL"
 
 echo -e "\n${GREEN}✅ Votre site GetYourSite est maintenant en ligne!${NC}"
+if [[ "$DEPLOY_PIZZA" == "true" ]]; then
+    echo -e "${GREEN}✅ Votre démo Pizza Bella Vita est également disponible!${NC}"
+fi
