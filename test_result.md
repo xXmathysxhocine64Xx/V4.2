@@ -192,21 +192,19 @@ frontend:
 
 metadata:
   created_by: "main_agent"
-  version: "3.0"
+  version: "4.0"
   test_sequence: 0
   run_ui: false
 
 test_plan:
   current_focus:
-    - "API Contact Simplifiée"
-    - "Déploiement VPS Complet"
-    - "Script de Diagnostic VPS"
+    - "Site Pizza Bella Vita"
+    - "Route Pizza Dédiée"
+    - "Script Déploiement Multi-Domaines"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
 
 agent_communication:
     - agent: "main"
-      message: "🔒 AUDIT DE SÉCURITÉ COMPLET ET CORRECTIONS CRITIQUES TERMINÉES - Toutes les vulnérabilités identifiées ont été corrigées: (1) Mise à jour Next.js 14.2.3→14.2.30 (7 vulnérabilités dont 1 CRITIQUE), (2) Configuration CORS sécurisée avec origins spécifiques, (3) API Contact complètement sécurisée avec rate limiting, CSRF protection, validation/sanitization avancée, (4) Middleware de sécurité avec headers CSP/HSTS/XSS, (5) Secrets cryptographiques générés, (6) Configuration Nginx VPS renforcée. Application maintenant conforme aux standards de sécurité."
-    - agent: "testing"
-      message: "🔒 TESTS DE SÉCURITÉ COMPLETS TERMINÉS - Audit de sécurité approfondi réalisé avec succès: (1) API /api/contact: headers sécurisés ✅, protection XSS/injection ✅, rate limiting efficace ✅, validation robuste ✅, (2) CORS: configuration sécurisée avec origins spécifiques ✅, blocage origins non autorisées ✅, (3) Middleware: tous headers de sécurité présents ✅, CSP/HSTS/XSS configurés ✅, (4) Validation: sanitization DOMPurify active ✅, Content-Type vérifié ✅. AUCUNE VULNÉRABILITÉ CRITIQUE DÉTECTÉE. Application sécurisée selon standards OWASP et prête pour production."
+      message: "🍕 SITE DE DÉMONSTRATION PIZZA CRÉÉ AVEC SUCCÈS - Développement complet d'un site vitrine/e-commerce pour une pizzeria avec : (1) Menu interactif de 6 pizzas avec images professionnelles, (2) Système de panier complet (ajout/suppression/quantités), (3) Design responsive moderne thème rouge/jaune, (4) Formulaire de commande fonctionnel, (5) Pages hero/menu/à-propos/contact, (6) Script déploiement multi-domaines avec choix interactif, (7) Route /pizza + support sous-domaine pizza.getyoursite.fr, (8) Documentation complète. Parfait pour présentation investisseurs."
