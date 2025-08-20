@@ -406,10 +406,17 @@ echo -e "${GREEN}🌐 Site principal: http://${DOMAIN}${NC}"
 if [[ "$DEPLOY_PIZZA" == "true" ]]; then
     echo -e "${GREEN}🍕 Site pizza: http://pizza.getyoursite.fr${NC}"
 fi
+if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
+    echo -e "${GREEN}🏛️ Site mairie: http://mairie.getyoursite.fr${NC}"
+fi
+
 if [[ -f /etc/letsencrypt/live/${DOMAIN}/fullchain.pem ]]; then
     echo -e "${GREEN}🔒 SSL activé: https://${DOMAIN}${NC}"
     if [[ "$DEPLOY_PIZZA" == "true" ]]; then
         echo -e "${GREEN}🔒 SSL pizza: https://pizza.getyoursite.fr${NC}"
+    fi
+    if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
+        echo -e "${GREEN}🔒 SSL mairie: https://mairie.getyoursite.fr${NC}"
     fi
 fi
 echo -e "\n${BLUE}📊 Statut des services:${NC}"
