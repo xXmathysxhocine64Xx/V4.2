@@ -232,15 +232,29 @@ server {
         limit_req zone=general_limit burst=10 nodelay;
 EOF
 
-# Ajouter la redirection pizza seulement si déploiement pizza activé
+# Ajouter les redirections pour les sous-domaines activés
+REDIRECTIONS=""
+
 if [[ "$DEPLOY_PIZZA" == "true" ]]; then
-cat >> /etc/nginx/sites-available/${DOMAIN} << EOF
-        
-        # Redirection pour le sous-domaine pizza
-        if (\$host = "pizza.getyoursite.fr") {
+    REDIRECTIONS="${REDIRECTIONS}        # Redirection pour le sous-domaine pizza
+        if (\$host = \"pizza.getyoursite.fr\") {
             rewrite ^/\$ /pizza last;
         }
-EOF
+"
+fi
+
+if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
+    REDIRECTIONS="${REDIRECTIONS}        # Redirection pour le sous-domaine mairie
+        if (\$host = \"mairie.getyoursite.fr\") {
+            rewrite ^/\$ /mairie last;
+        }
+"
+fi
+
+if [[ -n "$REDIRECTIONS" ]]; then
+cat >> /etc/nginx/sites-available/${DOMAIN} << EOF
+        
+${REDIRECTIONS}EOF
 fi
 
 cat >> /etc/nginx/sites-available/${DOMAIN} << EOF
