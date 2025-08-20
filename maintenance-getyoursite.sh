@@ -30,7 +30,7 @@ rebuild_and_restart() {
         
         if curl -f http://localhost:3000 >/dev/null 2>&1; then
             echo "✅ Application démarrée avec succès!"
-            echo "🌐 Site accessible sur: https://deploy-rescue-10.preview.emergentagent.com"
+            echo "🌐 Site accessible sur: https://deploy-script-fix.preview.emergentagent.com"
         else
             echo "❌ Erreur de démarrage, vérifiez les logs PM2"
             pm2 logs getyoursite --lines 10

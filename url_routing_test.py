@@ -15,7 +15,7 @@ class URLRoutingTester:
         self.test_results = []
         self.localhost_url = "http://localhost:3000"
         self.external_url = "http://getyoursite.fr"
-        self.preview_url = "https://deploy-rescue-10.preview.emergentagent.com"
+        self.preview_url = "https://deploy-script-fix.preview.emergentagent.com"
         
     def log_test(self, test_name, passed, details):
         """Log test results"""
