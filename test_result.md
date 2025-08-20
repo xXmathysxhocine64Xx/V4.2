@@ -105,23 +105,53 @@
 user_problem_statement: "Audit de sécurité complet et correction des failles de sécurité identifiées dans l'application GetYourSite. Vulnérabilités critiques dans Next.js, configuration CORS dangereuse, API non sécurisée, et manque de headers de sécurité."
 
 backend:
-  - task: "API Contact Simplifiée"
+  - task: "API Contact Sécurisée"
     implemented: true
     working: true
     file: "/app/app/api/contact/route.js"
     stuck_count: 0
-    priority: "high"
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Sécurisation complète de l'API Contact avec protection CSRF, rate limiting, validation avancée, sanitization DOMPurify, headers de sécurité, logging sécurisé avec masquage des données sensibles, gestion d'erreurs robuste et traçabilité des requêtes avec UUID."
+
+  - task: "Middleware de Sécurité"
+    implemented: true
+    working: true
+    file: "/app/middleware.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Créé un middleware Next.js complet avec headers de sécurité (CSP, HSTS, X-Frame-Options, etc.), vérification CORS pour les APIs, logging des requêtes sensibles, et protection contre les origins non autorisées."
+
+  - task: "Mise à jour Next.js Sécurisée"
+    implemented: true
+    working: true
+    file: "/app/package.json"
+    stuck_count: 0
+    priority: "critical"
     needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Simplifié l'API de contact en gardant seulement les fonctionnalités essentielles. Supprimé la validation complexe et la sécurité avancée. API basique avec log des messages et envoi email optionnel via Gmail."
-        - working: true
-          agent: "testing"
-          comment: "✅ TESTS COMPLETS RÉUSSIS - API Contact fonctionne parfaitement: GET /api/contact retourne statut 'active', POST avec données valides fonctionne (message reçu avec succès), validation des champs requis (nom, email, message) opérationnelle, validation format email fonctionnelle, messages bien loggés dans console. API stable avec 5 requêtes successives réussies. Aucune erreur critique détectée."
-        - working: true
-          agent: "testing"
-          comment: "✅ TESTS POST-NETTOYAGE CONFIRMÉS - API Contact parfaitement stable après nettoyage projet: GET /api/contact retourne {'message':'API Contact GetYourSite','status':'active'}, POST avec données valides retourne {'success':true,'message':'Message reçu avec succès!'}, validation email invalide retourne {'error':'Email invalide'}, validation champs manquants retourne {'error':'Nom, email et message requis'}. Stabilité confirmée avec 5 requêtes consécutives réussies. Aucune régression détectée."
+          comment: "Mise à jour de Next.js de v14.2.3 vers v14.2.30 pour corriger 7 vulnérabilités de sécurité dont 1 CRITIQUE (Authorization Bypass in Middleware), 2 HIGH (Cache Poisoning, authorization bypass) et 2 MODERATE (DoS conditions)."
+
+  - task: "Configuration CORS Sécurisée"
+    implemented: true
+    working: true
+    file: "/app/next.config.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Correction de la configuration CORS dangereuse (Access-Control-Allow-Origin: '*') remplacée par une configuration sécurisée avec origins spécifiques, headers de sécurité CSP, HSTS, X-Frame-Options, et protection XSS."
 
   - task: "Déploiement VPS Complet"
     implemented: true
