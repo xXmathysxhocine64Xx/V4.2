@@ -6,10 +6,10 @@
 
 set -e  # Arrêter en cas d'erreur
 
-# Variables
+# Variables par défaut
 PROJECT_NAME="getyoursite"
 PROJECT_DIR="$(pwd)"
-DOMAIN="getyoursite.fr"
+DEFAULT_DOMAIN="getyoursite.fr"
 APP_PORT="3000"
 
 # Couleurs
