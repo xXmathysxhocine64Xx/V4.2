@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "L'utilisateur avait des problèmes avec son site GetYourSite qui affichait des erreurs 404 quand il redémarrait le VPN. Il demandait de simplifier totalement le code pour qu'il soit le moins compliqué possible et très stable, et adapter le script de déploiement aux modifications."
+user_problem_statement: "L'utilisateur avait des problèmes avec son site GetYourSite qui ne fonctionnait pas correctement sur son VPS avec le domaine getyoursite.fr. Il demandait une solution pour le déploiement sur VPS avec configuration complète incluant Nginx, SSL et diagnostic des problèmes."
 
 backend:
   - task: "API Contact Simplifiée"
@@ -120,20 +120,29 @@ backend:
           agent: "testing"
           comment: "✅ TESTS COMPLETS RÉUSSIS - API Contact fonctionne parfaitement: GET /api/contact retourne statut 'active', POST avec données valides fonctionne (message reçu avec succès), validation des champs requis (nom, email, message) opérationnelle, validation format email fonctionnelle, messages bien loggés dans console. API stable avec 5 requêtes successives réussies. Aucune erreur critique détectée."
 
-  - task: "Déploiement PM2 Simplifié"
+  - task: "Déploiement VPS Complet"
     implemented: true
     working: true
-    file: "/app/deploy-simple.sh"
+    file: "/app/deploy-vps.sh"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Créé un script de déploiement simplifié qui utilise PM2. Configuration minimale dans ecosystem.config.js. Application déployée avec succès sur localhost:3000."
-        - working: true
-          agent: "testing"
-          comment: "✅ DÉPLOIEMENT PM2 PARFAITEMENT STABLE - Application 'getyoursite' online dans PM2, redémarrage PM2 testé avec succès (application revient online immédiatement), aucune erreur critique dans les logs PM2, stabilité confirmée sur plusieurs requêtes. Configuration PM2 optimale avec ecosystem.config.js."
+          comment: "Créé un script de déploiement VPS complet avec installation automatique des outils, configuration du firewall UFW, setup Nginx avec reverse proxy, configuration SSL Let's Encrypt optionnelle, et tests complets de fonctionnement."
+
+  - task: "Script de Diagnostic VPS"
+    implemented: true
+    working: true
+    file: "/app/diagnostic-vps.sh"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Créé un script de diagnostic complet qui vérifie l'état des services (PM2, Nginx, Node.js), les ports ouverts, la connectivité, la configuration DNS, les certificats SSL, et fournit des recommandations de correction automatiques."
 
 frontend:
   - task: "Site Vitrine Simplifié"
@@ -142,41 +151,41 @@ frontend:
     file: "/app/app/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Simplifié totalement le code frontend. Intégré tous les composants UI directement dans page.js. Supprimé toutes les dépendances UI complexes. Site fonctionnel avec sections Hero, Services, Portfolio et Contact."
 
-  - task: "Configuration Simplifiée"
+  - task: "Configuration VPS Optimisée"
     implemented: true
     working: true
-    file: "/app/next.config.js"
+    file: "/app/ecosystem.config.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Simplifié la configuration Next.js. Gardé seulement les options essentielles. CSS simplifié. Package.json allégé avec moins de dépendances."
+          comment: "Configuration PM2 optimisée pour VPS avec gestion des logs dans /var/log/pm2/, limitation mémoire à 1G, et configuration réseau pour écouter sur 0.0.0.0."
 
 metadata:
   created_by: "main_agent"
-  version: "2.0"
+  version: "3.0"
   test_sequence: 0
   run_ui: false
 
 test_plan:
   current_focus:
     - "API Contact Simplifiée"
-    - "Site Vitrine Simplifié"  
-    - "Déploiement PM2 Simplifié"
+    - "Déploiement VPS Complet"
+    - "Script de Diagnostic VPS"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
 
 agent_communication:
     - agent: "main"
-      message: "Simplification complète du site GetYourSite terminée. Supprimé tous les scripts de debug, maintenance et fichiers complexes. Code ultra-simplifié et stable. Application déployée avec PM2 et fonctionne sur localhost:3000. Prêt pour tests complets backend et frontend pour vérifier la stabilité."
+      message: "Simplification complète du site GetYourSite terminée avec ajout des outils VPS. Créé deploy-vps.sh pour déploiement complet sur VPS avec Nginx, UFW, SSL optionnel. Créé diagnostic-vps.sh pour diagnostic des problèmes. Mis à jour le guide d'utilisation avec instructions VPS complètes. Application prête pour production VPS."
     - agent: "testing"
       message: "🎉 TESTS BACKEND COMPLETS ET RÉUSSIS - Tous les tests critiques du backend passent avec succès: API Contact GET/POST fonctionnelle, validation des données opérationnelle, déploiement PM2 stable, redémarrage testé, aucune erreur critique. Le backend simplifié de GetYourSite est parfaitement stable et fiable. Objectif de simplification atteint avec succès."
