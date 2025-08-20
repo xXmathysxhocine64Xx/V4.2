@@ -1,22 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Badge } from '@/components/ui/badge'
 import { 
   Code2, 
   Rocket, 
   RefreshCw, 
   Mail, 
   Phone, 
-  MapPin, 
-  Star,
-  Users,
-  Globe,
-  Zap,
+  MapPin,
   Menu,
   X
 } from 'lucide-react'
