@@ -619,33 +619,42 @@ class GetYourSiteBackendTester:
             return False
     
     def run_all_tests(self):
-        """Run all backend tests focused on pizza domain support"""
-        print("🍕 Starting GetYourSite Contact API Tests - Pizza Domain Support")
-        print("=" * 70)
+        """Run all backend tests focused on multi-domain support (pizza + mairie)"""
+        print("🍕🏛️ Starting GetYourSite Contact API Tests - Multi-Domain Support (Pizza + Mairie)")
+        print("=" * 80)
         
         # Core API functionality tests
         self.test_api_contact_get()
         self.test_api_contact_post_valid()
         
-        # Validation tests (before rate limiting kicks in)
-        self.test_api_contact_post_missing_fields()
+        # Multi-domain tests - NEW MAIRIE DOMAIN
+        self.test_api_contact_mairie_domain()
+        self.test_api_contact_getyoursite_domain()
         
-        # Pizza domain specific tests
+        # Existing pizza domain test
         self.test_api_contact_pizza_domain()
+        
+        # Mairie-specific form types
+        self.test_api_contact_mairie_form_types()
+        
+        # CORS tests for all domains
         self.test_api_contact_cors_headers()
-        self.test_api_contact_validation_pizza_data()
         
         # Security tests
         self.test_api_security_headers()
         self.test_api_contact_unauthorized_origin()
         
+        # Validation tests
+        self.test_api_contact_post_missing_fields()
+        self.test_api_contact_validation_pizza_data()
+        
         # Rate limiting test (last as it may affect other tests)
         self.test_api_rate_limiting()
         
         # Final summary
-        print("\n" + "=" * 70)
-        print("🏁 Test Summary - Contact API Multi-Domain Support")
-        print("=" * 70)
+        print("\n" + "=" * 80)
+        print("🏁 Test Summary - Contact API Multi-Domain Support (Pizza + Mairie)")
+        print("=" * 80)
         
         total_tests = len(self.test_results)
         passed_tests = len([t for t in self.test_results if t['status'] == 'PASS'])
@@ -658,7 +667,7 @@ class GetYourSiteBackendTester:
         print(f"⚠️  Warnings: {warned_tests}")
         
         if failed_tests == 0:
-            print("\n🎉 All critical tests passed! Contact API with pizza domain support is working properly.")
+            print("\n🎉 All critical tests passed! Contact API with multi-domain support (pizza + mairie) is working properly.")
             return True
         else:
             print(f"\n❌ {failed_tests} critical test(s) failed:")
