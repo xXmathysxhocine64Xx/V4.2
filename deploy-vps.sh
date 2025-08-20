@@ -134,6 +134,15 @@ server {
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()" always;
+
+    # Hide Nginx version
+    server_tokens off;
+
+    # Rate limiting
+    limit_req_zone \$binary_remote_addr zone=contact_limit:10m rate=5r/m;
+    limit_req_zone \$binary_remote_addr zone=general_limit:10m rate=20r/m;
 
     # Gzip compression
     gzip on;
@@ -141,7 +150,37 @@ server {
     gzip_min_length 1000;
     gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
+    # Block common attacks
+    location ~* \.(sql|bak|log|ini|conf|sh|bat|cmd)$ {
+        deny all;
+        return 404;
+    }
+
+    # API rate limiting
+    location /api/contact {
+        limit_req zone=contact_limit burst=3 nodelay;
+        proxy_pass http://127.0.0.1:${APP_PORT};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
+        
+        # Additional security for API
+        proxy_hide_header X-Powered-By;
+        proxy_set_header X-Forwarded-Host \$server_name;
+        
+        # Timeout settings
+        proxy_connect_timeout 30s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+    }
+
     location / {
+        limit_req zone=general_limit burst=10 nodelay;
         proxy_pass http://127.0.0.1:${APP_PORT};
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
@@ -163,12 +202,22 @@ server {
         proxy_pass http://127.0.0.1:${APP_PORT};
         expires 365d;
         add_header Cache-Control "public, immutable";
+        add_header X-Content-Type-Options "nosniff" always;
     }
 
     # Gestion des erreurs
     error_page 502 503 504 /50x.html;
     location = /50x.html {
         root /var/www/html;
+    }
+
+    # Bloquer les scanners de vulnérabilités
+    location ~ /\\.ht {
+        deny all;
+    }
+    
+    location ~ /\\.(git|svn) {
+        deny all;
     }
 }
 EOF
