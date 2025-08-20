@@ -149,6 +149,9 @@ backend:
         - working: "NA"
           agent: "main"
           comment: "Créé un script de diagnostic complet qui vérifie l'état des services (PM2, Nginx, Node.js), les ports ouverts, la connectivité, la configuration DNS, les certificats SSL, et fournit des recommandations de correction automatiques."
+        - working: true
+          agent: "testing"
+          comment: "✅ SCRIPT DIAGNOSTIC TESTÉ - Script diagnostic-vps.sh présent et exécutable (8393 bytes), fonctionnel: détecte PM2 installé (v6.0.8), application getyoursite online, Node.js v20.19.4, port 3000 en écoute, génère rapport complet système/services/ports/connectivité/DNS/SSL. Fournit recommandations automatiques. Script opérationnel pour diagnostic VPS."
 
 frontend:
   - task: "Site Vitrine Simplifié"
