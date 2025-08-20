@@ -9,8 +9,86 @@ import {
   Phone, 
   MapPin,
   Menu,
-  X
+  X,
+  Star,
+  Users,
+  Globe
 } from 'lucide-react'
+
+// Composants UI simples intégrés
+const Button = ({ children, className = "", variant = "default", size = "default", onClick, type, disabled }) => {
+  const baseStyles = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+  const variants = {
+    default: "bg-blue-600 text-white hover:bg-blue-700",
+    outline: "border border-gray-300 bg-transparent hover:bg-gray-50",
+    ghost: "hover:bg-gray-100"
+  }
+  const sizes = {
+    default: "h-10 px-4 py-2",
+    lg: "h-11 px-8"
+  }
+  
+  return (
+    <button 
+      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      onClick={onClick}
+      type={type}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  )
+}
+
+const Card = ({ children, className = "" }) => (
+  <div className={`rounded-lg border bg-white shadow-sm ${className}`}>
+    {children}
+  </div>
+)
+
+const CardHeader = ({ children, className = "" }) => (
+  <div className={`flex flex-col space-y-1.5 p-6 ${className}`}>
+    {children}
+  </div>
+)
+
+const CardContent = ({ children, className = "" }) => (
+  <div className={`p-6 pt-0 ${className}`}>
+    {children}
+  </div>
+)
+
+const CardTitle = ({ children, className = "" }) => (
+  <h3 className={`text-2xl font-semibold leading-none tracking-tight ${className}`}>
+    {children}
+  </h3>
+)
+
+const CardDescription = ({ children, className = "" }) => (
+  <p className={`text-sm text-gray-600 ${className}`}>
+    {children}
+  </p>
+)
+
+const Input = ({ className = "", ...props }) => (
+  <input 
+    className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`} 
+    {...props} 
+  />
+)
+
+const Textarea = ({ className = "", ...props }) => (
+  <textarea 
+    className={`flex min-h-[80px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`} 
+    {...props} 
+  />
+)
+
+const Badge = ({ children, className = "" }) => (
+  <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold text-white ${className}`}>
+    {children}
+  </span>
+)
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
