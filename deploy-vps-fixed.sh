@@ -442,3 +442,6 @@ echo -e "\n${GREEN}✅ Votre site GetYourSite est maintenant en ligne!${NC}"
 if [[ "$DEPLOY_PIZZA" == "true" ]]; then
     echo -e "${GREEN}✅ Votre démo Pizza Bella Vita est également disponible!${NC}"
 fi
+if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
+    echo -e "${GREEN}✅ Votre démo Mairie de Brest est également disponible!${NC}"
+fi
