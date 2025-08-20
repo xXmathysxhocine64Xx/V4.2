@@ -115,12 +115,12 @@ backend:
     status_history:
         - working: true
           agent: "main"
-          comment: "API existante mise à jour pour supporter pizza.getyoursite.fr dans les origins autorisées. Compatible avec formulaire de commande pizza et site principal."
+          comment: "API existante mise à jour pour supporter pizza.getyoursite.fr et mairie.getyoursite.fr dans les origins autorisées. Compatible avec formulaires de commande pizza et demandes citoyennes de la mairie."
         - working: true
           agent: "testing"
           comment: "✅ BACKEND TESTING COMPLETED - Contact API fully functional with multi-domain support. Tests confirmed: (1) GET /api/contact returns active status, (2) POST requests from pizza.getyoursite.fr origin are accepted, (3) Security headers properly configured (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection), (4) CORS working for getyoursite.fr domains, (5) Unauthorized origins properly rejected with 403, (6) Rate limiting functional (10 req/15min), (7) Input validation implemented for required fields and email format, (8) Pizza-specific order data processed correctly. All critical functionality working as expected."
 
-  - task: "Variables Environnement Multi-Domaines"
+  - task: "Variables Environnement Multi-Domaines Mairie"
     implemented: true
     working: true
     file: "/app/.env"
@@ -130,9 +130,9 @@ backend:
     status_history:
         - working: true
           agent: "main"
-          comment: "Ajout de pizza.getyoursite.fr dans TRUSTED_ORIGINS pour permettre les requêtes API depuis le sous-domaine pizza."
+          comment: "Ajout de mairie.getyoursite.fr dans TRUSTED_ORIGINS pour permettre les requêtes API depuis le sous-domaine mairie en plus de pizza.getyoursite.fr."
 
-  - task: "Middleware Sécurité Multi-Domaines"
+  - task: "Middleware Sécurité Multi-Domaines Mairie"
     implemented: true
     working: true
     file: "/app/middleware.js"
@@ -142,7 +142,7 @@ backend:
     status_history:
         - working: true
           agent: "main"
-          comment: "Middleware mis à jour avec support pizza.getyoursite.fr dans les domaines autorisés et CSP étendu pour images Pexels et Unsplash."
+          comment: "Middleware mis à jour avec support mairie.getyoursite.fr dans les domaines autorisés en plus de pizza.getyoursite.fr. CSP étendu maintenu pour images externes."
 
 frontend:
   - task: "Site Pizza Bella Vita"
