@@ -202,6 +202,12 @@ server {
 
     location / {
         limit_req zone=general_limit burst=10 nodelay;
+        
+        # Redirection interne vers /pizza pour le sous-domaine pizza
+        if ($host = pizza.getyoursite.fr) {
+            rewrite ^/$ /pizza last;
+        }
+        
         proxy_pass http://127.0.0.1:${APP_PORT};
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
