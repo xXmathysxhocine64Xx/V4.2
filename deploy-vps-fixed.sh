@@ -46,11 +46,28 @@ echo ""
 echo -e "${YELLOW}➕ Souhaitez-vous également déployer la démo pizzeria sur pizza.getyoursite.fr ?${NC}"
 read -p "Déployer aussi pizza.getyoursite.fr ? (o/n): " pizza_choice
 
+echo ""
+echo -e "${YELLOW}🏛️ Souhaitez-vous également déployer la démo mairie sur mairie.getyoursite.fr ?${NC}"
+read -p "Déployer aussi mairie.getyoursite.fr ? (o/n): " mairie_choice
+
+DEPLOY_PIZZA="false"
+DEPLOY_MAIRIE="false"
+
 if [[ $pizza_choice =~ ^[Oo]$ ]]; then
     DEPLOY_PIZZA="true"
+fi
+
+if [[ $mairie_choice =~ ^[Oo]$ ]]; then
+    DEPLOY_MAIRIE="true"
+fi
+
+if [[ "$DEPLOY_PIZZA" == "true" && "$DEPLOY_MAIRIE" == "true" ]]; then
+    echo -e "${GREEN}✅ Déploiement du site principal + démo pizzeria + démo mairie${NC}"
+elif [[ "$DEPLOY_PIZZA" == "true" ]]; then
     echo -e "${GREEN}✅ Déploiement du site principal + démo pizzeria${NC}"
+elif [[ "$DEPLOY_MAIRIE" == "true" ]]; then
+    echo -e "${GREEN}✅ Déploiement du site principal + démo mairie${NC}"
 else
-    DEPLOY_PIZZA="false"
     echo -e "${GREEN}✅ Déploiement du site principal uniquement${NC}"
 fi
 
