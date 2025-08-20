@@ -177,6 +177,9 @@ frontend:
         - working: "NA"
           agent: "main"
           comment: "Configuration PM2 optimisée pour VPS avec gestion des logs dans /var/log/pm2/, limitation mémoire à 1G, et configuration réseau pour écouter sur 0.0.0.0."
+        - working: true
+          agent: "testing"
+          comment: "✅ CONFIGURATION PM2 VALIDÉE - ecosystem.config.js cohérent: nom 'getyoursite', script 'yarn start', port 3000, hostname '0.0.0.0', NODE_ENV 'production', max_memory_restart '500M', autorestart activé. Application PM2 online, restart testé avec succès (PID changé de 1131 à 1830). Configuration stable et fonctionnelle."
 
 metadata:
   created_by: "main_agent"
