@@ -119,6 +119,9 @@ backend:
         - working: true
           agent: "testing"
           comment: "✅ BACKEND TESTING COMPLETED - Contact API fully functional with multi-domain support. Tests confirmed: (1) GET /api/contact returns active status, (2) POST requests from pizza.getyoursite.fr origin are accepted, (3) Security headers properly configured (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection), (4) CORS working for getyoursite.fr domains, (5) Unauthorized origins properly rejected with 403, (6) Rate limiting functional (10 req/15min), (7) Input validation implemented for required fields and email format, (8) Pizza-specific order data processed correctly. All critical functionality working as expected."
+        - working: true
+          agent: "testing"
+          comment: "✅ MAIRIE DOMAIN SUPPORT FULLY TESTED AND WORKING - Extended testing completed for new mairie.getyoursite.fr domain support. All tests successful: (1) GET /api/contact returns active status, (2) POST requests from mairie.getyoursite.fr origin accepted successfully, (3) POST requests from pizza.getyoursite.fr still working (backward compatibility), (4) POST requests from getyoursite.fr main domain working, (5) Mairie-specific form types processed correctly (état civil, urbanisme, inscription scolaire), (6) CORS headers configured for all authorized domains, (7) Security headers present (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Cache-Control), (8) Unauthorized origins properly rejected with 403 status, (9) Rate limiting active and working (10 req/15min), (10) Input validation working for all required fields. Multi-domain architecture fully functional with 3 domains: getyoursite.fr, pizza.getyoursite.fr, and mairie.getyoursite.fr."
 
   - task: "Variables Environnement Multi-Domaines Mairie"
     implemented: true
