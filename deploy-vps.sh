@@ -49,23 +49,27 @@ case $domain_choice in
     1)
         DOMAIN="getyoursite.fr"
         DEPLOY_TYPE="main"
+        PROJECT_NAME="getyoursite"
         echo -e "${GREEN}✅ Déploiement du site principal GetYourSite${NC}"
         ;;
     2)
         DOMAIN="pizza.getyoursite.fr"
         DEPLOY_TYPE="pizza"
+        PROJECT_NAME="pizza-getyoursite"
         echo -e "${GREEN}✅ Déploiement de la démo pizzeria${NC}"
         ;;
     3)
         read -p "Entrez le domaine personnalisé: " custom_domain
         DOMAIN="$custom_domain"
         DEPLOY_TYPE="custom"
+        PROJECT_NAME="custom-$(echo $custom_domain | sed 's/[^a-zA-Z0-9]/-/g')"
         echo -e "${GREEN}✅ Déploiement sur domaine personnalisé: $DOMAIN${NC}"
         ;;
     *)
         echo -e "${YELLOW}Option non reconnue, utilisation du domaine par défaut: $DEFAULT_DOMAIN${NC}"
         DOMAIN="$DEFAULT_DOMAIN"
         DEPLOY_TYPE="main"
+        PROJECT_NAME="getyoursite"
         ;;
 esac
 
