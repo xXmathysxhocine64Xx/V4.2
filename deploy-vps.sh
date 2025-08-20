@@ -144,6 +144,12 @@ pm2 save > /dev/null 2>&1
 
 # 11. Configuration Nginx
 echo -e "${BLUE}🌐 Configuration Nginx...${NC}"
+
+# Ajouter les zones de rate limiting dans le contexte http principal
+if ! grep -q "contact_limit" /etc/nginx/nginx.conf; then
+    sed -i '/http {/a\\t# Rate limiting zones\n\tlimit_req_zone $binary_remote_addr zone=contact_limit:10m rate=5r/m;\n\tlimit_req_zone $binary_remote_addr zone=general_limit:10m rate=20r/m;' /etc/nginx/nginx.conf
+fi
+
 cat > /etc/nginx/sites-available/${DOMAIN} << EOF
 server {
     listen 80;
@@ -158,10 +164,6 @@ server {
 
     # Hide Nginx version
     server_tokens off;
-
-    # Rate limiting
-    limit_req_zone \$binary_remote_addr zone=contact_limit:10m rate=5r/m;
-    limit_req_zone \$binary_remote_addr zone=general_limit:10m rate=20r/m;
 
     # Gzip compression
     gzip on;
