@@ -19,6 +19,16 @@ NC='\033[0m' # No Color
 echo -e "${BLUE}🚀 Déploiement GetYourSite${NC}"
 echo "================================="
 
+# Vérification du répertoire de travail
+if [[ ! -f "package.json" || ! -f "next.config.js" ]]; then
+    echo -e "${RED}❌ Fichiers GetYourSite non trouvés dans le répertoire courant${NC}"
+    echo "Assurez-vous d'exécuter ce script depuis le répertoire du projet GetYourSite"
+    echo "Répertoire courant: $(pwd)"
+    exit 1
+fi
+
+echo -e "${BLUE}📍 Répertoire du projet: ${PROJECT_DIR}${NC}"
+
 # 1. Installer les dépendances
 echo -e "${BLUE}📦 Installation des dépendances...${NC}"
 cd "$PROJECT_DIR"
