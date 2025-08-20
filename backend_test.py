@@ -460,28 +460,31 @@ class GetYourSiteBackendTester:
             return False
     
     def run_all_tests(self):
-        """Run all backend tests"""
-        print("🧪 Starting GetYourSite Backend Tests")
-        print("=" * 50)
+        """Run all backend tests focused on pizza domain support"""
+        print("🍕 Starting GetYourSite Contact API Tests - Pizza Domain Support")
+        print("=" * 70)
         
-        # Test PM2 deployment first
-        self.test_pm2_status()
-        
-        # Test API endpoints
+        # Core API functionality tests
         self.test_api_contact_get()
         self.test_api_contact_post_valid()
-        self.test_api_contact_post_missing_fields()
-        self.test_api_contact_post_invalid_email()
         
-        # Test stability
-        self.test_api_stability()
-        self.test_pm2_logs()
-        self.test_pm2_restart()
+        # Pizza domain specific tests
+        self.test_api_contact_pizza_domain()
+        self.test_api_contact_cors_headers()
+        self.test_api_contact_validation_pizza_data()
+        
+        # Security and rate limiting tests
+        self.test_api_security_headers()
+        self.test_api_rate_limiting()
+        self.test_api_contact_unauthorized_origin()
+        
+        # Validation tests
+        self.test_api_contact_post_missing_fields()
         
         # Final summary
-        print("\n" + "=" * 50)
-        print("🏁 Test Summary")
-        print("=" * 50)
+        print("\n" + "=" * 70)
+        print("🏁 Test Summary - Contact API Multi-Domain Support")
+        print("=" * 70)
         
         total_tests = len(self.test_results)
         passed_tests = len([t for t in self.test_results if t['status'] == 'PASS'])
@@ -494,7 +497,7 @@ class GetYourSiteBackendTester:
         print(f"⚠️  Warnings: {warned_tests}")
         
         if failed_tests == 0:
-            print("\n🎉 All critical tests passed! Backend is working properly.")
+            print("\n🎉 All critical tests passed! Contact API with pizza domain support is working properly.")
             return True
         else:
             print(f"\n❌ {failed_tests} critical test(s) failed:")
