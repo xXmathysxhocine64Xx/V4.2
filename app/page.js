@@ -90,7 +90,16 @@ const Badge = ({ children, className = "" }) => (
   </span>
 )
 
+// Import du composant Pizza
+import PizzaPage from './pizza-page'
+
 export default function HomePage() {
+  // Vérifier si nous sommes sur le sous-domaine pizza
+  if (typeof window !== 'undefined' && window.location.hostname === 'pizza.getyoursite.fr') {
+    return <PizzaPage />
+  }
+  
+  // Sinon, afficher le site GetYourSite original
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [contactForm, setContactForm] = useState({
     name: '',
