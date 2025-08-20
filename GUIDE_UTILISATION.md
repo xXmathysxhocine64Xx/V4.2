@@ -1,156 +1,297 @@
-# 🚀 GetYourSite - Guide d'Utilisation Simplifié
+# 🚀 GetYourSite - Guide d'Utilisation
 
-## Installation Complète
+## 📋 Présentation
 
+GetYourSite est un site web professionnel de présentation des services de création, déploiement et refonte de sites web. L'application est construite avec Next.js et utilise PM2 pour le déploiement.
+
+## 🛠️ Installation et Déploiement
+
+### Prérequis
+- Node.js (version 16 ou supérieure)
+- Yarn (gestionnaire de paquets)
+- PM2 (gestionnaire de processus)
+- Nginx (pour VPS en production)
+
+## 🖥️ Déploiement Local/Développement
+
+### Déploiement Simple
 ```bash
-# Clonez ou téléchargez les fichiers du projet
-# Puis exécutez l'installation :
-sudo ./install-getyoursite.sh
-```
+# Rendre le script exécutable
+chmod +x deploy-simple.sh
 
-Le script d'installation va :
-- ✅ Installer Node.js, Yarn, PM2 automatiquement
-- ✅ Configurer Nginx (optionnel)
-- ✅ Déployer l'application avec PM2
-- ✅ Configurer Gmail (optionnel)
-- ✅ Tester le fonctionnement
-
-## Déploiement Rapide (si déjà installé)
-
-```bash
+# Lancer le déploiement
 ./deploy-simple.sh
 ```
 
-## Commandes Essentielles
+Le script effectue automatiquement :
+- ✅ Vérification des outils (Node.js, Yarn, PM2)
+- ✅ Installation des dépendances
+- ✅ Build de l'application Next.js
+- ✅ Configuration et démarrage PM2
+- ✅ Test de fonctionnement
+- ✅ Configuration du démarrage automatique
 
-### Gestion de l'application
+## 🌐 Déploiement VPS Production
+
+### Déploiement VPS Complet
+```bash
+# Rendre le script exécutable
+chmod +x deploy-vps.sh
+
+# Lancer le déploiement (en root)
+sudo ./deploy-vps.sh
+```
+
+Le script VPS effectue automatiquement :
+- ✅ Mise à jour système et installation des outils
+- ✅ Configuration du firewall (UFW)
+- ✅ Installation et build de l'application
+- ✅ Configuration PM2 optimisée
+- ✅ Configuration Nginx avec reverse proxy
+- ✅ Configuration SSL optionnelle (Let's Encrypt)
+- ✅ Tests complets de fonctionnement
+
+### Diagnostic VPS
+```bash
+# Diagnostiquer les problèmes
+chmod +x diagnostic-vps.sh
+./diagnostic-vps.sh
+```
+
+Le diagnostic vérifie :
+- ✅ État des services (PM2, Nginx, Node.js)
+- ✅ Ports ouverts et connectivité
+- ✅ Configuration DNS
+- ✅ Certificats SSL
+- ✅ Logs et performances
+- ✅ Recommandations de correction
+
+## 🔧 Configuration VPS
+
+### Structure de déploiement VPS
+```
+Utilisateur → Domaine (getyoursite.fr)
+    ↓
+Nginx (Port 80/443)
+    ↓
+Application Next.js via PM2 (Port 3000)
+```
+
+### Fichiers de configuration créés
+- `/etc/nginx/sites-available/getyoursite.fr` - Configuration Nginx
+- `/var/log/pm2/getyoursite.*` - Logs PM2
+- `/etc/letsencrypt/live/getyoursite.fr/` - Certificats SSL
+
+## 🌐 Accès au Site
+
+### Développement Local
+- **URL locale** : http://localhost:3000
+- **API Contact** : http://localhost:3000/api/contact
+
+### Production VPS
+- **URL publique** : http://getyoursite.fr
+- **URL sécurisée** : https://getyoursite.fr (si SSL configuré)
+- **API Contact** : http://getyoursite.fr/api/contact
+
+## 📊 Gestion avec PM2
+
+### Commandes utiles
 ```bash
 # Voir le statut
 pm2 status
 
-# Voir les logs en temps réel
+# Voir les logs
 pm2 logs getyoursite
 
-# Redémarrer l'application
+# Redémarrer
 pm2 restart getyoursite
 
+# Arrêter
+pm2 stop getyoursite
+
+# Supprimer
+pm2 delete getyoursite
+
+# Logs en temps réel
+pm2 logs getyoursite --follow
+```
+
+## 🔧 Gestion Nginx (VPS)
+
+### Commandes utiles
+```bash
+# Statut Nginx
+systemctl status nginx
+
+# Redémarrer Nginx
+systemctl restart nginx
+
+# Tester la configuration
+nginx -t
+
+# Recharger la configuration
+systemctl reload nginx
+
+# Logs Nginx
+tail -f /var/log/nginx/error.log
+tail -f /var/log/nginx/access.log
+```
+
+## 🔒 Gestion SSL (VPS)
+
+### Renouvellement automatique
+```bash
+# Tester le renouvellement
+certbot renew --dry-run
+
+# Forcer le renouvellement
+certbot renew --force-renewal
+
+# Voir les certificats
+certbot certificates
+```
+
+## 🔧 Structure du Projet
+
+```
+/
+├── app/                    # Application Next.js
+│   ├── page.js            # Page principale
+│   ├── layout.js          # Layout global
+│   ├── globals.css        # Styles globaux
+│   └── api/
+│       └── contact/
+│           └── route.js   # API de contact
+├── deploy-simple.sh       # Script déploiement local
+├── deploy-vps.sh          # Script déploiement VPS
+├── diagnostic-vps.sh      # Script diagnostic VPS
+├── validate-getyoursite.sh # Script de validation
+├── ecosystem.config.js    # Configuration PM2
+├── package.json           # Dépendances du projet
+├── next.config.js         # Configuration Next.js
+└── README.md             # Documentation
+```
+
+## 🎨 Fonctionnalités
+
+### Page Principale
+- **Section Hero** : Présentation des services
+- **Section Services** : Conception, Déploiement, Refonte
+- **Section Portfolio** : Exemples de réalisations
+- **Section Contact** : Formulaire de contact
+
+### API de Contact
+- **GET** `/api/contact` : Vérification du statut de l'API
+- **POST** `/api/contact` : Envoi de messages de contact
+
+## 🔄 Maintenance
+
+### Mise à jour Local
+```bash
 # Arrêter l'application
 pm2 stop getyoursite
 
-# Démarrer l'application
+# Mettre à jour le code
+git pull origin main
+
+# Réinstaller les dépendances
+yarn install
+
+# Rebuild
+yarn build
+
+# Redémarrer
 pm2 start getyoursite
 ```
 
-### Développement local
+### Mise à jour VPS
 ```bash
-# Mode développement
-yarn dev
+# Se connecter au VPS
+ssh root@votre-serveur
 
-# Build de production
-yarn build
+# Aller dans le répertoire du projet
+cd /path/to/getyoursite
 
-# Démarrer en production
-yarn start
+# Suivre les étapes de mise à jour locale
+# Puis redémarrer Nginx si nécessaire
+systemctl reload nginx
 ```
 
-## Configuration Gmail
+## ⚠️ Dépannage
 
-1. **Obtenir un mot de passe d'application Gmail :**
-   - Allez sur [myaccount.google.com](https://myaccount.google.com)
-   - Sécurité → Vérification en 2 étapes (activez-la si nécessaire)
-   - Sécurité → Mots de passe des applications
-   - Générez un mot de passe pour "Courrier"
+### Problèmes courants VPS
 
-2. **Configurer dans le fichier `.env` :**
-   ```bash
-   GMAIL_USER=votre-email@gmail.com
-   GMAIL_APP_PASSWORD=votre-mot-de-passe-app-16-caracteres
-   GMAIL_RECIPIENT=votre-email@gmail.com
-   ```
+#### Site non accessible depuis l'extérieur
+1. Exécuter le diagnostic : `./diagnostic-vps.sh`
+2. Vérifier le DNS : Le domaine pointe-t-il vers votre IP ?
+3. Vérifier le firewall : `ufw status`
+4. Vérifier Nginx : `systemctl status nginx`
 
-3. **Redémarrer l'application :**
-   ```bash
-   pm2 restart getyoursite
-   ```
-
-## Structure du Projet Simplifiée
-
-```
-/var/www/getyoursite/
-├── app/
-│   ├── page.js              # Site vitrine complet
-│   ├── layout.js            # Layout principal
-│   ├── globals.css          # Styles CSS
-│   └── api/
-│       └── contact/
-│           └── route.js     # API de contact
-├── package.json             # Dépendances minimales
-├── next.config.js           # Configuration Next.js
-├── ecosystem.config.js      # Configuration PM2
-├── deploy-simple.sh         # Script de déploiement
-├── install-getyoursite.sh   # Script d'installation
-└── .env                     # Variables d'environnement
-```
-
-## Résolution de Problèmes
-
-### L'application ne démarre pas
+#### Application ne démarre pas
 ```bash
-# Vérifier les logs
-pm2 logs getyoursite
-
-# Redémarrer PM2
-pm2 kill
-pm2 start ecosystem.config.js
-```
-
-### Erreur 404 
-```bash
-# Vérifier que l'app est bien démarrée
+# Vérifier PM2
 pm2 status
 
-# Tester l'API directement
-curl http://localhost:3000/api/contact
-```
+# Voir les erreurs
+pm2 logs getyoursite --lines 50
 
-### Problème de build
-```bash
-# Nettoyer et rebuilder
-rm -rf .next/
-yarn build
+# Redémarrer si nécessaire
 pm2 restart getyoursite
 ```
 
-### Nginx ne redirige pas
+#### Nginx erreur 502 Bad Gateway
 ```bash
-# Tester la config Nginx
+# Vérifier que l'application répond sur le port 3000
+curl http://localhost:3000
+
+# Vérifier la configuration Nginx
 nginx -t
+
+# Voir les logs Nginx
+tail -f /var/log/nginx/error.log
+```
+
+#### Certificat SSL expiré
+```bash
+# Renouveler manuellement
+certbot renew --force-renewal
 
 # Redémarrer Nginx
 systemctl restart nginx
 ```
 
-## URLs d'Accès
+### Outils de debug
+```bash
+# Vérifier tous les ports ouverts
+netstat -tuln
 
-- **Site principal :** http://localhost:3000
-- **API de contact :** http://localhost:3000/api/contact
-- **Avec Nginx :** http://votre-ip-serveur
+# Vérifier les processus Node.js
+ps aux | grep node
 
-## Fonctionnalités
+# Tester la connectivité
+curl -I http://getyoursite.fr
+curl -I https://getyoursite.fr
 
-✅ **Site vitrine complet** avec sections Hero, Services, Portfolio, Contact  
-✅ **Formulaire de contact** avec validation et envoi d'emails  
-✅ **Design responsive** adaptatif mobile/desktop  
-✅ **Code ultra-simplifié** et stable  
-✅ **Déploiement PM2** robuste et fiable  
-✅ **Configuration minimale** facile à maintenir  
+# Vérifier l'utilisation des ressources
+top
+df -h
+free -h
+```
 
-## Support
+## 📞 Support
 
-Le code a été volontairement simplifié pour :
-- ❌ **Supprimer** toute la complexité inutile
-- ✅ **Garder** seulement les fonctionnalités essentielles  
-- ✅ **Assurer** une stabilité maximale
-- ✅ **Faciliter** la maintenance et le débogage
+En cas de problème, consultez dans l'ordre :
+1. **Script de diagnostic** : `./diagnostic-vps.sh`
+2. **Logs PM2** : `pm2 logs getyoursite`
+3. **Logs Nginx** : `/var/log/nginx/error.log`
+4. **Script de validation** : `./validate-getyoursite.sh`
+5. **État des services** : `pm2 status` et `systemctl status nginx`
 
-**Aucun script de maintenance complexe, aucun fichier de debug - juste l'essentiel qui fonctionne !**
+### Contacts d'urgence pour le VPS
+- Vérifier la connectivité réseau du serveur
+- Contacter l'hébergeur si problème d'infrastructure
+- Vérifier les paramètres DNS chez le registraire de domaine
+
+---
+
+**GetYourSite** - Solution simple et stable pour votre présence web professionnelle, maintenant optimisée pour VPS en production !
