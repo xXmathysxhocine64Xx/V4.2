@@ -175,11 +175,23 @@ frontend:
     file: "/app/deploy-vps.sh"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: true
           agent: "main"
-          comment: "Script deploy-vps.sh adapté avec menu interactif : choix entre getyoursite.fr, pizza.getyoursite.fr ou domaine personnalisé. Gestion automatique des noms de projet PM2 distincts selon domaine. Compatibilité maintenue avec déploiements existants."
+          comment: "Script deploy-vps.sh corrigé et amélioré : (1) Site principal getyoursite.fr obligatoire par défaut, (2) Pizza.getyoursite.fr optionnel avec question interactive, (3) Correction erreur Nginx limit_req_zone dans contexte http, (4) Configuration SSL pour un ou deux domaines selon choix, (5) Script fix-nginx.sh pour corriger erreurs existantes, (6) Guide complet de déploiement."
+
+  - task: "Script Correction Nginx"
+    implemented: true
+    working: true
+    file: "/app/fix-nginx.sh"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Script de correction automatique créé pour résoudre les erreurs de configuration Nginx existantes. Nettoie les configs problématiques et ajoute les zones rate limiting au bon endroit dans nginx.conf."
 
   - task: "Documentation Complète"
     implemented: true
