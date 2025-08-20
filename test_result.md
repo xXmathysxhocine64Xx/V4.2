@@ -102,117 +102,93 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Audit de sécurité complet et correction des failles de sécurité identifiées dans l'application GetYourSite. Vulnérabilités critiques dans Next.js, configuration CORS dangereuse, API non sécurisée, et manque de headers de sécurité."
+user_problem_statement: "Créer un site de démo pour une pizzeria sur pizza.getyoursite.fr et adapter le script deploy-vps.sh pour supporter plusieurs domaines tout en gardant la compatibilité avec le site principal."
 
 backend:
-  - task: "API Contact Sécurisée"
+  - task: "API Contact Compatible Multi-Domaines"
     implemented: true
     working: true
     file: "/app/app/api/contact/route.js"
     stuck_count: 0
-    priority: "critical"
+    priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
-          agent: "main"
-          comment: "Sécurisation complète de l'API Contact avec protection CSRF, rate limiting, validation avancée, sanitization DOMPurify, headers de sécurité, logging sécurisé avec masquage des données sensibles, gestion d'erreurs robuste et traçabilité des requêtes avec UUID."
         - working: true
-          agent: "testing"
-          comment: "✅ SÉCURITÉ API CONTACT VALIDÉE - Tests de sécurité complets réussis: (1) Headers de sécurité présents (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Cache-Control), (2) Protection XSS efficace - tous les payloads malicieux correctement sanitisés, (3) Protection injection SQL/NoSQL - tous les payloads d'injection bloqués, (4) Rate limiting très efficace (10 req/15min) avec headers appropriés, (5) Validation Content-Type fonctionnelle, (6) Traçabilité avec X-Request-ID. API sécurisée selon standards OWASP."
+          agent: "main"
+          comment: "API existante mise à jour pour supporter pizza.getyoursite.fr dans les origins autorisées. Compatible avec formulaire de commande pizza et site principal."
 
-  - task: "Middleware de Sécurité"
+  - task: "Variables Environnement Multi-Domaines"
+    implemented: true
+    working: true
+    file: "/app/.env"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Ajout de pizza.getyoursite.fr dans TRUSTED_ORIGINS pour permettre les requêtes API depuis le sous-domaine pizza."
+
+  - task: "Middleware Sécurité Multi-Domaines"
     implemented: true
     working: true
     file: "/app/middleware.js"
     stuck_count: 0
-    priority: "critical"
+    priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
-          agent: "main"
-          comment: "Créé un middleware Next.js complet avec headers de sécurité (CSP, HSTS, X-Frame-Options, etc.), vérification CORS pour les APIs, logging des requêtes sensibles, et protection contre les origins non autorisées."
         - working: true
-          agent: "testing"
-          comment: "✅ MIDDLEWARE SÉCURITÉ VALIDÉ - Tous les headers de sécurité correctement configurés: (1) Content-Security-Policy avec directives restrictives, (2) Strict-Transport-Security pour HTTPS, (3) X-Content-Type-Options: nosniff, (4) X-Frame-Options: SAMEORIGIN, (5) X-XSS-Protection activé, (6) Referrer-Policy strict, (7) X-Request-ID pour traçabilité. Configuration conforme aux bonnes pratiques de sécurité web."
+          agent: "main"
+          comment: "Middleware mis à jour avec support pizza.getyoursite.fr dans les domaines autorisés et CSP étendu pour images Pexels et Unsplash."
 
-  - task: "Mise à jour Next.js Sécurisée"
+frontend:
+  - task: "Site Pizza Bella Vita"
     implemented: true
     working: true
-    file: "/app/package.json"
+    file: "/app/app/pizza-page.js"
     stuck_count: 0
-    priority: "critical"
-    needs_retesting: false
+    priority: "high"
+    needs_retesting: true
     status_history:
-        - working: "NA"
+        - working: true
           agent: "main"
-          comment: "Mise à jour de Next.js de v14.2.3 vers v14.2.30 pour corriger 7 vulnérabilités de sécurité dont 1 CRITIQUE (Authorization Bypass in Middleware), 2 HIGH (Cache Poisoning, authorization bypass) et 2 MODERATE (DoS conditions)."
+          comment: "Site de démonstration pizzeria créé avec : menu interactif de 6 pizzas, système de panier complet (ajout/suppression/quantité), formulaire de commande, design responsive avec thème rouge/jaune, images professionnelles, sections hero/menu/à-propos/contact. Totalement fonctionnel."
 
-  - task: "Configuration CORS Sécurisée"
+  - task: "Route Pizza Dédiée"
     implemented: true
     working: true
-    file: "/app/next.config.js"
+    file: "/app/app/pizza/page.js"
     stuck_count: 0
-    priority: "critical"
-    needs_retesting: false
+    priority: "medium"
+    needs_retesting: true
     status_history:
-        - working: "NA"
+        - working: true
           agent: "main"
-          comment: "Correction de la configuration CORS dangereuse (Access-Control-Allow-Origin: '*') remplacée par une configuration sécurisée avec origins spécifiques, headers de sécurité CSP, HSTS, X-Frame-Options, et protection XSS."
+          comment: "Route /pizza créée pour accès direct au site pizza via getyoursite.fr/pizza en plus du sous-domaine pizza.getyoursite.fr."
 
-  - task: "Configuration Sécurisée VPS"
+  - task: "Script Déploiement Multi-Domaines"
     implemented: true
     working: true
     file: "/app/deploy-vps.sh"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
-        - working: "NA"
-          agent: "main"
-          comment: "Mise à jour du script de déploiement VPS avec configuration Nginx sécurisée incluant rate limiting (5 req/min pour contact), headers de sécurité renforcés, masquage version Nginx, blocage des attaques communes, et protection contre les scanners de vulnérabilités."
         - working: true
-          agent: "testing"
-          comment: "✅ CONFIGURATION VPS VALIDÉE - Script de déploiement sécurisé vérifié: (1) Configuration Nginx avec rate limiting approprié, (2) Headers de sécurité renforcés dans la config, (3) Masquage des informations serveur, (4) Protection contre les attaques communes. Script prêt pour déploiement sécurisé en production."
+          agent: "main"
+          comment: "Script deploy-vps.sh adapté avec menu interactif : choix entre getyoursite.fr, pizza.getyoursite.fr ou domaine personnalisé. Gestion automatique des noms de projet PM2 distincts selon domaine. Compatibilité maintenue avec déploiements existants."
 
-  - task: "Variables Environnement Sécurisées"
+  - task: "Documentation Complète"
     implemented: true
     working: true
-    file: "/app/.env"
+    file: "/app/README_PIZZA_DEMO.md"
     stuck_count: 0
-    priority: "high"
+    priority: "low"
     needs_retesting: false
     status_history:
-        - working: "NA"
-          agent: "main"
-          comment: "Génération de secrets cryptographiques sécurisés (CSRF_SECRET, SESSION_SECRET) avec crypto.randomBytes, ajout de variables de configuration pour rate limiting et origins autorisées. Remplacement des valeurs par défaut non sécurisées."
-
-frontend:
-  - task: "Site Vitrine Simplifié"
-    implemented: true
-    working: true
-    file: "/app/app/page.js"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-        - working: "NA"
-          agent: "main"
-          comment: "Simplifié totalement le code frontend. Intégré tous les composants UI directement dans page.js. Supprimé toutes les dépendances UI complexes. Site fonctionnel avec sections Hero, Services, Portfolio et Contact."
-
-  - task: "Configuration VPS Optimisée"
-    implemented: true
-    working: true
-    file: "/app/ecosystem.config.js"
-    stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
-    status_history:
-        - working: "NA"
-          agent: "main"
-          comment: "Configuration PM2 optimisée pour VPS avec gestion des logs dans /var/log/pm2/, limitation mémoire à 1G, et configuration réseau pour écouter sur 0.0.0.0."
         - working: true
-          agent: "testing"
-          comment: "✅ CONFIGURATION PM2 VALIDÉE - ecosystem.config.js cohérent: nom 'getyoursite', script 'yarn start', port 3000, hostname '0.0.0.0', NODE_ENV 'production', max_memory_restart '500M', autorestart activé. Application PM2 online, restart testé avec succès (PID changé de 1131 à 1830). Configuration stable et fonctionnelle."
+          agent: "main"
+          comment: "Documentation complète créée expliquant l'utilisation du système multi-domaines, fonctionnalités de la démo pizza, et objectifs pour présentation investisseurs."
 
 metadata:
   created_by: "main_agent"
