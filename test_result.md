@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "L'utilisateur avait des problèmes avec son site GetYourSite qui ne fonctionnait pas correctement sur son VPS avec le domaine getyoursite.fr. Il demandait une solution pour le déploiement sur VPS avec configuration complète incluant Nginx, SSL et diagnostic des problèmes."
+user_problem_statement: "Audit de sécurité complet et correction des failles de sécurité identifiées dans l'application GetYourSite. Vulnérabilités critiques dans Next.js, configuration CORS dangereuse, API non sécurisée, et manque de headers de sécurité."
 
 backend:
   - task: "API Contact Simplifiée"
