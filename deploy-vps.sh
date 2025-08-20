@@ -36,8 +36,42 @@ if [[ ! -f "package.json" || ! -f "next.config.js" ]]; then
     exit 1
 fi
 
+# Sélection du domaine
+echo -e "${BLUE}🌐 Sélection du domaine de déploiement${NC}"
+echo "Domaines disponibles :"
+echo "1) getyoursite.fr (site principal)"
+echo "2) pizza.getyoursite.fr (démo pizzeria)"
+echo "3) Autre domaine (personnalisé)"
+echo ""
+read -p "Choisissez votre option (1-3): " domain_choice
+
+case $domain_choice in
+    1)
+        DOMAIN="getyoursite.fr"
+        DEPLOY_TYPE="main"
+        echo -e "${GREEN}✅ Déploiement du site principal GetYourSite${NC}"
+        ;;
+    2)
+        DOMAIN="pizza.getyoursite.fr"
+        DEPLOY_TYPE="pizza"
+        echo -e "${GREEN}✅ Déploiement de la démo pizzeria${NC}"
+        ;;
+    3)
+        read -p "Entrez le domaine personnalisé: " custom_domain
+        DOMAIN="$custom_domain"
+        DEPLOY_TYPE="custom"
+        echo -e "${GREEN}✅ Déploiement sur domaine personnalisé: $DOMAIN${NC}"
+        ;;
+    *)
+        echo -e "${YELLOW}Option non reconnue, utilisation du domaine par défaut: $DEFAULT_DOMAIN${NC}"
+        DOMAIN="$DEFAULT_DOMAIN"
+        DEPLOY_TYPE="main"
+        ;;
+esac
+
 echo -e "${BLUE}📍 Répertoire du projet: ${PROJECT_DIR}${NC}"
-echo -e "${BLUE}🌐 Domaine: ${DOMAIN}${NC}"
+echo -e "${BLUE}🌐 Domaine de déploiement: ${DOMAIN}${NC}"
+echo -e "${BLUE}🎯 Type de déploiement: ${DEPLOY_TYPE}${NC}"
 
 # 1. Mise à jour du système
 echo -e "${BLUE}🔄 Mise à jour du système...${NC}"
