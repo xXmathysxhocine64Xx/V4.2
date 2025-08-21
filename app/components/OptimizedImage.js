@@ -153,7 +153,8 @@ const OptimizedImage = ({
         loading={priority ? "eager" : loading}
         onLoad={handleLoad}
         onError={handleError}
-        className={`${fade ? (isLoading ? 'opacity-0' : 'opacity-100') : 'opacity-100'} transition-opacity duration-300 w-full h-full object-cover`}
+        className={`transition-opacity duration-300 w-full h-full object-cover ${fade ? '' : ''}`}
+        style={{ opacity: isLoading ? 0 : 1, ...(props.style || {}) }}
         {...props}
       />
     </div>
