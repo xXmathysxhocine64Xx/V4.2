@@ -99,6 +99,16 @@ export default function MenuPage() {
   // Menu des pizzas Lucky Pizza Lannilis avec images optimisées
   const pizzaMenu = [
     {
+      id: 0,
+      package_id: 'test_free',
+      name: "🎁 Pizza Test Gratuite",
+      description: "Pizza de démonstration pour tester le système de commande - 100% gratuite !",
+      price: 0.00,
+      image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=224&fit=crop&crop=entropy&cs=srgb&fm=webp&q=85&blend=F97316&blend-mode=multiply&blend-alpha=10",
+      isTest: true,
+      testBadge: "TEST GRATUIT"
+    },
+    {
       id: 1,
       package_id: 'margherita',
       name: "Margherita Authentique",
