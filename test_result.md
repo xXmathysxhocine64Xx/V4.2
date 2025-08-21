@@ -316,6 +316,18 @@ frontend:
           agent: "main"
           comment: "Documentation complète mise à jour : (1) README_PIZZA_DEMO.md avec fonctionnalités pizza et mairie détaillées, (2) GUIDE_DEPLOIEMENT_PIZZA.md avec instructions pas-à-pas pour déploiement triple domaine et dépannage, (3) Explications pour présentation investisseurs avec exemples concrets de sites sectoriels."
 
+  - task: "Outils Validation et Configuration Stripe"
+    implemented: true
+    working: true
+    file: "/app/validate-pizza-config.sh, /app/GUIDE_STRIPE_PIZZA.md"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Création d'outils complets pour la validation et configuration Stripe : (1) Script validate-pizza-config.sh qui teste automatiquement APIs contact/paiement, configuration Stripe, pages pizza et MongoDB, (2) Guide détaillé GUIDE_STRIPE_PIZZA.md avec instructions complètes pour configuration Stripe, obtention des clés, configuration webhook, tests et dépannage, (3) Documentation des 6 pizzas prédéfinies avec prix fixes, (4) Instructions pour modes test/production et cartes de test, (5) Commandes de monitoring et debugging. Outils prêts pour faciliter la configuration Stripe par les utilisateurs."
+
 metadata:
   created_by: "main_agent"
   version: "4.0"
