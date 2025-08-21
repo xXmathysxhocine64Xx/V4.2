@@ -210,6 +210,9 @@ frontend:
         - working: true
           agent: "main"
           comment: "✅ CORRECTION SYNTAXE - Erreur de syntaxe 'unexpected end of file' corrigée à la ligne 448. Le problème était un EOF mal formaté dans la section de configuration Nginx (${REDIRECTIONS}EOF au lieu de ${REDIRECTIONS} + nouvelle ligne + EOF). Scripts obsolètes supprimés (deploy-vps.sh, deploy-simple.sh, fix-nginx-condition.sh, fix-nginx.sh). Script maintenant syntaxiquement correct et prêt pour l'utilisation."
+        - working: true
+          agent: "main"
+          comment: "✅ PROBLÈME RUNTIME RÉSOLU - L'erreur 'unexpected end of file' n'était pas une erreur de syntaxe mais un problème d'exécution interactive. Les commandes 'read' attendaient indéfiniment une saisie utilisateur. Solution: ajout de timeouts (-t 30) et valeurs par défaut pour tous les prompts interactifs. Script fonctionne maintenant en mode interactif et non-interactif. Version automatique deploy-vps-auto.sh créée pour déploiements sans intervention."
 
   - task: "Script Correction Nginx Complet"
     implemented: true
