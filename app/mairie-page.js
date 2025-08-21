@@ -20,7 +20,13 @@ import {
   X,
   Menu as MenuIcon,
   AlertCircle,
-  CheckCircle
+  CheckCircle,
+  Sparkles,
+  Zap,
+  Shield,
+  Globe,
+  Cpu,
+  Layers
 } from 'lucide-react'
 
 // Composants UI simples
