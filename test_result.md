@@ -369,12 +369,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Site Mairie de Brest"
-    - "Route Mairie Dédiée"
-    - "Script Déploiement Multi-Domaines Complet"
-  stuck_tasks: []
-  test_all: true
-  test_priority: "high_first"
+    - "API Contact Compatible Multi-Domaines"
+  stuck_tasks:
+    - "API Contact Compatible Multi-Domaines"
+  test_all: false
+  test_priority: "stuck_first"
 
 agent_communication:
     - agent: "main"
