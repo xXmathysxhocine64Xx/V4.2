@@ -34,7 +34,7 @@ export default function ActualitesRefonte() {
     { name: 'Contact', href: '/mairie/contact' },
   ]
 
-  // Remplacement des URLs 404 par des URLs valides Unsplash
+  // URLs validées (200) pour les vignettes d'articles
   const articles = [
     { tag: 'Culture', title: 'Exposition estivale au Musée des Beaux-Arts', excerpt: 'Un été sous le signe de la création…', date: '12 juillet', href: '#', img: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f' },
     { tag: 'Travaux', title: 'Réaménagement du centre – phases et déviations', excerpt: 'Point d’étape et circulation…', date: '20 juillet', href: '#', img: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e' },
