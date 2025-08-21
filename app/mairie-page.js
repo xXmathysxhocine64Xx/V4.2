@@ -275,36 +275,47 @@ export default function MairiePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white/95 backdrop-blur-md border-b border-blue-200 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-violet-900 relative overflow-hidden">
+      {/* Fond animé avec particules */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-cyan-600/20"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      {/* Navigation futuriste */}
+      <nav className="relative z-50 bg-white/10 backdrop-blur-xl border-b border-white/20 sticky top-0">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <Building2 className="w-8 h-8 text-blue-600" />
+            <div className="flex items-center space-x-4">
+              <div className="p-2 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600">
+                <Building2 className="w-8 h-8 text-white" />
+              </div>
               <div>
-                <div className="text-xl font-bold text-blue-800">Ville de Brest</div>
-                <div className="text-xs text-gray-600">Finistère - Bretagne</div>
+                <div className="text-xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                  Ville de Brest
+                </div>
+                <div className="text-xs text-blue-200">Smart City • Finistère</div>
               </div>
             </div>
             
             <div className="hidden md:flex space-x-8">
-              <a href="#accueil" className="text-gray-600 hover:text-blue-600 transition-colors">Accueil</a>
-              <a href="#services" className="text-gray-600 hover:text-blue-600 transition-colors">Services</a>
-              <a href="#actualites" className="text-gray-600 hover:text-blue-600 transition-colors">Actualités</a>
-              <a href="#demarches" className="text-gray-600 hover:text-blue-600 transition-colors">Démarches</a>
-              <a href="#contact" className="text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+              <a href="#accueil" className="text-white/80 hover:text-white transition-colors hover:scale-105 transform duration-300">Accueil</a>
+              <a href="#services" className="text-white/80 hover:text-white transition-colors hover:scale-105 transform duration-300">Services</a>
+              <a href="#actualites" className="text-white/80 hover:text-white transition-colors hover:scale-105 transform duration-300">Actualités</a>
+              <a href="#demarches" className="text-white/80 hover:text-white transition-colors hover:scale-105 transform duration-300">Démarches</a>
+              <a href="#contact" className="text-white/80 hover:text-white transition-colors hover:scale-105 transform duration-300">Contact</a>
             </div>
 
             <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Espace Citoyen
+              <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/10">
+                <Sparkles className="w-4 h-4 mr-2" />
+                Espace Digital
               </Button>
 
               <Button 
                 variant="ghost" 
-                className="md:hidden"
+                className="md:hidden text-white hover:bg-white/10"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? <X /> : <MenuIcon />}
@@ -313,63 +324,81 @@ export default function MairiePage() {
           </div>
 
           {isMenuOpen && (
-            <div className="md:hidden mt-4 space-y-2 border-t border-gray-200 pt-4">
-              <a href="#accueil" className="block py-2 text-gray-600 hover:text-blue-600">Accueil</a>
-              <a href="#services" className="block py-2 text-gray-600 hover:text-blue-600">Services</a>
-              <a href="#actualites" className="block py-2 text-gray-600 hover:text-blue-600">Actualités</a>
-              <a href="#demarches" className="block py-2 text-gray-600 hover:text-blue-600">Démarches</a>
-              <a href="#contact" className="block py-2 text-gray-600 hover:text-blue-600">Contact</a>
+            <div className="md:hidden mt-6 space-y-4 border-t border-white/20 pt-6">
+              <a href="#accueil" className="block py-3 text-white/80 hover:text-white">Accueil</a>
+              <a href="#services" className="block py-3 text-white/80 hover:text-white">Services</a>
+              <a href="#actualites" className="block py-3 text-white/80 hover:text-white">Actualités</a>
+              <a href="#demarches" className="block py-3 text-white/80 hover:text-white">Démarches</a>
+              <a href="#contact" className="block py-3 text-white/80 hover:text-white">Contact</a>
             </div>
           )}
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section id="accueil" className="py-20 px-4">
-        <div className="container mx-auto text-center max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 text-left">
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-800 leading-tight">
-                Bienvenue à
-                <span className="text-blue-600 block">Brest</span>
-              </h1>
-              <p className="text-xl text-gray-600 max-w-lg">
-                Votre ville maritime au cœur de la Bretagne. Découvrez nos services 
-                municipaux, actualités et démarches en ligne pour faciliter votre quotidien.
-              </p>
+      {/* Hero Section Futuriste */}
+      <section id="accueil" className="relative py-24 px-6">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <div className="space-y-6">
+                <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/80 text-sm">
+                  <Zap className="w-4 h-4 mr-2" />
+                  Ville Intelligente • Version 2025
+                </div>
+                
+                <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+                  <span className="bg-gradient-to-r from-white via-blue-200 to-cyan-300 bg-clip-text text-transparent">
+                    Brest
+                  </span>
+                  <br />
+                  <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    Digital City
+                  </span>
+                </h1>
+                
+                <p className="text-xl text-blue-100 max-w-lg leading-relaxed">
+                  Découvrez la première ville intelligente de Bretagne. Services municipaux connectés, 
+                  IA intégrée et expérience citoyenne révolutionnaire.
+                </p>
+              </div>
+              
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                  <a href="#services">Nos Services</a>
+                <Button size="lg" variant="futuristic" className="group">
+                  <Sparkles className="w-5 h-5 mr-2 group-hover:rotate-180 transition-transform duration-500" />
+                  Explorer les Services
                 </Button>
-                <Button size="lg" variant="outline">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Prendre RDV
+                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                  <Calendar className="w-5 h-5 mr-2" />
+                  Assistant IA
                 </Button>
               </div>
               
-              <div className="grid grid-cols-3 gap-6 pt-8">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">140 000</div>
-                  <div className="text-sm text-gray-600">Habitants</div>
+              <div className="grid grid-cols-3 gap-8 pt-8">
+                <div className="text-center space-y-2">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">140K+</div>
+                  <div className="text-sm text-blue-200">Citoyens connectés</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">24h/7j</div>
-                  <div className="text-sm text-gray-600">Services urgents</div>
+                <div className="text-center space-y-2">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent">24/7</div>
+                  <div className="text-sm text-blue-200">Services IA</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">100%</div>
-                  <div className="text-sm text-gray-600">Démat. progressif</div>
+                <div className="text-center space-y-2">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">100%</div>
+                  <div className="text-sm text-blue-200">Smart Services</div>
                 </div>
               </div>
             </div>
             
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-2xl transform rotate-3"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
-                alt="Port de Brest"
-                className="relative rounded-2xl shadow-2xl w-full h-96 object-cover"
-              />
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-3xl blur-2xl"></div>
+                <img 
+                  src="https://images.unsplash.com/photo-1549791084-5f78368b208b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmV8ZW58MHx8fGJsdWV8MTc1NTc3MzIxN3ww&ixlib=rb-4.1.0&q=85"
+                  alt="Brest Smart City"
+                  className="relative rounded-3xl shadow-2xl w-full h-96 object-cover border border-white/20"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent rounded-3xl"></div>
+              </div>
             </div>
           </div>
         </div>
