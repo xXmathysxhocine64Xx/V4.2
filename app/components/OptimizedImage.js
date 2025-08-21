@@ -10,7 +10,7 @@ import { Loader2 } from 'lucide-react'
  * - WebP si possible
  * - Gestion d'erreur
  * - Placeholder
- * - Sécurisation du rendu: détecte l'état "complete" pour éviter les images qui restent transparentes
+ * - Sécurisation du rendu: check "complete" + IntersectionObserver pour éviter les images qui restent transparentes
  */
 const OptimizedImage = ({ 
   src, 
@@ -21,16 +21,16 @@ const OptimizedImage = ({
   priority = false,
   loading = "lazy",
   quality = 75,
-  fade = true, // contrôle la transition d'opacité
+  fade = true,
   ...props 
 }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [optimizedSrc, setOptimizedSrc] = useState('')
   const imgRef = useRef(null)
+  const observerRef = useRef(null)
 
   useEffect(() => {
-    // Optimiser l'URL
     const optimizeImageUrl = (originalSrc) => {
       try {
         const url = new URL(originalSrc)
@@ -63,8 +63,7 @@ const OptimizedImage = ({
     }
   }, [src, width, height, quality])
 
-  // Sécurisation: si l'évènement onLoad est manqué (cache, lazy, timing),
-  // vérifier l'état complete de l'élément image et basculer en affichage
+  // Vérif "complete" immédiate + retardée
   useEffect(() => {
     if (!imgRef.current) return
     let cancelled = false
@@ -73,12 +72,42 @@ const OptimizedImage = ({
         if (!cancelled) setIsLoading(false)
       }
     }
-    // vérif immédiate + recheck après un court délai
+    // première passe + rechecks
     checkComplete()
-    const t = setTimeout(checkComplete, 300)
+    const t1 = setTimeout(checkComplete, 300)
     const t2 = setTimeout(checkComplete, 800)
-    return () => { cancelled = true; clearTimeout(t); clearTimeout(t2) }
+    const t3 = setTimeout(checkComplete, 1500)
+    return () => { cancelled = true; clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
   }, [optimizedSrc])
+
+  // IntersectionObserver: quand l'image entre dans le viewport, revérifier l'état
+  useEffect(() => {
+    if (!imgRef.current) return
+    if (priority || loading === 'eager') return // pas nécessaire pour les images prioritaires
+
+    if (observerRef.current) {
+      observerRef.current.disconnect()
+      observerRef.current = null
+    }
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      const entry = entries[0]
+      if (entry && entry.isIntersecting) {
+        // attendre le prochain frame pour laisser le navigateur mettre à jour "complete"
+        requestAnimationFrame(() => {
+          if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
+            setIsLoading(false)
+          }
+        })
+      }
+    }, { rootMargin: '200px' })
+
+    observerRef.current.observe(imgRef.current)
+
+    return () => {
+      if (observerRef.current) observerRef.current.disconnect()
+    }
+  }, [priority, loading, optimizedSrc])
 
   const handleLoad = () => {
     setIsLoading(false)
@@ -90,7 +119,6 @@ const OptimizedImage = ({
     setHasError(true)
   }
 
-  // Placeholder pendant chargement
   const showPlaceholder = isLoading && !hasError
 
   return (
