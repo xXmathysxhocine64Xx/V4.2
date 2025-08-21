@@ -122,92 +122,119 @@ export default function MairiePage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
 
-  // Services municipaux
+  // Services municipaux avec nouveau design futuriste
   const services = [
     {
       id: 1,
       title: "État Civil",
       description: "Actes de naissance, mariage, décès, PACS, légalisations",
-      icon: <FileText className="w-6 h-6" />,
-      color: "bg-blue-500",
+      icon: <FileText className="w-7 h-7" />,
+      gradient: "from-blue-500 to-blue-600",
       link: "#services"
     },
     {
       id: 2,
       title: "Urbanisme",
       description: "Permis de construire, déclarations de travaux, PLU",
-      icon: <Building2 className="w-6 h-6" />,
-      color: "bg-green-500",
+      icon: <Building2 className="w-7 h-7" />,
+      gradient: "from-green-500 to-emerald-600",
       link: "#services"
     },
     {
       id: 3,
       title: "Social & Famille",
       description: "CCAS, aide sociale, logement, petite enfance",
-      icon: <Heart className="w-6 h-6" />,
-      color: "bg-rose-500",
+      icon: <Heart className="w-7 h-7" />,
+      gradient: "from-rose-500 to-pink-600",
       link: "#services"
     },
     {
       id: 4,
       title: "Éducation",
       description: "Inscriptions scolaires, cantine, activités périscolaires",
-      icon: <GraduationCap className="w-6 h-6" />,
-      color: "bg-amber-500",
+      icon: <GraduationCap className="w-7 h-7" />,
+      gradient: "from-amber-500 to-orange-600",
       link: "#services"
     },
     {
       id: 5,
       title: "Culture & Sport",
       description: "Bibliothèque, associations, équipements sportifs",
-      icon: <Users className="w-6 h-6" />,
-      color: "bg-purple-500",
+      icon: <Users className="w-7 h-7" />,
+      gradient: "from-purple-500 to-violet-600",
       link: "#services"
     },
     {
       id: 6,
       title: "Environnement",
       description: "Collecte des déchets, espaces verts, développement durable",
-      icon: <TreePine className="w-6 h-6" />,
-      color: "bg-emerald-500",
+      icon: <TreePine className="w-7 h-7" />,
+      gradient: "from-emerald-500 to-green-600",
       link: "#services"
     }
   ]
 
-  // Actualités
+  // Nouvelles actualités avec design moderne
   const actualites = [
     {
       id: 1,
-      title: "Nouvelle ligne de bus écologique",
-      date: "15 Janvier 2024",
-      category: "Transport",
-      description: "Mise en service d'une ligne de bus électrique reliant le centre-ville au port de commerce.",
-      image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
+      title: "Intelligence Artificielle au service des citoyens",
+      date: "15 Janvier 2025",
+      category: "Innovation",
+      description: "Déploiement d'un assistant virtuel IA pour simplifier vos démarches administratives 24h/7j.",
+      image: "https://images.unsplash.com/photo-1651589090232-215dee24a48b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwyfHxkaWdpdGFsJTIwZ292ZXJubWVudHxlbnwwfHx8Ymx1ZXwxNzU1NzczMjIyfDA&ixlib=rb-4.1.0&q=85",
+      badge: "bg-gradient-to-r from-violet-600 to-purple-600 text-white"
     },
     {
       id: 2,
-      title: "Rénovation du centre culturel",
-      date: "10 Janvier 2024",
-      category: "Culture",
-      description: "Lancement des travaux de modernisation du centre culturel avec une réouverture prévue en septembre.",
-      image: "https://images.unsplash.com/photo-1567696911980-2eed69a46042?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+      title: "Smart City : Brest 2030 en marche",
+      date: "10 Janvier 2025",
+      category: "Technologie",
+      description: "Lancement du projet de ville intelligente avec capteurs IoT et gestion prédictive des services urbains.",
+      image: "https://images.unsplash.com/photo-1512364615838-8088a04a778b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwyfHxmdXR1cmlzdGljJTIwY2l0eXxlbnwwfHx8Ymx1ZXwxNzU1NzczMjEyfDA&ixlib=rb-4.1.0&q=85",
+      badge: "bg-gradient-to-r from-cyan-600 to-blue-600 text-white"
     },
     {
       id: 3,
-      title: "Concours jeunes entrepreneurs",
-      date: "5 Janvier 2024",
-      category: "Économie",
-      description: "Candidatures ouvertes pour le concours d'aide à la création d'entreprise destiné aux jeunes brestois.",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
+      title: "Mobilité verte : vélos électroniques partagés",
+      date: "5 Janvier 2025",
+      category: "Environnement",
+      description: "Nouveau service de vélos électriques en libre-service avec stations intelligentes dans toute la métropole.",
+      image: "https://images.unsplash.com/photo-1602660798203-714912a9e79a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwzfHxmdXR1cmlzdGljJTIwY2l0eXxlbnwwfHx8Ymx1ZXwxNzU1NzczMjEyfDA&ixlib=rb-4.1.0&q=85",
+      badge: "bg-gradient-to-r from-green-600 to-emerald-600 text-white"
     }
   ]
 
-  // Démarches en ligne
+  // Démarches modernisées avec nouvelles technologies
   const demarches = [
-    { title: "Demande d'acte de naissance", status: "available", description: "Obtenez votre acte en ligne" },
-    { title: "Inscription scolaire", status: "available", description: "Inscrivez votre enfant pour la rentrée" },
-    { title: "Déclaration de travaux", status: "coming", description: "Bientôt disponible en ligne" },
-    { title: "Demande de logement social", status: "available", description: "Déposez votre dossier" }
+    { 
+      title: "Assistant IA - Démarches", 
+      status: "available", 
+      description: "Notre IA vous guide pas à pas",
+      icon: <Cpu className="w-5 h-5" />,
+      tech: true
+    },
+    { 
+      title: "Blockchain - Identité numérique", 
+      status: "available", 
+      description: "Sécurité maximale garantie",
+      icon: <Shield className="w-5 h-5" />,
+      tech: true
+    },
+    { 
+      title: "AR - Visite virtuelle services", 
+      status: "coming", 
+      description: "Réalité augmentée bientôt disponible",
+      icon: <Layers className="w-5 h-5" />,
+      tech: true
+    },
+    { 
+      title: "API Citoyenne - Intégration", 
+      status: "available", 
+      description: "Connectez vos apps favorites",
+      icon: <Globe className="w-5 h-5" />,
+      tech: true
+    }
   ]
 
   const handleContactSubmit = async (e) => {
