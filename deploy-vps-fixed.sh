@@ -524,6 +524,9 @@ if [[ -f /etc/letsencrypt/live/${DOMAIN}/fullchain.pem ]]; then
     echo -e "${GREEN}🔒 SSL activé: https://${DOMAIN}${NC}"
     if [[ "$DEPLOY_PIZZA" == "true" ]]; then
         echo -e "${GREEN}🔒 SSL pizza: https://pizza.getyoursite.fr${NC}"
+        if [[ "$CONFIGURE_STRIPE" == "true" ]]; then
+            echo -e "${BLUE}💳 Webhook Stripe sécurisé: https://pizza.getyoursite.fr/api/webhook/stripe${NC}"
+        fi
     fi
     if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
         echo -e "${GREEN}🔒 SSL mairie: https://mairie.getyoursite.fr${NC}"
