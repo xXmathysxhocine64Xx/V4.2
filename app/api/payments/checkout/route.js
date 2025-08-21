@@ -14,6 +14,25 @@ export async function POST(request) {
     const protocol = request.headers.get('x-forwarded-proto') || 'https'
     const origin_url = `${protocol}://${host}`
     
+    // Handle test free pizza without going through Stripe
+    if (package_id === 'test_free') {
+      const fakeSessionId = `cs_test_free_${Date.now()}_${Math.random().toString(36).substr(2, 8)}`
+      
+      // Build success URL for test pizza
+      const success_url = `${origin_url}/pizza/success?session_id=${fakeSessionId}`
+      
+      return NextResponse.json({
+        session_id: fakeSessionId,
+        url: success_url,
+        amount: 0.00,
+        currency: 'EUR',
+        pizza_name: 'Pizza Test Gratuite (Démo)',
+        status: 'test_success',
+        message: 'Pizza gratuite - commande confirmée automatiquement!',
+        is_test: true
+      })
+    }
+    
     const payload = {
       package_id,
       origin_url,
