@@ -113,7 +113,7 @@ const OptimizedImage = ({
     return () => { if (observerRef.current) observerRef.current.disconnect() }
   }, [priority, loading, optimizedSrc])
 
-  const handleLoad = () => { setIsLoading(false); setHasError(false) }
+  const handleLoad = () => { setIsLoading(false); setHasError(false); if (imgRef.current) { imgRef.current.classList.add('loaded') } }
   const handleError = () => { setIsLoading(false); setHasError(true) }
 
   const showPlaceholder = isLoading && !hasError
