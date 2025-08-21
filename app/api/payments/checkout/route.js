@@ -49,6 +49,7 @@ async def create_checkout():
         
         # Define fixed packages (SECURITY: amounts defined on backend only)
         PACKAGES = {
+            'test_free': {'amount': 0.00, 'name': 'Pizza Test Gratuite (Démo)', 'is_test': True},
             'small_pizza': {'amount': 12.90, 'name': 'Pizza Petite'},
             'medium_pizza': {'amount': 16.90, 'name': 'Pizza Moyenne'}, 
             'large_pizza': {'amount': 19.90, 'name': 'Pizza Grande'},
