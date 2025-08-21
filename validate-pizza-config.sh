@@ -76,6 +76,33 @@ else
     echo -e "${RED}❌ Fichier .env non trouvé${NC}"
 fi
 
+# Test configuration Email
+echo -e "\n${BLUE}3.1. Vérification Configuration Email${NC}"
+if [ -f ".env" ]; then
+    if grep -q "GMAIL_USER=" .env && ! grep -q "GMAIL_USER=votre-email@gmail.com" .env; then
+        echo -e "${GREEN}✅ Adresse Gmail configurée${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Adresse Gmail utilise la valeur par défaut${NC}"
+    fi
+    
+    if grep -q "GMAIL_APP_PASSWORD=" .env && ! grep -q "GMAIL_APP_PASSWORD=votre-mot-de-passe-app" .env; then
+        echo -e "${GREEN}✅ Mot de passe Gmail configuré${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Mot de passe Gmail utilise la valeur par défaut${NC}"
+    fi
+    
+    # Test d'envoi d'email si configuré
+    if grep -q "GMAIL_USER=" .env && ! grep -q "votre-email@gmail.com" .env; then
+        if curl -s -X POST -H "Content-Type: application/json" \
+           -d '{"name":"Test Config","email":"test@example.com","subject":"Test Configuration","message":"Test automatique de validation"}' \
+           http://localhost:3000/api/contact | grep -q "success" 2>/dev/null; then
+            echo -e "${GREEN}✅ Test d'envoi email réussi${NC}"
+        else
+            echo -e "${YELLOW}⚠️  Test d'envoi email échoué - vérifiez les paramètres Gmail${NC}"
+        fi
+    fi
+fi
+
 # Test des pages pizza
 echo -e "\n${BLUE}4. Test Pages Pizza${NC}"
 if curl -s -f http://localhost:3000/pizza > /dev/null 2>&1; then
