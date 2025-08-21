@@ -510,6 +510,11 @@ echo -e "${BLUE}===========================================${NC}"
 echo -e "${GREEN}🌐 Site principal: http://${DOMAIN}${NC}"
 if [[ "$DEPLOY_PIZZA" == "true" ]]; then
     echo -e "${GREEN}🍕 Site pizza: http://pizza.getyoursite.fr${NC}"
+    if [[ "$CONFIGURE_STRIPE" == "true" ]]; then
+        echo -e "${GREEN}💳 Paiements Stripe: Configurés${NC}"
+        echo -e "${BLUE}   • URL webhook: https://pizza.getyoursite.fr/api/webhook/stripe${NC}"
+        echo -e "${BLUE}   • Menu pizzas: 6 pizzas prédéfinies avec paiement en ligne${NC}"
+    fi
 fi
 if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
     echo -e "${GREEN}🏛️ Site mairie: http://mairie.getyoursite.fr${NC}"
