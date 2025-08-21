@@ -361,6 +361,14 @@ export default function MenuPage() {
                   </div>
                 )}
                 
+                {pizza.isTest && (
+                  <div className="absolute top-4 right-4 z-10">
+                    <Badge className="bg-green-500 text-white shadow-md animate-pulse">
+                      🎁 {pizza.testBadge}
+                    </Badge>
+                  </div>
+                )}
+                
                 <div className="relative h-56 overflow-hidden">
                   {/* Image optimisée avec lazy loading intelligent */}
                   <OptimizedImage
