@@ -558,7 +558,15 @@ echo "• certbot renew --dry-run - Tester le renouvellement SSL"
 echo -e "\n${GREEN}✅ Votre site GetYourSite est maintenant en ligne!${NC}"
 if [[ "$DEPLOY_PIZZA" == "true" ]]; then
     echo -e "${GREEN}✅ Votre démo Pizza Bella Vita est également disponible!${NC}"
+    if [[ "$CONFIGURE_STRIPE" == "true" ]]; then
+        echo -e "${BLUE}💳 Paiements Stripe configurés - testez avec le menu pizza${NC}"
+    fi
 fi
 if [[ "$DEPLOY_MAIRIE" == "true" ]]; then
     echo -e "${GREEN}✅ Votre démo Mairie de Brest est également disponible!${NC}"
+fi
+
+if [[ "$DEPLOY_PIZZA" == "true" ]]; then
+    echo -e "\n${BLUE}🧪 Pour valider la configuration pizza/stripe:${NC}"
+    echo "cd ${PROJECT_DIR} && ./validate-pizza-config.sh"
 fi
