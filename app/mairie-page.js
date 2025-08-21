@@ -404,38 +404,69 @@ export default function MairiePage() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-20 px-4 bg-white">
-        <div className="container mx-auto max-w-6xl">
+      {/* Services Section Futuriste */}
+      <section id="services" className="relative py-24 px-6">
+        <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Nos Services Municipaux
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-blue-200 text-sm mb-6">
+              <Cpu className="w-4 h-4 mr-2" />
+              Services Municipaux Intelligents
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                Technologies au Service
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                des Citoyens
+              </span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Découvrez l'ensemble de nos services pour vous accompagner dans vos démarches administratives
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Découvrez nos services municipaux modernisés par l'IA et les technologies émergentes
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
             {services.map((service) => (
-              <Card key={service.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer">
-                <CardHeader className="pb-4">
-                  <div className={`${service.color} text-white p-3 rounded-lg w-fit mb-4 group-hover:scale-110 transition-transform`}>
+              <Card key={service.id} className="group cursor-pointer relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <CardHeader className="relative z-10">
+                  <div className={`bg-gradient-to-r ${service.gradient} text-white p-4 rounded-2xl w-fit mb-4 group-hover:scale-110 transition-all duration-500 shadow-lg`}>
                     {service.icon}
                   </div>
-                  <CardTitle className="text-lg flex items-center justify-between">
+                  <CardTitle className="text-xl mb-3 group-hover:scale-105 transition-transform duration-300">
                     {service.title}
-                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
                   </CardTitle>
-                  <p className="text-gray-600 text-sm leading-relaxed">{service.description}</p>
+                  <p className="text-gray-600 leading-relaxed mb-4">{service.description}</p>
                 </CardHeader>
                 <CardContent>
-                  <Button variant="ghost" className="w-full justify-start p-0 h-auto">
+                  <Button variant="ghost" className="w-full justify-between group-hover:bg-blue-50 transition-colors">
                     Accéder au service
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* Statistiques avancées */}
+          <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
+              <div className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-2">98%</div>
+              <div className="text-blue-200 text-sm">Satisfaction IA</div>
+            </div>
+            <div className="text-center p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
+              <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">50ms</div>
+              <div className="text-blue-200 text-sm">Temps réponse</div>
+            </div>
+            <div className="text-center p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
+              <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent mb-2">24/7</div>
+              <div className="text-blue-200 text-sm">Disponibilité</div>
+            </div>
+            <div className="text-center p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
+              <div className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent mb-2">100K+</div>
+              <div className="text-blue-200 text-sm">Requêtes/jour</div>
+            </div>
           </div>
         </div>
       </section>
