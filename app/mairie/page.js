@@ -1,5 +1,5 @@
-import MairiePage from '../mairie-page'
+import { redirect } from 'next/navigation'
 
 export default function MairieRoute() {
-  return <MairiePage />
+  redirect('/mairie/accueil')
 }
