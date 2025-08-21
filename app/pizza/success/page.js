@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Check, Loader2, ChefHat, Clock, MapPin, ArrowLeft } from 'lucide-react'
+import { Check, Loader2, ChefHat, Clock, MapPin, ArrowLeft, X } from 'lucide-react'
 import Link from 'next/link'
 
 const Button = ({ children, className = "", variant = "default", size = "default", onClick, href }) => {
