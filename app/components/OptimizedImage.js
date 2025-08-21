@@ -54,24 +54,28 @@ const OptimizedImage = ({
     }
   }, [src, width, height, quality])
 
-  // Vérif "complete" immédiate + retardée + polling court (anti-placeholder bloqué)
+  // Vérif "complete" immédiate + retardée + polling
   useEffect(() => {
     if (!imgRef.current) return
     let cancelled = false
 
+    const markLoaded = () => {
+      if (cancelled) return
+      setIsLoading(false)
+      if (imgRef.current) imgRef.current.classList.add('loaded')
+    }
+
     const checkComplete = () => {
       if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
-        if (!cancelled) setIsLoading(false)
+        markLoaded()
       }
     }
 
-    // passes différées
     const t1 = setTimeout(checkComplete, 100)
     const t2 = setTimeout(checkComplete, 300)
     const t3 = setTimeout(checkComplete, 800)
     const t4 = setTimeout(checkComplete, 1500)
 
-    // polling 2s max
     let ticks = 0
     const int = setInterval(() => {
       checkComplete()
@@ -85,9 +89,9 @@ const OptimizedImage = ({
       clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4)
       clearInterval(int)
     }
-  }, [optimizedSrc])
+  }, [optimizedSrc, isLoading])
 
-  // IntersectionObserver: quand l'image entre dans le viewport, revérifier l'état
+  // IntersectionObserver pour lazy images
   useEffect(() => {
     if (!imgRef.current) return
     if (priority || loading === 'eager') return
@@ -103,6 +107,7 @@ const OptimizedImage = ({
         requestAnimationFrame(() => {
           if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
             setIsLoading(false)
+            if (imgRef.current) imgRef.current.classList.add('loaded')
           }
         })
       }
@@ -113,7 +118,11 @@ const OptimizedImage = ({
     return () => { if (observerRef.current) observerRef.current.disconnect() }
   }, [priority, loading, optimizedSrc])
 
-  const handleLoad = () => { setIsLoading(false); setHasError(false); if (imgRef.current) { imgRef.current.classList.add('loaded') } }
+  const handleLoad = () => { 
+    setIsLoading(false); 
+    setHasError(false); 
+    if (imgRef.current) imgRef.current.classList.add('loaded') 
+  }
   const handleError = () => { setIsLoading(false); setHasError(true) }
 
   const showPlaceholder = isLoading && !hasError
