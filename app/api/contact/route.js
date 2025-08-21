@@ -96,6 +96,28 @@ const getSecurityHeaders = () => ({
   'Pragma': 'no-cache'
 });
 
+// Headers CORS avec gestion des domaines autorisés
+const getCORSHeaders = (request) => {
+  const origin = request.headers.get('origin');
+  const trustedOrigins = process.env.TRUSTED_ORIGINS?.split(',') || ['https://getyoursite.fr'];
+  
+  // Add localhost for development
+  const allowedOrigins = [
+    ...trustedOrigins,
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+  ];
+  
+  const allowOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+  
+  return {
+    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+    'Access-Control-Max-Age': '86400'
+  };
+};
+
 export async function GET(request) {
   try {
     const headers = getSecurityHeaders();
