@@ -35,15 +35,15 @@ import {
   Search
 } from 'lucide-react'
 
-// Composants UI modernes et institutionnels
+// Composants UI modernes et institutionnels - Palette Rouge Brest
 const Button = ({ children, className = "", variant = "default", size = "default", onClick, type, disabled, href }) => {
   const baseStyles = "inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
   const variants = {
-    default: "bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md",
-    outline: "border border-blue-200 bg-white text-blue-600 hover:bg-blue-50 hover:border-blue-300",
-    ghost: "hover:bg-blue-50 text-blue-600",
+    default: "bg-red-600 text-white hover:bg-red-700 shadow-sm hover:shadow-md",
+    outline: "border border-red-200 bg-white text-red-600 hover:bg-red-50 hover:border-red-300",
+    ghost: "hover:bg-red-50 text-red-600",
     secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-    primary: "bg-blue-700 text-white hover:bg-blue-800 shadow-lg"
+    primary: "bg-red-700 text-white hover:bg-red-800 shadow-lg"
   }
   const sizes = {
     default: "h-10 px-6 py-2",
@@ -104,7 +104,7 @@ const Badge = ({ children, className = "" }) => (
   </span>
 )
 
-// Composant Navigation
+// Composant Navigation - Thème Rouge Brest
 const Navigation = ({ currentPage = "accueil" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -122,12 +122,12 @@ const Navigation = ({ currentPage = "accueil" }) => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           <Link href="/mairie/accueil" className="flex items-center space-x-3">
-            <div className="p-2 rounded-lg bg-blue-600">
+            <div className="p-2 rounded-lg bg-red-600">
               <Building2 className="w-6 h-6 text-white" />
             </div>
             <div>
               <div className="text-xl font-bold text-gray-900">Ville de Brest</div>
-              <div className="text-xs text-blue-600">Métropole • Finistère</div>
+              <div className="text-xs text-red-600">Métropole • Finistère</div>
             </div>
           </Link>
           
@@ -136,8 +136,8 @@ const Navigation = ({ currentPage = "accueil" }) => {
               <Link
                 key={item.id}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                  currentPage === item.id ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
+                className={`text-sm font-medium transition-colors hover:text-red-600 ${
+                  currentPage === item.id ? 'text-red-600 border-b-2 border-red-600 pb-1' : 'text-gray-700'
                 }`}
               >
                 {item.name}
@@ -167,7 +167,7 @@ const Navigation = ({ currentPage = "accueil" }) => {
               <Link
                 key={item.id}
                 href={item.href}
-                className="block py-2 text-gray-700 hover:text-blue-600"
+                className="block py-2 text-gray-700 hover:text-red-600"
               >
                 {item.name}
               </Link>
@@ -220,63 +220,63 @@ export default function AccueilPage() {
     }
   ]
 
-  // Services principaux
+  // Services principaux - Palette Rouge
   const servicesHero = [
     {
       title: "Services en ligne",
       description: "Vos démarches administratives simplifiées",
       icon: <Globe className="w-8 h-8" />,
-      color: "blue",
+      color: "red",
       href: "/mairie/services"
     },
     {
       title: "Actualités",
       description: "Toute l'actualité de la métropole",
       icon: <FileText className="w-8 h-8" />,
-      color: "green",
+      color: "rose",
       href: "/mairie/actualites"
     },
     {
       title: "Agenda",
       description: "Événements et sorties à Brest",
       icon: <Calendar className="w-8 h-8" />,
-      color: "purple",
+      color: "burgundy",
       href: "/mairie/agenda"
     },
     {
       title: "La Métropole",
       description: "Découvrir le territoire brestois",
       icon: <MapPin className="w-8 h-8" />,
-      color: "orange",
+      color: "crimson",
       href: "/mairie/metropole"
     }
   ]
 
   const colorClasses = {
-    blue: "bg-blue-50 text-blue-600 border-blue-200",
-    green: "bg-green-50 text-green-600 border-green-200", 
-    purple: "bg-purple-50 text-purple-600 border-purple-200",
-    orange: "bg-orange-50 text-orange-600 border-orange-200"
+    red: "bg-red-50 text-red-600 border-red-200",
+    rose: "bg-rose-50 text-rose-600 border-rose-200", 
+    burgundy: "bg-red-100 text-red-700 border-red-300",
+    crimson: "bg-red-50 text-red-700 border-red-200"
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation currentPage="accueil" />
 
-      {/* Hero Section */}
+      {/* Hero Section - Thème Rouge Brest */}
       <section className="relative bg-white">
         <div className="container mx-auto px-6 py-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-6">
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-sm">
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-sm">
                   <MapPin className="w-4 h-4 mr-2" />
                   Métropole de Brest • Finistère
                 </div>
                 
                 <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
                   Ville de 
-                  <span className="text-blue-600"> Brest</span>
+                  <span className="text-red-600"> Brest</span>
                 </h1>
                 
                 <p className="text-xl text-gray-600 leading-relaxed">
@@ -298,15 +298,15 @@ export default function AccueilPage() {
               </div>
 
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">140K+</div>
+              <div className="text-3xl font-bold text-red-600">140K+</div>
               <div className="text-sm text-gray-600">Habitants</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-green-600">8</div>
+              <div className="text-3xl font-bold text-rose-600">8</div>
               <div className="text-sm text-gray-600">Communes</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600">24h/7j</div>
+              <div className="text-3xl font-bold text-red-700">24h/7j</div>
               <div className="text-sm text-gray-600">Services</div>
             </div>
             </div>
@@ -317,7 +317,7 @@ export default function AccueilPage() {
                 alt="Brest - Vue sur la rade"
                 className="rounded-xl shadow-lg w-full h-96 object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent rounded-xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-red-900/20 to-transparent rounded-xl"></div>
             </div>
           </div>
         </div>
@@ -336,14 +336,14 @@ export default function AccueilPage() {
               <Card key={index} className="group cursor-pointer hover:scale-[1.02] transition-transform">
                 <CardHeader>
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 rounded-lg bg-blue-50 text-blue-600 group-hover:bg-blue-100 transition-colors">
+                    <div className="p-2 rounded-lg bg-red-50 text-red-600 group-hover:bg-red-100 transition-colors">
                       {acces.icon}
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">{acces.title}</CardTitle>
                       <p className="text-sm text-gray-600">{acces.description}</p>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-red-600 transition-colors" />
                   </div>
                 </CardHeader>
               </Card>
@@ -369,7 +369,7 @@ export default function AccueilPage() {
                   </div>
                   <CardTitle className="mb-2">{service.title}</CardTitle>
                   <p className="text-gray-600 text-sm mb-4">{service.description}</p>
-                  <Button variant="outline" size="sm" href={service.href} className="group-hover:bg-blue-50">
+                  <Button variant="outline" size="sm" href={service.href} className="group-hover:bg-red-50">
                     Découvrir
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -385,7 +385,7 @@ export default function AccueilPage() {
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="bg-blue-50 text-blue-700 border border-blue-200 mb-4">
+              <Badge className="bg-red-50 text-red-700 border border-red-200 mb-4">
                 Un été à Brest
               </Badge>
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -413,13 +413,13 @@ export default function AccueilPage() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer - Thème Rouge */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-4 gap-8">
             <div className="col-span-2">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="p-2 rounded-lg bg-blue-600">
+                <div className="p-2 rounded-lg bg-red-600">
                   <Building2 className="w-6 h-6 text-white" />
                 </div>
                 <div>

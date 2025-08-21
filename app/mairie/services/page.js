@@ -40,15 +40,15 @@ import {
   Construction
 } from 'lucide-react'
 
-// Composants UI réutilisables
+// Composants UI réutilisables - Palette Rouge Brest
 const Button = ({ children, className = "", variant = "default", size = "default", onClick, type, disabled, href }) => {
   const baseStyles = "inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
   const variants = {
-    default: "bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md",
-    outline: "border border-blue-200 bg-white text-blue-600 hover:bg-blue-50 hover:border-blue-300",
-    ghost: "hover:bg-blue-50 text-blue-600",
+    default: "bg-red-600 text-white hover:bg-red-700 shadow-sm hover:shadow-md",
+    outline: "border border-red-200 bg-white text-red-600 hover:bg-red-50 hover:border-red-300",
+    ghost: "hover:bg-red-50 text-red-600",
     secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-    primary: "bg-blue-700 text-white hover:bg-blue-800 shadow-lg"
+    primary: "bg-red-700 text-white hover:bg-red-800 shadow-lg"
   }
   const sizes = {
     default: "h-10 px-6 py-2",
@@ -103,7 +103,7 @@ const CardTitle = ({ children, className = "" }) => (
   </h3>
 )
 
-// Composant Navigation
+// Composant Navigation - Thème Rouge
 const Navigation = ({ currentPage = "services" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -121,12 +121,12 @@ const Navigation = ({ currentPage = "services" }) => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           <Link href="/mairie/accueil" className="flex items-center space-x-3">
-            <div className="p-2 rounded-lg bg-blue-600">
+            <div className="p-2 rounded-lg bg-red-600">
               <Building2 className="w-6 h-6 text-white" />
             </div>
             <div>
               <div className="text-xl font-bold text-gray-900">Ville de Brest</div>
-              <div className="text-xs text-blue-600">Métropole • Finistère</div>
+              <div className="text-xs text-red-600">Métropole • Finistère</div>
             </div>
           </Link>
           
@@ -135,8 +135,8 @@ const Navigation = ({ currentPage = "services" }) => {
               <Link
                 key={item.id}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                  currentPage === item.id ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
+                className={`text-sm font-medium transition-colors hover:text-red-600 ${
+                  currentPage === item.id ? 'text-red-600 border-b-2 border-red-600 pb-1' : 'text-gray-700'
                 }`}
               >
                 {item.name}
@@ -166,7 +166,7 @@ const Navigation = ({ currentPage = "services" }) => {
               <Link
                 key={item.id}
                 href={item.href}
-                className="block py-2 text-gray-700 hover:text-blue-600"
+                className="block py-2 text-gray-700 hover:text-red-600"
               >
                 {item.name}
               </Link>
@@ -179,12 +179,12 @@ const Navigation = ({ currentPage = "services" }) => {
 }
 
 export default function ServicesPage() {
-  // Services municipaux organisés par catégories
+  // Services municipaux organisés par catégories - Palette Rouge
   const categoriesServices = [
     {
       title: "État Civil & Citoyenneté",
       icon: <UserCheck className="w-8 h-8" />,
-      color: "blue",
+      color: "red",
       services: [
         {
           name: "Carte d'identité et passeport",
@@ -215,7 +215,7 @@ export default function ServicesPage() {
     {
       title: "Urbanisme & Habitat",
       icon: <Building2 className="w-8 h-8" />,
-      color: "green",
+      color: "rose",
       services: [
         {
           name: "Permis de construire",
@@ -246,7 +246,7 @@ export default function ServicesPage() {
     {
       title: "Transport & Mobilité",
       icon: <Car className="w-8 h-8" />,
-      color: "purple",
+      color: "burgundy",
       services: [
         {
           name: "Travaux en cours",
@@ -277,7 +277,7 @@ export default function ServicesPage() {
     {
       title: "Environnement & Déchets",
       icon: <Trash2 className="w-8 h-8" />,
-      color: "emerald",
+      color: "crimson",
       services: [
         {
           name: "Déchetteries",
@@ -308,7 +308,7 @@ export default function ServicesPage() {
     {
       title: "Loisirs & Maritime",
       icon: <Waves className="w-8 h-8" />,
-      color: "cyan",
+      color: "coral",
       services: [
         {
           name: "Plages de la métropole",
@@ -339,7 +339,7 @@ export default function ServicesPage() {
     {
       title: "Emploi & Social",
       icon: <Briefcase className="w-8 h-8" />,
-      color: "orange",
+      color: "maroon",
       services: [
         {
           name: "Emplois et stages",
@@ -370,12 +370,12 @@ export default function ServicesPage() {
   ]
 
   const colorClasses = {
-    blue: "bg-blue-50 text-blue-600 border-blue-200",
-    green: "bg-green-50 text-green-600 border-green-200", 
-    purple: "bg-purple-50 text-purple-600 border-purple-200",
-    orange: "bg-orange-50 text-orange-600 border-orange-200",
-    emerald: "bg-emerald-50 text-emerald-600 border-emerald-200",
-    cyan: "bg-cyan-50 text-cyan-600 border-cyan-200"
+    red: "bg-red-50 text-red-600 border-red-200",
+    rose: "bg-rose-50 text-rose-600 border-rose-200", 
+    burgundy: "bg-red-100 text-red-700 border-red-300",
+    crimson: "bg-red-50 text-red-700 border-red-200",
+    coral: "bg-red-50 text-red-600 border-red-200",
+    maroon: "bg-red-100 text-red-800 border-red-300"
   }
 
   return (
@@ -408,13 +408,13 @@ export default function ServicesPage() {
       </section>
 
       {/* Accès rapides */}
-      <section className="py-12 bg-blue-50 border-t border-blue-100">
+      <section className="py-12 bg-red-50 border-t border-red-100">
         <div className="container mx-auto px-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Accès les plus demandés</h2>
           <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4">
             <Card className="text-center">
               <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center mx-auto mb-3">
                   <FileText className="w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-gray-900">Carte d'identité</h3>
@@ -423,7 +423,7 @@ export default function ServicesPage() {
             </Card>
             <Card className="text-center">
               <CardHeader>
-                <div className="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-lg flex items-center justify-center mx-auto mb-3">
                   <Briefcase className="w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-gray-900">Emplois</h3>
@@ -432,7 +432,7 @@ export default function ServicesPage() {
             </Card>
             <Card className="text-center">
               <CardHeader>
-                <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-red-100 text-red-700 rounded-lg flex items-center justify-center mx-auto mb-3">
                   <Construction className="w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-gray-900">Travaux</h3>
@@ -441,7 +441,7 @@ export default function ServicesPage() {
             </Card>
             <Card className="text-center">
               <CardHeader>
-                <div className="w-12 h-12 bg-cyan-100 text-cyan-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <div className="w-12 h-12 bg-red-50 text-red-600 rounded-lg flex items-center justify-center mx-auto mb-3">
                   <Waves className="w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-gray-900">Plages</h3>
@@ -484,9 +484,9 @@ export default function ServicesPage() {
                               )}
                             </div>
                             <p className="text-gray-600 mb-3">{service.description}</p>
-                            <p className="text-sm text-blue-600 font-medium">{service.info}</p>
+                            <p className="text-sm text-red-600 font-medium">{service.info}</p>
                           </div>
-                          <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                          <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-red-600 transition-colors" />
                         </div>
                       </CardHeader>
                     </Card>
@@ -525,7 +525,7 @@ export default function ServicesPage() {
           <div className="grid lg:grid-cols-4 gap-8">
             <div className="col-span-2">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="p-2 rounded-lg bg-blue-600">
+                <div className="p-2 rounded-lg bg-red-600">
                   <Building2 className="w-6 h-6 text-white" />
                 </div>
                 <div>
