@@ -1,0 +1,127 @@
+/* Optimisations CSS spécifiques pour Microsoft Edge */
+
+/* Amélioration des performances de scroll sur Edge */
+* {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimisation des transformations pour Edge */
+.edge-optimized {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Réduction des animations complexes sur Edge */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimisation des gradients pour Edge */
+.gradient-optimized {
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+/* Amélioration des performances des images */
+.image-optimized {
+  content-visibility: auto;
+  contain-intrinsic-size: 400px 300px;
+}
+
+/* Optimisation de l'affichage pour Edge */
+.card-optimized {
+  contain: layout style paint;
+  isolation: isolate;
+}
+
+/* Performance des animations hover pour Edge */
+.hover-optimized {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-optimized:hover {
+  transform: translateY(-2px) translateZ(0);
+  will-change: transform;
+}
+
+/* Optimisation du rendering pour Edge */
+.text-optimized {
+  text-rendering: optimizeSpeed;
+  font-feature-settings: "kern" 1;
+}
+
+/* Préchargement des polices pour Edge */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  src: local('Inter');
+}
+
+/* Styles spécifiques à Edge (détection via CSS) */
+@supports (-ms-ime-align: auto) {
+  /* Styles spécifiques à Edge Legacy */
+  .gradient-background {
+    background: linear-gradient(45deg, #f97316, #f59e0b);
+    filter: none;
+  }
+}
+
+@supports ((-webkit-mask: none) or (mask: none)) and (not (-webkit-appearance: none)) {
+  /* Styles spécifiques à Edge Chromium */
+  .advanced-animation {
+    animation-play-state: running;
+  }
+}
+
+/* Optimisation des lazy-loaded images */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* Amélioration de la performance de scroll sur les conteneurs */
+.scroll-optimized {
+  -webkit-overflow-scrolling: touch;
+  overflow-anchor: auto;
+  scroll-snap-type: y mandatory;
+}
+
+/* Optimisation des ombres pour Edge */
+.shadow-optimized {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* Réduction de la complexité des bordures arrondies */
+.rounded-optimized {
+  border-radius: 0.75rem;
+  mask-clip: padding-box;
+}
+
+/* Performance des transitions de couleur */
+.color-transition-optimized {
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+/* Optimisation des éléments sticky */
+.sticky-optimized {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
