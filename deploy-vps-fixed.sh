@@ -499,6 +499,17 @@ if [ "$SUCCESS" = true ]; then
             # Test de l'API de contact pour la pizza
             if curl -s -H "Host: pizza.getyoursite.fr" http://localhost/api/contact > /dev/null 2>&1; then
                 echo -e "${GREEN}✅ API contact pizza fonctionnelle${NC}"
+                
+                # Test du formulaire de contact si email configuré
+                if [[ "$CONFIGURE_EMAIL" == "true" ]]; then
+                    if curl -s -X POST -H "Host: pizza.getyoursite.fr" -H "Content-Type: application/json" \
+                       -d '{"name":"Test Deploy","email":"test@example.com","subject":"Test","message":"Test de déploiement"}' \
+                       http://localhost/api/contact | grep -q "success" 2>/dev/null; then
+                        echo -e "${GREEN}✅ Formulaire de contact fonctionnel${NC}"
+                    else
+                        echo -e "${YELLOW}⚠️  Formulaire de contact: vérifiez la configuration email${NC}"
+                    fi
+                fi
             else
                 echo -e "${YELLOW}⚠️  API contact pizza non accessible${NC}"
             fi
