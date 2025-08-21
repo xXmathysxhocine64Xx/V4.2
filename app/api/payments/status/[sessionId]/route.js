@@ -34,19 +34,35 @@ async def check_payment_status():
         
         session_id = sys.argv[1]
         
-        # Initialize Stripe
-        stripe_checkout = StripeCheckout(api_key=stripe_api_key)
-        
-        # Get checkout status from Stripe
-        checkout_status = await stripe_checkout.get_checkout_status(session_id)
-        
-        # Connect to MongoDB
+        # Connect to MongoDB first to check if it's a test transaction
         client = MongoClient(mongo_url)
         db = client['getyoursite']
         transactions_collection = db['payment_transactions']
         
         # Find transaction in database
         transaction = transactions_collection.find_one({'session_id': session_id})
+        
+        # Handle test free pizza sessions
+        if transaction and transaction.get('test_mode') == True:
+            result = {
+                'session_id': session_id,
+                'status': transaction.get('status', 'test_success'),
+                'payment_status': transaction.get('payment_status', 'completed_test'),
+                'amount_total': transaction.get('amount', 0),
+                'currency': transaction.get('currency', 'EUR'),
+                'pizza_name': transaction.get('pizza_name', ''),
+                'is_test': True,
+                'message': 'Pizza gratuite de test - commande confirmée!'
+            }
+            client.close()
+            print(json.dumps(result))
+            return
+        
+        # Initialize Stripe for paid transactions
+        stripe_checkout = StripeCheckout(api_key=stripe_api_key)
+        
+        # Get checkout status from Stripe
+        checkout_status = await stripe_checkout.get_checkout_status(session_id)
         
         if transaction:
             # Update transaction status if payment completed and not already processed
