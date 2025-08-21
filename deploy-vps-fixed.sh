@@ -44,11 +44,11 @@ PROJECT_NAME="getyoursite"
 
 echo ""
 echo -e "${YELLOW}➕ Souhaitez-vous également déployer la démo pizzeria sur pizza.getyoursite.fr ?${NC}"
-read -p "Déployer aussi pizza.getyoursite.fr ? (o/n): " pizza_choice
+read -t 30 -p "Déployer aussi pizza.getyoursite.fr ? (o/n): " pizza_choice || pizza_choice="n"
 
 echo ""
 echo -e "${YELLOW}🏛️ Souhaitez-vous également déployer la démo mairie sur mairie.getyoursite.fr ?${NC}"
-read -p "Déployer aussi mairie.getyoursite.fr ? (o/n): " mairie_choice
+read -t 30 -p "Déployer aussi mairie.getyoursite.fr ? (o/n): " mairie_choice || mairie_choice="n"
 
 DEPLOY_PIZZA="false"
 DEPLOY_MAIRIE="false"
