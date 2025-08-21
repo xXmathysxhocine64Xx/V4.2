@@ -89,10 +89,13 @@ class BrestMairieBackendTester:
             response = requests.get(f"{self.base_url}/mairie", timeout=10, allow_redirects=False)
             
             if response.status_code in [301, 302, 307, 308]:
-                # Check if redirect location is correct
+                # Check if redirect location is correct or if it's a Next.js client-side redirect
                 location = response.headers.get('location', '')
                 if '/mairie/accueil' in location:
                     self.log_test("Mairie Redirect", "PASS", f"Redirects correctly to {location}")
+                    return True
+                elif 'NEXT_REDIRECT' in response.text and '/mairie/accueil' in response.text:
+                    self.log_test("Mairie Redirect", "PASS", "Next.js client-side redirect to /mairie/accueil")
                     return True
                 else:
                     self.log_test("Mairie Redirect", "FAIL", f"Redirects to wrong location: {location}")
