@@ -68,6 +68,7 @@ async def create_checkout():
         
         package = PACKAGES[package_id]
         amount = package['amount']
+        is_test_free = package.get('is_test', False) and amount == 0.00
         
         # Initialize Stripe
         host_url = origin_url
@@ -83,9 +84,53 @@ async def create_checkout():
             'package_id': package_id,
             'pizza_name': package['name'],
             'source': 'lucky_pizza_lannilis',
-            'created_at': datetime.now().isoformat()
+            'created_at': datetime.now().isoformat(),
+            'is_test_free': is_test_free
         })
         
+        # Handle free pizza test case
+        if is_test_free:
+            # Generate a fake session ID for free test
+            fake_session_id = f'cs_test_free_{str(uuid4())[:8]}'
+            
+            # Connect to MongoDB and save transaction immediately as completed
+            client = MongoClient(mongo_url)
+            db = client['getyoursite']
+            transactions_collection = db['payment_transactions']
+            
+            transaction_data = {
+                'session_id': fake_session_id,
+                'package_id': package_id,
+                'pizza_name': package['name'],
+                'amount': 0.00,
+                'currency': 'EUR',
+                'payment_status': 'completed_test',
+                'status': 'test_success',
+                'metadata': metadata,
+                'created_at': datetime.now().isoformat(),
+                'updated_at': datetime.now().isoformat(),
+                'test_mode': True,
+                'notes': 'Pizza gratuite de test - aucun paiement requis'
+            }
+            
+            transactions_collection.insert_one(transaction_data)
+            client.close()
+            
+            # Return fake session data for free pizza
+            result = {
+                'session_id': fake_session_id,
+                'url': success_url.replace('{CHECKOUT_SESSION_ID}', fake_session_id),
+                'amount': 0.00,
+                'currency': 'EUR',
+                'pizza_name': package['name'],
+                'status': 'test_success',
+                'message': 'Pizza gratuite - commande confirmée automatiquement!'
+            }
+            
+            print(json.dumps(result))
+            return
+        
+        # Normal Stripe checkout for paid pizzas
         # Create checkout session
         checkout_request = CheckoutSessionRequest(
             amount=amount,
