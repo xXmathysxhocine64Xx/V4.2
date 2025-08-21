@@ -15,7 +15,7 @@ import {
   Users,
   HeartPulse,
   GraduationCap,
-  Trees,
+  TreePine,
   Bus,
   Newspaper,
   Megaphone,
