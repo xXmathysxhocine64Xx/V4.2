@@ -443,6 +443,23 @@ if [ "$SUCCESS" = true ]; then
     if [[ "$DEPLOY_PIZZA" == "true" ]]; then
         if curl -s -H "Host: pizza.getyoursite.fr" http://localhost > /dev/null 2>&1; then
             echo -e "${GREEN}✅ Site pizza accessible${NC}"
+            
+            # Test de l'API de contact pour la pizza
+            if curl -s -H "Host: pizza.getyoursite.fr" http://localhost/api/contact > /dev/null 2>&1; then
+                echo -e "${GREEN}✅ API contact pizza fonctionnelle${NC}"
+            else
+                echo -e "${YELLOW}⚠️  API contact pizza non accessible${NC}"
+            fi
+            
+            # Test de l'API de paiement si Stripe configuré
+            if [[ "$CONFIGURE_STRIPE" == "true" && -n "$STRIPE_SECRET_KEY" ]]; then
+                if curl -s -X POST -H "Host: pizza.getyoursite.fr" -H "Content-Type: application/json" \
+                   -d '{"package_id":"margherita"}' http://localhost/api/payments/checkout > /dev/null 2>&1; then
+                    echo -e "${GREEN}✅ API paiement pizza fonctionnelle${NC}"
+                else
+                    echo -e "${YELLOW}⚠️  API paiement pizza: vérifiez les clés Stripe${NC}"
+                fi
+            fi
         else
             echo -e "${YELLOW}⚠️  Site pizza configuré mais test échoué${NC}"
         fi
