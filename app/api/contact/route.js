@@ -173,6 +173,7 @@ export async function POST(request) {
       
       const headers = {
         ...getSecurityHeaders(),
+        ...getCORSHeaders(request),
         'Retry-After': Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000).toString(),
         'X-RateLimit-Limit': RATE_LIMIT_MAX.toString(),
         'X-RateLimit-Remaining': '0',
