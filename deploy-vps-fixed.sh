@@ -161,6 +161,52 @@ yarn install --silent
 
 # 8. Build de l'application
 echo -e "${BLUE}🔨 Build de l'application...${NC}"
+
+# Configuration du fichier .env avant le build
+if [[ "$CONFIGURE_STRIPE" == "true" ]]; then
+    echo -e "${BLUE}⚙️  Configuration des variables d'environnement Stripe...${NC}"
+    
+    # Backup du fichier .env actuel
+    cp .env .env.backup.$(date +%Y%m%d_%H%M%S) 2>/dev/null || true
+    
+    # Mise à jour des clés Stripe
+    if [[ -n "$STRIPE_SECRET_KEY" ]]; then
+        # Suppression de l'ancienne clé s'il existe
+        sed -i '/^STRIPE_API_KEY=/d' .env
+        echo "STRIPE_API_KEY=${STRIPE_SECRET_KEY}" >> .env
+        echo -e "${GREEN}✓ Clé secrète Stripe configurée${NC}"
+    fi
+    
+    if [[ -n "$STRIPE_PUBLISHABLE_KEY" ]]; then
+        # Suppression de l'ancienne clé s'il existe
+        sed -i '/^NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=/d' .env
+        echo "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}" >> .env
+        echo -e "${GREEN}✓ Clé publique Stripe configurée${NC}"
+    fi
+    
+    if [[ -n "$STRIPE_WEBHOOK_SECRET" ]]; then
+        # Suppression de l'ancien secret s'il existe
+        sed -i '/^STRIPE_WEBHOOK_SECRET=/d' .env
+        echo "STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}" >> .env
+        echo -e "${GREEN}✓ Secret webhook Stripe configuré${NC}"
+    fi
+    
+    # Configuration MongoDB pour les transactions si pas déjà présent
+    if ! grep -q "MONGO_URL=" .env; then
+        echo "MONGO_URL=mongodb://localhost:27017" >> .env
+        echo -e "${GREEN}✓ URL MongoDB configurée pour les transactions${NC}"
+    fi
+    
+    echo -e "${BLUE}📋 Résumé de la configuration Stripe:${NC}"
+    echo -e "${GREEN}• Clé secrète: ${STRIPE_SECRET_KEY:0:12}...${NC}"
+    if [[ -n "$STRIPE_PUBLISHABLE_KEY" ]]; then
+        echo -e "${GREEN}• Clé publique: ${STRIPE_PUBLISHABLE_KEY:0:12}...${NC}"
+    fi
+    if [[ -n "$STRIPE_WEBHOOK_SECRET" ]]; then
+        echo -e "${GREEN}• Webhook configuré: ${STRIPE_WEBHOOK_SECRET:0:8}...${NC}"
+    fi
+fi
+
 yarn build
 
 # 9. Configuration PM2
