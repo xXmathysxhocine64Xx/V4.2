@@ -125,6 +125,9 @@ backend:
         - working: true
           agent: "main"
           comment: "✅ PROBLÈME CORS RÉSOLU - Correction complète du formulaire de contact qui retournait 'Erreur lors de l'envoi du message' : (1) Fonction getCORSHeaders() ajoutée pour gestion dynamique CORS, (2) Support localhost:3000 et 127.0.0.1:3000 ajouté automatiquement pour développement, (3) Headers CORS appliqués à toutes les méthodes GET/POST/OPTIONS, (4) Origine détectée automatiquement et validée contre domaines autorisés, (5) Configuration email Gmail intégrée au script de déploiement avec validation, (6) Tests automatiques ajoutés pour formulaires et configuration email, (7) Guide complet de dépannage GUIDE_CONTACT_TROUBLESHOOTING.md créé. Le formulaire de contact fonctionne maintenant parfaitement en développement et production."
+        - working: false
+          agent: "user"
+          comment: "🚨 ERREUR FORMULAIRE CONTACT SIGNALÉE - L'utilisateur rapporte que le formulaire de contact renvoie encore des erreurs malgré les corrections CORS précédentes. Investigation nécessaire pour identifier si le problème affecte les 3 sites (getyoursite.fr, pizza.getyoursite.fr, mairie.getyoursite.fr) ou un domaine spécifique. Tests backend et frontend requis pour diagnostiquer la cause exacte."
 
   - task: "Variables Environnement Multi-Domaines Mairie"
     implemented: true
