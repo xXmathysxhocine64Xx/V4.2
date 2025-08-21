@@ -67,6 +67,11 @@ STRIPE_PUBLISHABLE_KEY=""
 STRIPE_SECRET_KEY=""
 STRIPE_WEBHOOK_SECRET=""
 
+# Configuration Email pour les formulaires de contact
+CONFIGURE_EMAIL="false"
+GMAIL_USER=""
+GMAIL_APP_PASSWORD=""
+
 if [[ "$DEPLOY_PIZZA" == "true" ]]; then
     echo ""
     echo -e "${YELLOW}💳 Configuration Stripe pour la pizzeria Lucky Pizza${NC}"
@@ -95,6 +100,31 @@ if [[ "$DEPLOY_PIZZA" == "true" ]]; then
         if [[ -n "$STRIPE_PUBLISHABLE_KEY" && ! "$STRIPE_PUBLISHABLE_KEY" =~ ^pk_[a-zA-Z0-9_]+ ]]; then
             echo -e "${YELLOW}⚠️  Attention: La clé publique ne semble pas avoir le format attendu${NC}"
         fi
+    fi
+fi
+
+# Configuration Email pour tous les sites
+echo ""
+echo -e "${YELLOW}📧 Configuration Email pour les formulaires de contact${NC}"
+echo -e "${BLUE}Permet d'envoyer les messages des formulaires par email${NC}"
+read -t 30 -p "Souhaitez-vous configurer l'envoi d'emails ? (o/n): " email_choice || email_choice="n"
+
+if [[ $email_choice =~ ^[Oo]$ ]]; then
+    CONFIGURE_EMAIL="true"
+    echo ""
+    echo -e "${BLUE}📝 Configuration Gmail${NC}"
+    echo -e "${YELLOW}Instructions:${NC}"
+    echo -e "${YELLOW}1. Utilisez un compte Gmail${NC}"
+    echo -e "${YELLOW}2. Activez la validation en 2 étapes${NC}"
+    echo -e "${YELLOW}3. Générez un mot de passe d'application: https://myaccount.google.com/apppasswords${NC}"
+    
+    read -t 60 -p "Adresse Gmail: " GMAIL_USER || GMAIL_USER=""
+    read -t 60 -s -p "Mot de passe d'application Gmail: " GMAIL_APP_PASSWORD || GMAIL_APP_PASSWORD=""
+    echo ""
+    
+    # Validation basique de l'email
+    if [[ -n "$GMAIL_USER" && ! "$GMAIL_USER" =~ ^[a-zA-Z0-9._%+-]+@gmail\.com$ ]]; then
+        echo -e "${YELLOW}⚠️  Attention: Veuillez utiliser une adresse Gmail valide${NC}"
     fi
 fi
 
