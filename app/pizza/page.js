@@ -1,5 +1,5 @@
-import PizzaPage from '../pizza-page'
+import LuckyPizzaPage from '../lucky-pizza-page'
 
 export default function PizzaRoute() {
-  return <PizzaPage />
+  return <LuckyPizzaPage />
 }
