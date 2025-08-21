@@ -219,6 +219,7 @@ export default function AccueilPage() {
       href: "/mairie/services#transport"
     }
   ]
+  ]
 
   // Services principaux
   const servicesHero = [
