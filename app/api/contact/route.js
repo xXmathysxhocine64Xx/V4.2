@@ -353,24 +353,9 @@ export async function POST(request) {
 }
 
 export async function OPTIONS(request) {
-  const origin = request.headers.get('origin');
-  const trustedOrigins = process.env.TRUSTED_ORIGINS?.split(',') || ['https://getyoursite.fr'];
-  
-  // Add localhost for development
-  const allowedOrigins = [
-    ...trustedOrigins,
-    'http://localhost:3000',
-    'http://127.0.0.1:3000'
-  ];
-  
-  const allowOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
-  
   const headers = {
     ...getSecurityHeaders(),
-    'Access-Control-Allow-Origin': allowOrigin,
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
-    'Access-Control-Max-Age': '86400'
+    ...getCORSHeaders(request)
   };
   
   return new NextResponse(null, { status: 200, headers });
