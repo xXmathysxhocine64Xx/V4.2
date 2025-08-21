@@ -288,6 +288,9 @@ frontend:
         - working: true
           agent: "main"
           comment: "✅ PROBLÈME RUNTIME RÉSOLU - L'erreur 'unexpected end of file' n'était pas une erreur de syntaxe mais un problème d'exécution interactive. Les commandes 'read' attendaient indéfiniment une saisie utilisateur. Solution: ajout de timeouts (-t 30) et valeurs par défaut pour tous les prompts interactifs. Script fonctionne maintenant en mode interactif et non-interactif. Version automatique deploy-vps-auto.sh créée pour déploiements sans intervention."
+        - working: true
+          agent: "main"
+          comment: "✅ CONFIGURATION STRIPE AUTOMATISÉE - Le script de déploiement inclut maintenant une configuration interactive complète de Stripe pour pizza.getyoursite.fr : (1) Questions interactives pour configuration Stripe optionnelle, (2) Saisie sécurisée des clés API (publique/secrète) et webhook, (3) Validation basique du format des clés, (4) Mise à jour automatique du fichier .env avec backup, (5) Tests automatiques des APIs contact et paiement, (6) Script de validation dédié validate-pizza-config.sh créé, (7) Guide complet GUIDE_STRIPE_PIZZA.md avec instructions détaillées. Le script guide l'utilisateur étape par étape pour une configuration Stripe complète et opérationnelle."
 
   - task: "Script Correction Nginx Complet"
     implemented: true
