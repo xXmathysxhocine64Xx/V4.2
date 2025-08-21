@@ -232,11 +232,14 @@ frontend:
     file: "/app/app/pizza/page.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: true
           agent: "main"
           comment: "Route /pizza créée pour accès direct au site pizza via getyoursite.fr/pizza en plus du sous-domaine pizza.getyoursite.fr."
+        - working: true
+          agent: "testing"
+          comment: "✅ PIZZA ROUTE PERFORMANCE TESTED - Route /pizza/accueil and /pizza/menu extensively tested for Edge browser performance. Key findings: (1) Navigation structure working correctly with client-side redirects, (2) All pizza sub-routes functional (/accueil, /menu, /a-propos, /contact), (3) Performance metrics: Accueil page 3.68s load, Menu page 3.54s load with 6 images, (4) Critical performance issues: All images severely oversized (31x-363x), external dependencies on Unsplash/Pexels causing network delays, (5) Edge compatibility: CSS gradients and animations working but impacting performance, scroll performance sluggish at 1.27s, (6) Cart functionality and JavaScript interactions working properly. Route structure functional but requires urgent image optimization for production use."
 
   - task: "Route Mairie Dédiée"
     implemented: true
