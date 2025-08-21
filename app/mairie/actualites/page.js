@@ -39,7 +39,7 @@ export default function ActualitesRefonte() {
     { tag: 'Culture', title: 'Exposition estivale au Musée des Beaux-Arts', excerpt: 'Un été sous le signe de la création…', date: '12 juillet', href: '#', img: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f' },
     { tag: 'Travaux', title: 'Réaménagement du centre – phases et déviations', excerpt: 'Point d’étape et circulation…', date: '20 juillet', href: '#', img: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e' },
     { tag: 'Jeunesse', title: 'Inscriptions périscolaires : dossier en ligne', excerpt: 'Simplifiez vos démarches…', date: '25 juillet', href: '#', img: 'https://images.unsplash.com/photo-1509062522246-3755977927d7' },
-    { tag: 'Sport', title: 'Nouveaux équipements sportifs', excerpt: 'Des investissements pour tous', date: '01 août', href: '#', img: 'https://images.unsplash.com/photo-1521417531039-94f0d983d66b' },
+    { tag: 'Sport', title: 'Nouveaux équipements sportifs', excerpt: 'Des investissements pour tous', date: '01 août', href: '#', img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b' },
     { tag: 'Environnement', title: 'Déchetteries : horaires d’été', excerpt: 'Anticipez vos dépôts…', date: '03 août', href: '#', img: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee' },
     { tag: 'Transports', title: 'Bibus : renforts lignes d’été', excerpt: 'Fréquences adaptées…', date: '05 août', href: '#', img: 'https://images.unsplash.com/photo-1465447142348-e9952c393450' },
   ]
