@@ -29,19 +29,20 @@ import {
   Layers
 } from 'lucide-react'
 
-// Composants UI simples
+// Composants UI modernes avec design futuriste
 const Button = ({ children, className = "", variant = "default", size = "default", onClick, type, disabled }) => {
-  const baseStyles = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+  const baseStyles = "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-all duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 transform hover:scale-105 hover:shadow-lg"
   const variants = {
-    default: "bg-blue-600 text-white hover:bg-blue-700",
-    outline: "border border-blue-300 bg-transparent text-blue-600 hover:bg-blue-50",
-    ghost: "hover:bg-blue-100 text-blue-600",
-    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200"
+    default: "bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-700 hover:to-cyan-700 shadow-lg",
+    outline: "border border-blue-300 bg-white/80 backdrop-blur-sm text-blue-600 hover:bg-blue-50 hover:border-blue-400",
+    ghost: "hover:bg-blue-100/50 text-blue-600 backdrop-blur-sm",
+    secondary: "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-900 hover:from-gray-200 hover:to-gray-300",
+    futuristic: "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white hover:shadow-xl hover:shadow-blue-500/25"
   }
   const sizes = {
-    default: "h-10 px-4 py-2",
-    lg: "h-11 px-8",
-    sm: "h-8 px-3 text-sm"
+    default: "h-11 px-6 py-2",
+    lg: "h-12 px-8 text-base",
+    sm: "h-9 px-4 text-sm"
   }
   
   return (
@@ -57,13 +58,13 @@ const Button = ({ children, className = "", variant = "default", size = "default
 }
 
 const Card = ({ children, className = "" }) => (
-  <div className={`rounded-lg border bg-white shadow-sm ${className}`}>
+  <div className={`rounded-2xl border border-white/20 bg-white/80 backdrop-blur-md shadow-xl hover:shadow-2xl hover:bg-white/90 transition-all duration-300 hover:scale-[1.02] ${className}`}>
     {children}
   </div>
 )
 
 const CardHeader = ({ children, className = "" }) => (
-  <div className={`flex flex-col space-y-1.5 p-6 ${className}`}>
+  <div className={`flex flex-col space-y-2 p-6 ${className}`}>
     {children}
   </div>
 )
@@ -75,34 +76,34 @@ const CardContent = ({ children, className = "" }) => (
 )
 
 const CardTitle = ({ children, className = "" }) => (
-  <h3 className={`text-xl font-semibold leading-none tracking-tight ${className}`}>
+  <h3 className={`text-xl font-bold leading-none tracking-tight bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent ${className}`}>
     {children}
   </h3>
 )
 
 const Badge = ({ children, className = "" }) => (
-  <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${className}`}>
+  <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-sm ${className}`}>
     {children}
   </span>
 )
 
 const Input = ({ className = "", ...props }) => (
   <input 
-    className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`} 
+    className={`flex h-11 w-full rounded-xl border border-gray-200 bg-white/80 backdrop-blur-sm px-4 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300 ${className}`} 
     {...props} 
   />
 )
 
 const Textarea = ({ className = "", ...props }) => (
   <textarea 
-    className={`flex min-h-[80px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${className}`} 
+    className={`flex min-h-[100px] w-full rounded-xl border border-gray-200 bg-white/80 backdrop-blur-sm px-4 py-3 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300 ${className}`} 
     {...props} 
   />
 )
 
 const Select = ({ children, className = "", ...props }) => (
   <select 
-    className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${className}`}
+    className={`flex h-11 w-full rounded-xl border border-gray-200 bg-white/80 backdrop-blur-sm px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ${className}`}
     {...props}
   >
     {children}
