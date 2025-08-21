@@ -3,15 +3,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Loader2 } from 'lucide-react'
 
-/**
- * Composant d'image optimisée
- * - Lazy loading natif
- * - Optimisation Unsplash/Pexels
- * - WebP si possible
- * - Gestion d'erreur
- * - Placeholder
- * - Sécurisation du rendu: check "complete" + IntersectionObserver pour éviter les images qui restent transparentes
- */
 const OptimizedImage = ({ 
   src, 
   alt, 
@@ -63,27 +54,43 @@ const OptimizedImage = ({
     }
   }, [src, width, height, quality])
 
-  // Vérif "complete" immédiate + retardée
+  // Vérif "complete" immédiate + retardée + polling court (anti-placeholder bloqué)
   useEffect(() => {
     if (!imgRef.current) return
     let cancelled = false
+
     const checkComplete = () => {
       if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
         if (!cancelled) setIsLoading(false)
       }
     }
-    // première passe + rechecks
-    checkComplete()
-    const t1 = setTimeout(checkComplete, 300)
-    const t2 = setTimeout(checkComplete, 800)
-    const t3 = setTimeout(checkComplete, 1500)
-    return () => { cancelled = true; clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+
+    // passes différées
+    const t1 = setTimeout(checkComplete, 100)
+    const t2 = setTimeout(checkComplete, 300)
+    const t3 = setTimeout(checkComplete, 800)
+    const t4 = setTimeout(checkComplete, 1500)
+
+    // polling 2s max
+    let ticks = 0
+    const int = setInterval(() => {
+      checkComplete()
+      if (!imgRef.current) return
+      if (!isLoading) { clearInterval(int) }
+      if (++ticks > 12) { clearInterval(int) }
+    }, 150)
+
+    return () => {
+      cancelled = true
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4)
+      clearInterval(int)
+    }
   }, [optimizedSrc])
 
   // IntersectionObserver: quand l'image entre dans le viewport, revérifier l'état
   useEffect(() => {
     if (!imgRef.current) return
-    if (priority || loading === 'eager') return // pas nécessaire pour les images prioritaires
+    if (priority || loading === 'eager') return
 
     if (observerRef.current) {
       observerRef.current.disconnect()
@@ -93,7 +100,6 @@ const OptimizedImage = ({
     observerRef.current = new IntersectionObserver((entries) => {
       const entry = entries[0]
       if (entry && entry.isIntersecting) {
-        // attendre le prochain frame pour laisser le navigateur mettre à jour "complete"
         requestAnimationFrame(() => {
           if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
             setIsLoading(false)
@@ -104,20 +110,11 @@ const OptimizedImage = ({
 
     observerRef.current.observe(imgRef.current)
 
-    return () => {
-      if (observerRef.current) observerRef.current.disconnect()
-    }
+    return () => { if (observerRef.current) observerRef.current.disconnect() }
   }, [priority, loading, optimizedSrc])
 
-  const handleLoad = () => {
-    setIsLoading(false)
-    setHasError(false)
-  }
-
-  const handleError = () => {
-    setIsLoading(false)
-    setHasError(true)
-  }
+  const handleLoad = () => { setIsLoading(false); setHasError(false) }
+  const handleError = () => { setIsLoading(false); setHasError(true) }
 
   const showPlaceholder = isLoading && !hasError
 
