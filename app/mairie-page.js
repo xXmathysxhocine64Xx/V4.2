@@ -852,53 +852,123 @@ export default function MairiePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-4 gap-8">
+      {/* Footer Futuriste */}
+      <footer className="relative py-16 px-6 bg-gradient-to-br from-gray-900 via-slate-900 to-black">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-cyan-600/10"></div>
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="grid lg:grid-cols-4 gap-12">
             <div className="col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
-                <Building2 className="w-8 h-8 text-blue-400" />
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600">
+                  <Building2 className="w-8 h-8 text-white" />
+                </div>
                 <div>
-                  <div className="text-xl font-bold">Ville de Brest</div>
-                  <div className="text-sm text-gray-400">Finistère - Bretagne</div>
+                  <div className="text-2xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                    Ville de Brest
+                  </div>
+                  <div className="text-sm text-blue-300">Smart City • Finistère • Bretagne</div>
                 </div>
               </div>
-              <p className="text-gray-300 mb-4 text-sm">
-                Brest, ville maritime du Finistère, vous accueille avec ses 
-                140 000 habitants et son riche patrimoine maritime et culturel.
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                Brest, première ville intelligente du Finistère, vous accueille avec ses 
+                140 000 habitants connectés et son écosystème technologique d'avant-garde. 
+                Découvrez l'avenir de l'administration municipale.
               </p>
-              <div className="text-xs text-gray-400">
-                <p>🏛️ Site de démonstration créé par GetYourSite</p>
-                <p>Un exemple de portail municipal professionnel</p>
+              <div className="space-y-2 text-sm text-gray-400">
+                <div className="flex items-center">
+                  <Sparkles className="w-4 h-4 mr-2 text-blue-400" />
+                  <span>Propulsé par l'Intelligence Artificielle</span>
+                </div>
+                <div className="flex items-center">
+                  <Shield className="w-4 h-4 mr-2 text-green-400" />
+                  <span>Sécurisé par blockchain</span>
+                </div>
+                <div className="flex items-center">
+                  <Globe className="w-4 h-4 mr-2 text-purple-400" />
+                  <span>Connecté au réseau Smart Cities Europe</span>
+                </div>
               </div>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Services</h4>
-              <ul className="space-y-2 text-gray-300 text-sm">
-                <li>État Civil</li>
-                <li>Urbanisme</li>
-                <li>Action Sociale</li>
-                <li>Éducation</li>
-                <li>Culture & Sport</li>
+              <h4 className="font-bold text-white mb-6 flex items-center">
+                <Cpu className="w-5 h-5 mr-2 text-cyan-400" />
+                Services IA
+              </h4>
+              <ul className="space-y-3 text-gray-300 text-sm">
+                <li className="flex items-center hover:text-white transition-colors cursor-pointer">
+                  <ChevronRight className="w-4 h-4 mr-2 text-cyan-400" />
+                  Assistant virtuel 24/7
+                </li>
+                <li className="flex items-center hover:text-white transition-colors cursor-pointer">
+                  <ChevronRight className="w-4 h-4 mr-2 text-purple-400" />
+                  Démarches automatisées
+                </li>
+                <li className="flex items-center hover:text-white transition-colors cursor-pointer">
+                  <ChevronRight className="w-4 h-4 mr-2 text-blue-400" />
+                  Analyse prédictive
+                </li>
+                <li className="flex items-center hover:text-white transition-colors cursor-pointer">
+                  <ChevronRight className="w-4 h-4 mr-2 text-green-400" />
+                  Support multilingue
+                </li>
+                <li className="flex items-center hover:text-white transition-colors cursor-pointer">
+                  <ChevronRight className="w-4 h-4 mr-2 text-orange-400" />
+                  API développeurs
+                </li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
-              <ul className="space-y-2 text-gray-300 text-sm">
-                <li>02 98 00 80 80</li>
-                <li>contact@brest.fr</li>
-                <li>2 rue Frézier</li>
-                <li>29200 Brest</li>
-                <li>Lun-Ven: 8h30-17h</li>
+              <h4 className="font-bold text-white mb-6 flex items-center">
+                <Zap className="w-5 h-5 mr-2 text-yellow-400" />
+                Contact Digital
+              </h4>
+              <ul className="space-y-3 text-gray-300 text-sm">
+                <li className="flex items-center">
+                  <Phone className="w-4 h-4 mr-2 text-green-400" />
+                  02 98 00 80 80
+                </li>
+                <li className="flex items-center">
+                  <Mail className="w-4 h-4 mr-2 text-blue-400" />
+                  ia@brest.digital
+                </li>
+                <li className="flex items-center">
+                  <MapPin className="w-4 h-4 mr-2 text-purple-400" />
+                  2 rue Frézier, Brest
+                </li>
+                <li className="flex items-center">
+                  <Globe className="w-4 h-4 mr-2 text-cyan-400" />
+                  Smart City Hub
+                </li>
+                <li className="flex items-center">
+                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  IA: 24h/7j • Humains: 8h30-17h
+                </li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-            <p>&copy; 2024 Ville de Brest. Site de démonstration - Créé avec GetYourSite.fr</p>
+          <div className="border-t border-gray-800 mt-12 pt-8">
+            <div className="flex flex-col lg:flex-row justify-between items-center">
+              <div className="text-gray-400 text-sm mb-4 lg:mb-0">
+                <p>&copy; 2025 Ville de Brest • Site de démonstration Smart City</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  ⚡ Créé avec GetYourSite.fr • Propulsé par l'IA • Design futuriste
+                </p>
+              </div>
+              
+              <div className="flex items-center space-x-4">
+                <Button size="sm" variant="outline" className="border-gray-700 text-gray-400 hover:text-white hover:border-cyan-400">
+                  <Globe className="w-4 h-4 mr-2" />
+                  API Docs
+                </Button>
+                <Button size="sm" variant="futuristic">
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Lab Innovation
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
