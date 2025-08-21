@@ -2,474 +2,370 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { 
+import OptimizedImage from '@/app/components/OptimizedImage'
+import {
   Building2,
-  Users,
   FileText,
   Calendar,
   MapPin,
   Phone,
-  Clock,
   Mail,
-  ChevronRight,
-  ExternalLink,
-  Heart,
-  Home,
+  Landmark,
+  ShieldCheck,
+  Users,
+  HeartPulse,
   GraduationCap,
-  Briefcase,
-  TreePine,
-  X,
-  Menu as MenuIcon,
-  AlertCircle,
-  CheckCircle,
-  Sparkles,
-  Zap,
-  Shield,
-  Globe,
-  Cpu,
-  Layers,
+  Trees,
+  Bus,
+  Newspaper,
+  Megaphone,
+  Clock,
+  ChevronRight,
   ArrowRight,
-  Star,
-  Award,
-  Navigation as NavigationIcon,
-  Search
+  Search,
+  ExternalLink
 } from 'lucide-react'
 
-// Composants UI modernes et institutionnels - Palette Rouge Brest
-const Button = ({ children, className = "", variant = "default", size = "default", onClick, type, disabled, href }) => {
-  const baseStyles = "inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
-  const variants = {
-    default: "bg-red-600 text-white hover:bg-red-700 shadow-sm hover:shadow-md",
-    outline: "border border-red-200 bg-white text-red-600 hover:bg-red-50 hover:border-red-300",
-    ghost: "hover:bg-red-50 text-red-600",
-    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-    primary: "bg-red-700 text-white hover:bg-red-800 shadow-lg"
-  }
-  const sizes = {
-    default: "h-10 px-6 py-2",
-    lg: "h-11 px-8 text-base",
-    sm: "h-9 px-4 text-sm"
-  }
-  
-  if (href) {
-    return (
-      <Link 
-        href={href}
-        className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
-      >
-        {children}
-      </Link>
-    )
-  }
-  
-  return (
-    <button 
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
-      onClick={onClick}
-      type={type}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  )
-}
-
-const Card = ({ children, className = "" }) => (
-  <div className={`rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-all duration-200 ${className}`}>
-    {children}
-  </div>
-)
-
-const CardHeader = ({ children, className = "" }) => (
-  <div className={`flex flex-col space-y-2 p-6 ${className}`}>
-    {children}
-  </div>
-)
-
-const CardContent = ({ children, className = "" }) => (
-  <div className={`p-6 pt-0 ${className}`}>
-    {children}
-  </div>
-)
-
-const CardTitle = ({ children, className = "" }) => (
-  <h3 className={`text-xl font-semibold leading-none tracking-tight text-gray-900 ${className}`}>
-    {children}
-  </h3>
-)
-
-const Badge = ({ children, className = "" }) => (
-  <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${className}`}>
+// Palette Rouge & Blanc – design totalement nouveau
+const RedPill = ({ children, className = '' }) => (
+  <span className={`inline-flex items-center rounded-full bg-red-600 text-white px-3 py-1 text-xs font-semibold shadow-sm ${className}`}>
     {children}
   </span>
 )
 
-// Composant Navigation - Thème Rouge Brest
-const Navigation = ({ currentPage = "accueil" }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+const Button = ({ children, variant = 'primary', size = 'md', href, className = '', ...props }) => {
+  const base = 'inline-flex items-center justify-center font-semibold transition-all duration-200 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 disabled:opacity-50 disabled:pointer-events-none'
+  const variants = {
+    primary: 'bg-red-600 hover:bg-red-700 text-white shadow-sm hover:shadow',
+    secondary: 'bg-white text-red-700 border border-red-200 hover:bg-red-50',
+    ghost: 'text-red-700 hover:bg-red-50',
+    dark: 'bg-gray-900 hover:bg-black text-white'
+  }
+  const sizes = {
+    sm: 'h-9 px-4 text-sm',
+    md: 'h-11 px-6 text-sm',
+    lg: 'h-12 px-7 text-base'
+  }
 
-  const navItems = [
-    { name: 'Accueil', href: '/mairie/accueil', id: 'accueil' },
-    { name: 'Services', href: '/mairie/services', id: 'services' },
-    { name: 'Actualités', href: '/mairie/actualites', id: 'actualites' },
-    { name: 'Agenda', href: '/mairie/agenda', id: 'agenda' },
-    { name: 'La Métropole', href: '/mairie/metropole', id: 'metropole' },
-    { name: 'Contact', href: '/mairie/contact', id: 'contact' }
-  ]
-
+  const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`
+  if (href) return (
+    <Link href={href} className={cls} {...props}>
+      {children}
+    </Link>
+  )
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex justify-between items-center">
-          <Link href="/mairie/accueil" className="flex items-center space-x-3">
-            <div className="p-2 rounded-lg bg-red-600">
-              <Building2 className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <div className="text-xl font-bold text-gray-900">Ville de Brest</div>
-              <div className="text-xs text-red-600">Métropole • Finistère</div>
-            </div>
-          </Link>
-          
-          <div className="hidden md:flex space-x-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-red-600 ${
-                  currentPage === item.id ? 'text-red-600 border-b-2 border-red-600 pb-1' : 'text-gray-700'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <Button variant="outline" size="sm">
-              <Search className="w-4 h-4 mr-2" />
-              Recherche
-            </Button>
-
-            <Button 
-              variant="ghost" 
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X /> : <MenuIcon />}
-            </Button>
-          </div>
-        </div>
-
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 space-y-2 border-t border-gray-100 pt-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className="block py-2 text-gray-700 hover:text-red-600"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-    </nav>
+    <button className={cls} {...props}>{children}</button>
   )
 }
 
-export default function AccueilPage() {
-  // Accès rapides du vrai site de Brest
-  const accesRapides = [
-    {
-      title: "Carte d'identité et passeport",
-      description: "Demandes de CNI et passeports",
-      icon: <FileText className="w-5 h-5" />,
-      href: "/mairie/services#carte-identite"
-    },
-    {
-      title: "Emplois et stages",
-      description: "Offres d'emploi de la métropole",
-      icon: <Briefcase className="w-5 h-5" />,
-      href: "/mairie/services#emplois"
-    },
-    {
-      title: "Travaux en cours",
-      description: "Information trafic et chantiers",
-      icon: <AlertCircle className="w-5 h-5" />,
-      href: "/mairie/services#travaux"
-    },
-    {
-      title: "Déchetteries",
-      description: "Horaires et accès aux déchetteries",
-      icon: <TreePine className="w-5 h-5" />,
-      href: "/mairie/services#dechetteries"
-    },
-    {
-      title: "Les plages",
-      description: "Plages de la rade de Brest",
-      icon: <Globe className="w-5 h-5" />,
-      href: "/mairie/services#plages"
-    },
-    {
-      title: "Se déplacer",
-      description: "Transport et stationnement",
-      icon: <NavigationIcon className="w-5 h-5" />,
-      href: "/mairie/services#transport"
-    }
+const Stat = ({ value, label }) => (
+  <div className="text-center">
+    <div className="text-3xl md:text-4xl font-extrabold text-red-700">{value}</div>
+    <div className="text-xs md:text-sm text-gray-600">{label}</div>
+  </div>
+)
+
+export default function AccueilRefonte() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // Images sélectionnées (héros & mosaïque)
+  const heroImage = 'https://images.unsplash.com/photo-1706033914690-9e4eec495528?crop=entropy&cs=srgb&fm=jpg&q=85'
+  const mosaic1 = 'https://images.unsplash.com/photo-1706033914963-5b4c087b1456?crop=entropy&cs=srgb&fm=jpg&q=85'
+  const mosaic2 = 'https://images.unsplash.com/photo-1612736118792-28544332c23c?crop=entropy&cs=srgb&fm=jpg&q=85'
+  const mosaic3 = 'https://images.unsplash.com/photo-1585189241286-4d4ee9b4fdaf?crop=entropy&cs=srgb&fm=jpg&q=85'
+
+  const topLinks = [
+    { label: 'Prendre rendez-vous', href: '/mairie/services', icon: <Clock className="w-4 h-4 mr-2" /> },
+    { label: 'Signaler un problème', href: '/mairie/contact', icon: <Megaphone className="w-4 h-4 mr-2" /> },
+    { label: 'Nous contacter', href: '/mairie/contact', icon: <Phone className="w-4 h-4 mr-2" /> },
   ]
 
-  // Services principaux - Palette Rouge
-  const servicesHero = [
-    {
-      title: "Services en ligne",
-      description: "Vos démarches administratives simplifiées",
-      icon: <Globe className="w-8 h-8" />,
-      color: "red",
-      href: "/mairie/services"
-    },
-    {
-      title: "Actualités",
-      description: "Toute l'actualité de la métropole",
-      icon: <FileText className="w-8 h-8" />,
-      color: "rose",
-      href: "/mairie/actualites"
-    },
-    {
-      title: "Agenda",
-      description: "Événements et sorties à Brest",
-      icon: <Calendar className="w-8 h-8" />,
-      color: "burgundy",
-      href: "/mairie/agenda"
-    },
-    {
-      title: "La Métropole",
-      description: "Découvrir le territoire brestois",
-      icon: <MapPin className="w-8 h-8" />,
-      color: "crimson",
-      href: "/mairie/metropole"
-    }
+  const nav = [
+    { name: 'Accueil', href: '/mairie/accueil' },
+    { name: 'Démarches', href: '/mairie/services' },
+    { name: 'Actualités', href: '/mairie/actualites' },
+    { name: "Agenda", href: '/mairie/agenda' },
+    { name: 'La Métropole', href: '/mairie/metropole' },
+    { name: 'Contact', href: '/mairie/contact' },
   ]
 
-  const colorClasses = {
-    red: "bg-red-50 text-red-600 border-red-200",
-    rose: "bg-rose-50 text-rose-600 border-rose-200", 
-    burgundy: "bg-red-100 text-red-700 border-red-300",
-    crimson: "bg-red-50 text-red-700 border-red-200"
-  }
+  const quickActions = [
+    { title: "Carte d'identité & Passeport", desc: 'Rendez-vous et pièces à fournir', icon: <FileText className="w-5 h-5" />, href: '/mairie/services#carte-identite' },
+    { title: 'Urbanisme', desc: 'Permis, PLU, déclarations', icon: <Landmark className="w-5 h-5" />, href: '/mairie/services#urbanisme' },
+    { title: 'Écoles & Inscriptions', desc: 'Rythmes, cantine, périscolaire', icon: <GraduationCap className="w-5 h-5" />, href: '/mairie/services#education' },
+    { title: 'Déchets & Déchetteries', desc: 'Horaires, collecte, tri', icon: <Trees className="w-5 h-5" />, href: '/mairie/services#dechets' },
+    { title: 'Transports & Stationnement', desc: 'Bibus, parkings, vélos', icon: <Bus className="w-5 h-5" />, href: '/mairie/services#transport' },
+    { title: 'Solidarités', desc: 'CCAS, aides, santé', icon: <HeartPulse className="w-5 h-5" />, href: '/mairie/services#social' },
+  ]
+
+  const news = [
+    { tag: 'Culture', title: 'Exposition estivale au Musée des Beaux-Arts', date: '12 juillet', href: '/mairie/actualites' },
+    { tag: 'Travaux', title: 'Réaménagement du centre – phases et déviations', date: '20 juillet', href: '/mairie/actualites' },
+    { tag: 'Jeunesse', title: 'Inscriptions périscolaires : dossier en ligne', date: '25 juillet', href: '/mairie/actualites' },
+  ]
+
+  const events = [
+    { day: '18', month: 'JUL', title: 'Marché nocturne – Quai Commandant Malbert', href: '/mairie/agenda' },
+    { day: '22', month: 'JUL', title: 'Concert gratuit – Jardin Kennedy', href: '/mairie/agenda' },
+    { day: '02', month: 'AOU', title: 'Fête de quartier – Lambézellec', href: '/mairie/agenda' },
+  ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation currentPage="accueil" />
-
-      {/* Hero Section - Thème Rouge Brest */}
-      <section className="relative bg-white">
-        <div className="container mx-auto px-6 py-16">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="space-y-6">
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-sm">
-                  <MapPin className="w-4 h-4 mr-2" />
-                  Métropole de Brest • Finistère
-                </div>
-                
-                <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Ville de 
-                  <span className="text-red-600"> Brest</span>
-                </h1>
-                
-                <p className="text-xl text-gray-600 leading-relaxed">
-                  Brest métropole facilite votre quotidien et vos démarches administratives. 
-                  Retrouvez des informations pratiques et des actualités. Découvrez la richesse culturelle, 
-                  respirez l'air du large !
-                </p>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" variant="primary" href="/mairie/services">
-                  <FileText className="w-5 h-5 mr-2" />
-                  Mes démarches
-                </Button>
-                <Button size="lg" variant="outline" href="/mairie/agenda">
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Agenda
-                </Button>
-              </div>
-
-            <div className="text-center">
-              <div className="text-3xl font-bold text-red-600">140K+</div>
-              <div className="text-sm text-gray-600">Habitants</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-rose-600">8</div>
-              <div className="text-sm text-gray-600">Communes</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-red-700">24h/7j</div>
-              <div className="text-sm text-gray-600">Services</div>
-            </div>
-            </div>
-            
-            <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1561467602-bff7f676c706?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxicmVzdCUyMGJyaXR0YW55fGVufDB8fHxibHVlfDE3NTU3NzQ3ODd8MA&ixlib=rb-4.1.0&q=85"
-                alt="Brest - Vue sur la rade"
-                className="rounded-xl shadow-lg w-full h-96 object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-red-900/20 to-transparent rounded-xl"></div>
-            </div>
+    <div className="min-h-screen bg-white">
+      {/* Topbar */}
+      <div className="bg-red-700 text-white text-xs">
+        <div className="container mx-auto px-6 py-2 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Building2 className="w-4 h-4" />
+            <span className="font-semibold">Ville de Brest</span>
           </div>
-        </div>
-      </section>
-
-      {/* Accès rapides Section */}
-      <section className="py-16 bg-white border-t border-gray-100">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Accès rapides</h2>
-            <p className="text-lg text-gray-600">Les services les plus demandés</p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-            {accesRapides.map((acces, index) => (
-              <Card key={index} className="group cursor-pointer hover:scale-[1.02] transition-transform">
-                <CardHeader>
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 rounded-lg bg-red-50 text-red-600 group-hover:bg-red-100 transition-colors">
-                      {acces.icon}
-                    </div>
-                    <div className="flex-1">
-                      <CardTitle className="text-base mb-1">{acces.title}</CardTitle>
-                      <p className="text-sm text-gray-600">{acces.description}</p>
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-red-600 transition-colors" />
-                  </div>
-                </CardHeader>
-              </Card>
+          <div className="hidden md:flex items-center gap-4">
+            {topLinks.map((l, i) => (
+              <Link key={i} href={l.href} className="inline-flex items-center opacity-90 hover:opacity-100">
+                {l.icon}
+                {l.label}
+              </Link>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Services Hero Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Vos services</h2>
-            <p className="text-lg text-gray-600">Découvrez les services de la métropole brestoise</p>
-          </div>
-
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
-            {servicesHero.map((service, index) => (
-              <Card key={index} className="text-center group cursor-pointer hover:scale-[1.02] transition-all">
-                <CardHeader>
-                  <div className={`w-16 h-16 rounded-xl ${colorClasses[service.color]} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                    {service.icon}
-                  </div>
-                  <CardTitle className="mb-2">{service.title}</CardTitle>
-                  <p className="text-gray-600 text-sm mb-4">{service.description}</p>
-                  <Button variant="outline" size="sm" href={service.href} className="group-hover:bg-red-50">
-                    Découvrir
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Mise en avant */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-red-100">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/mairie/accueil" className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-red-600 shadow-sm">
+              <Building2 className="w-6 h-6 text-white" />
+            </div>
             <div>
-              <Badge className="bg-red-50 text-red-700 border border-red-200 mb-4">
-                Un été à Brest
-              </Badge>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Un été plein de (re)découvertes !
-              </h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                L'été à venir sera pour nombre d'entre nous un moment plus calme, à la faveur des longues journées, 
-                d'un soleil espéré, et d'un rythme souvent moins effréné que le reste de l'année. Visiteurs de quelques jours 
-                ou habitants de toujours, il est temps de (re)découvrir les trésors de la métropole brestoise !
-              </p>
-              <Button variant="primary" href="/mairie/agenda">
-                Voir le programme
-                <ArrowRight className="w-4 h-4 ml-2" />
+              <div className="text-lg md:text-xl font-extrabold tracking-tight text-gray-900">Brest</div>
+              <div className="text-[10px] uppercase text-red-700 font-semibold -mt-1">Mairie & Métropole</div>
+            </div>
+          </Link>
+
+          <nav className="hidden md:flex items-center gap-6">
+            {nav.map((n) => (
+              <Link key={n.name} href={n.href} className="text-sm font-medium text-gray-700 hover:text-red-700">
+                {n.name}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden md:flex items-center gap-3">
+            <Button variant="secondary" size="sm" href="/mairie/services">
+              <Search className="w-4 h-4 mr-2" /> Rechercher
+            </Button>
+            <Button variant="primary" size="sm" href="/mairie/contact">
+              <Mail className="w-4 h-4 mr-2" /> Écrire à la mairie
+            </Button>
+          </div>
+
+          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden rounded-lg border border-red-200 p-2 text-red-700">
+            <span className="sr-only">Ouvrir le menu</span>
+            ☰
+          </button>
+        </div>
+        {menuOpen && (
+          <div className="md:hidden border-t border-red-100 bg-white">
+            <div className="px-6 py-3 grid gap-2">
+              {nav.map((n) => (
+                <Link key={n.name} href={n.href} className="py-2 text-sm font-medium text-gray-700 hover:text-red-700">
+                  {n.name}
+                </Link>
+              ))}
+              <div className="flex gap-3 pt-2">
+                <Button variant="secondary" size="sm" href="/mairie/services" className="flex-1">Rechercher</Button>
+                <Button variant="primary" size="sm" href="/mairie/contact" className="flex-1">Contact</Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Hero Section – Rouge/Blanc avec image immersive */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-white" />
+        <div className="container relative mx-auto px-6 py-12 md:py-20 grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <RedPill className="mb-4">Métropole maritime • Bretagne</RedPill>
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
+              Mairie de <span className="text-red-700">Brest</span>
+            </h1>
+            <p className="mt-5 text-lg text-gray-700 leading-relaxed">
+              Démarches en ligne, informations pratiques, événements et actualités : retrouvez tout ce qui facilite votre quotidien à Brest.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <Button variant="primary" size="lg" href="/mairie/services">
+                <FileText className="w-5 h-5 mr-2" /> Mes démarches
+              </Button>
+              <Button variant="secondary" size="lg" href="/mairie/agenda">
+                <Calendar className="w-5 h-5 mr-2" /> Agenda
               </Button>
             </div>
-            
-            <div>
-              <img 
-                src="https://images.unsplash.com/photo-1705082121134-4c9314fae148?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwyfHxicmVzdCUyMGJyaXR0YW55fGVufDB8fHxibHVlfDE3NTU3NzQ3ODd8MA&ixlib=rb-4.1.0&q=85"
-                alt="Brest - Vue côtière"
-                className="rounded-xl shadow-lg w-full h-80 object-cover"
-              />
+            <div className="mt-10 grid grid-cols-3 gap-4">
+              <Stat value="140K+" label="Habitants" />
+              <Stat value="8" label="Communes" />
+              <Stat value="24/7" label="Démarches en ligne" />
+            </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-6 bg-red-100/40 blur-2xl rounded-[2rem] -z-10" />
+            <OptimizedImage src={heroImage} alt="Brest – patrimoine maritime" className="h-80 md:h-[28rem] w-full rounded-2xl shadow-2xl image-optimized" width={1280} height={720} quality={80} />
+            <div className="absolute bottom-3 left-3">
+              <RedPill className="shadow-lg">Ville & Métropole</RedPill>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer - Thème Rouge */}
-      <footer className="bg-gray-900 text-white py-12">
+      {/* Accès rapides – cartes denses et aérées */}
+      <section className="py-12 md:py-16 bg-white border-t border-red-100">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-4 gap-8">
-            <div className="col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="p-2 rounded-lg bg-red-600">
-                  <Building2 className="w-6 h-6 text-white" />
+          <div className="flex items-end justify-between mb-6 md:mb-10">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">Accès rapides</h2>
+              <p className="text-gray-600">Les démarches les plus utilisées</p>
+            </div>
+            <Button variant="ghost" href="/mairie/services" className="hidden md:inline-flex">
+              Tout voir <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+
+          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {quickActions.map((a, i) => (
+              <Link key={i} href={a.href} className="group rounded-2xl border border-red-100 p-4 hover:bg-red-50 hover:border-red-200 transition-all card-optimized">
+                <div className="w-10 h-10 rounded-lg bg-red-100 text-red-700 flex items-center justify-center mb-3 shadow-sm">
+                  {a.icon}
                 </div>
-                <div>
-                  <div className="text-xl font-bold">Ville de Brest</div>
-                  <div className="text-sm text-gray-400">Métropole • Finistère • Bretagne</div>
+                <div className="font-semibold text-gray-900 leading-snug group-hover:text-red-800">{a.title}</div>
+                <div className="text-xs text-gray-600 mt-1">{a.desc}</div>
+                <div className="mt-3 text-[11px] font-semibold text-red-700 inline-flex items-center">
+                  Accéder <ArrowRight className="w-3 h-3 ml-1" />
                 </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Mosaïque visuelle – pour éviter le côté plat */}
+      <section className="py-12 md:py-16 bg-red-50/60">
+        <div className="container mx-auto px-6 grid md:grid-cols-3 gap-4 md:gap-6 items-stretch">
+          <OptimizedImage src={mosaic1} alt="Voiliers – Brest" className="h-56 md:h-72 w-full rounded-2xl shadow-lg" width={800} height={520} />
+          <OptimizedImage src={mosaic2} alt="Ville maritime" className="h-56 md:h-72 w-full rounded-2xl shadow-lg" width={800} height={520} />
+          <OptimizedImage src={mosaic3} alt="Skyline portuaire" className="h-56 md:h-72 w-full rounded-2xl shadow-lg" width={800} height={520} />
+        </div>
+      </section>
+
+      {/* Actualités */}
+      <section className="py-12 md:py-16 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="flex items-end justify-between mb-6 md:mb-10">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">Actualités</h2>
+              <p className="text-gray-600">Ce qui se passe en ce moment à Brest</p>
+            </div>
+            <Button variant="ghost" href="/mairie/actualites" className="hidden md:inline-flex">
+              Toutes les actus <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+            {news.map((n, i) => (
+              <Link key={i} href={n.href} className="group rounded-2xl border border-gray-200 p-5 hover:border-red-200 hover:bg-red-50/40 transition-all card-optimized">
+                <div className="text-[11px] font-bold tracking-wide text-red-700 uppercase mb-2">{n.tag}</div>
+                <div className="font-semibold text-gray-900 group-hover:text-red-800">{n.title}</div>
+                <div className="text-xs text-gray-600 mt-1">{n.date}</div>
+                <div className="mt-4 inline-flex items-center text-sm text-red-700 font-semibold">
+                  Lire <ArrowRight className="w-4 h-4 ml-1" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Agenda – aperçu */}
+      <section className="py-12 md:py-16 bg-gradient-to-b from-red-50 to-white border-t border-red-100">
+        <div className="container mx-auto px-6">
+          <div className="flex items-end justify-between mb-6 md:mb-10">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">Agenda</h2>
+              <p className="text-gray-600">Sorties, événements, rendez-vous citoyens</p>
+            </div>
+            <Button variant="ghost" href="/mairie/agenda" className="hidden md:inline-flex">
+              Tout l'agenda <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+            {events.map((e, i) => (
+              <Link key={i} href={e.href} className="group rounded-2xl border border-red-100 p-5 bg-white hover:bg-red-50/40 hover:border-red-200 transition-all">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-lg bg-red-600 text-white flex flex-col items-center justify-center font-extrabold">
+                    <div className="text-lg leading-none">{e.day}</div>
+                    <div className="text-[10px] tracking-widest">{e.month}</div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-gray-900 group-hover:text-red-800">{e.title}</div>
+                    <div className="text-xs text-red-700 mt-1 inline-flex items-center">Voir <ArrowRight className="w-3 h-3 ml-1" /></div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bande CTA */}
+      <section className="py-12 md:py-16 bg-gray-900">
+        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h3 className="text-2xl md:text-3xl font-extrabold text-white">Une démarche à réaliser ?</h3>
+            <p className="text-gray-300 mt-2">La plupart des demandes se font en ligne en quelques minutes.</p>
+          </div>
+          <div className="flex gap-3">
+            <Button variant="dark" size="lg" href="/mairie/services"><FileText className="w-5 h-5 mr-2" /> Démarrer</Button>
+            <Button variant="secondary" size="lg" href="/mairie/contact" className="bg-white/10 text-white border-white/20 hover:bg-white/20"><Mail className="w-5 h-5 mr-2" /> Nous écrire</Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer moderne rouge/blanc */}
+      <footer className="bg-white border-t border-red-100">
+        <div className="container mx-auto px-6 py-12 grid md:grid-cols-4 gap-8">
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2 rounded-lg bg-red-600 shadow-sm"><Building2 className="w-6 h-6 text-white" /></div>
+              <div>
+                <div className="text-lg font-extrabold">Ville de Brest</div>
+                <div className="text-xs uppercase text-red-700 font-semibold -mt-1">Métropole • Finistère</div>
               </div>
-              <p className="text-gray-300 mb-4 leading-relaxed">
-                Brest métropole facilite votre quotidien et vos démarches administratives. 
-                Une métropole maritime de 140 000 habitants au bout du Finistère.
-              </p>
             </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Services</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><Link href="/mairie/services" className="hover:text-white transition-colors">Mes démarches</Link></li>
-                <li><Link href="/mairie/agenda" className="hover:text-white transition-colors">Agenda</Link></li>
-                <li><Link href="/mairie/actualites" className="hover:text-white transition-colors">Actualités</Link></li>
-                <li><Link href="/mairie/contact" className="hover:text-white transition-colors">Contact</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li className="flex items-center">
-                  <Phone className="w-4 h-4 mr-2" />
-                  02 98 00 80 80
-                </li>
-                <li className="flex items-center">
-                  <Mail className="w-4 h-4 mr-2" />
-                  contact@brest.fr
-                </li>
-                <li className="flex items-start">
-                  <MapPin className="w-4 h-4 mr-2 mt-0.5" />
-                  2 rue Frézier<br />29200 Brest
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-            <p className="text-sm text-gray-400">
-              &copy; 2025 Ville de Brest • Site de démonstration moderne
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Créé avec GetYourSite.fr • Design moderne et institutionnel
+            <p className="text-sm text-gray-600 max-w-md">
+              Brest métropole facilite votre quotidien et vos démarches administratives.
             </p>
           </div>
+          <div>
+            <div className="font-semibold text-gray-900 mb-3">Services</div>
+            <ul className="space-y-2 text-sm">
+              <li><Link className="text-gray-600 hover:text-red-700" href="/mairie/services">Mes démarches</Link></li>
+              <li><Link className="text-gray-600 hover:text-red-700" href="/mairie/agenda">Agenda</Link></li>
+              <li><Link className="text-gray-600 hover:text-red-700" href="/mairie/actualites">Actualités</Link></li>
+              <li><Link className="text-gray-600 hover:text-red-700" href="/mairie/contact">Contact</Link></li>
+            </ul>
+          </div>
+          <div>
+            <div className="font-semibold text-gray-900 mb-3">Contact</div>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li className="flex items-center"><Phone className="w-4 h-4 mr-2" /> 02 98 00 80 80</li>
+              <li className="flex items-center"><Mail className="w-4 h-4 mr-2" /> contact@brest.fr</li>
+              <li className="flex items-start"><MapPin className="w-4 h-4 mr-2 mt-0.5" /> 2 rue Frézier, 29200 Brest</li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-red-100 py-4 text-center text-xs text-gray-500">
+          © 2025 Ville de Brest — Refonte de démonstration (rouge/blanc)
         </div>
       </footer>
     </div>
