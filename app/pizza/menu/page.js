@@ -395,7 +395,9 @@ export default function MenuPage() {
                 <CardHeader>
                   <div className="flex justify-between items-start mb-3">
                     <CardTitle className="text-xl text-gray-900">{pizza.name}</CardTitle>
-                    <div className="text-2xl font-bold text-orange-600">{pizza.price.toFixed(2)}€</div>
+                    <div className={`text-2xl font-bold ${pizza.isTest ? 'text-green-600' : 'text-orange-600'}`}>
+                      {pizza.isTest ? 'GRATUIT' : `${pizza.price.toFixed(2)}€`}
+                    </div>
                   </div>
                   <p className="text-gray-600 text-sm leading-relaxed">{pizza.description}</p>
                 </CardHeader>
