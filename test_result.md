@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Créer un site de démo pour une pizzeria sur pizza.getyoursite.fr et un site de démo pour une mairie sur mairie.getyoursite.fr, et adapter les scripts de déploiement pour supporter plusieurs domaines tout en gardant la compatibilité avec le site principal."
+user_problem_statement: "Refonte complète et moderne du site de la mairie de Brest (basé sur brest.fr) avec une touche de modernité tout en gardant le contenu fidèle au site original. Séparer les pages pour une présentation potentielle de vente à la ville de Brest."
 
 backend:
   - task: "API Contact Compatible Multi-Domaines"
