@@ -546,6 +546,10 @@ echo "• pm2 logs ${PROJECT_NAME} - Logs du site principal"
 if [[ "$DEPLOY_PIZZA" == "true" || "$DEPLOY_MAIRIE" == "true" ]]; then
     echo "• Sites démo accessibles via même instance PM2"
 fi
+if [[ "$CONFIGURE_STRIPE" == "true" ]]; then
+    echo "• Test API paiement: curl -X POST -H 'Content-Type: application/json' -d '{\"package_id\":\"margherita\"}' https://pizza.getyoursite.fr/api/payments/checkout"
+    echo "• Logs paiements: grep 'payment' /var/log/pm2/${PROJECT_NAME}.log"
+fi
 echo "• pm2 restart ${PROJECT_NAME} - Redémarrer l'application"
 echo "• systemctl status nginx - Statut Nginx"
 echo "• nginx -t - Tester la configuration Nginx"
