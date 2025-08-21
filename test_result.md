@@ -107,11 +107,11 @@ user_problem_statement: "Refonte complète et moderne du site de la mairie de Br
 backend:
   - task: "API Contact Compatible Multi-Domaines"
     implemented: true
-    working: true
+    working: false
     file: "/app/app/api/contact/route.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
         - working: true
           agent: "main"
