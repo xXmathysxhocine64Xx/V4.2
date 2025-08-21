@@ -93,7 +93,7 @@ export default function AccueilRefonte() {
     { title: "Carte d'identité & Passeport", desc: 'Rendez-vous et pièces à fournir', icon: <FileText className="w-5 h-5" />, href: '/mairie/services#carte-identite' },
     { title: 'Urbanisme', desc: 'Permis, PLU, déclarations', icon: <Landmark className="w-5 h-5" />, href: '/mairie/services#urbanisme' },
     { title: 'Écoles & Inscriptions', desc: 'Rythmes, cantine, périscolaire', icon: <GraduationCap className="w-5 h-5" />, href: '/mairie/services#education' },
-    { title: 'Déchets & Déchetteries', desc: 'Horaires, collecte, tri', icon: <Trees className="w-5 h-5" />, href: '/mairie/services#dechets' },
+    { title: 'Déchets & Déchetteries', desc: 'Horaires, collecte, tri', icon: <TreePine className="w-5 h-5" />, href: '/mairie/services#dechets' },
     { title: 'Transports & Stationnement', desc: 'Bibus, parkings, vélos', icon: <Bus className="w-5 h-5" />, href: '/mairie/services#transport' },
     { title: 'Solidarités', desc: 'CCAS, aides, santé', icon: <HeartPulse className="w-5 h-5" />, href: '/mairie/services#social' },
   ]
