@@ -12,6 +12,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://unsplash.com" crossOrigin="anonymous" />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )

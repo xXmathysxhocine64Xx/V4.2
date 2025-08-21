@@ -69,10 +69,10 @@ export default function AccueilRefonte() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   // Images sélectionnées (héros & mosaïque)
-  const heroImage = 'https://images.unsplash.com/photo-1706033914690-9e4eec495528?crop=entropy&cs=srgb&fm=jpg&q=85'
-  const mosaic1 = 'https://images.unsplash.com/photo-1706033914963-5b4c087b1456?crop=entropy&cs=srgb&fm=jpg&q=85'
-  const mosaic2 = 'https://images.unsplash.com/photo-1612736118792-28544332c23c?crop=entropy&cs=srgb&fm=jpg&q=85'
-  const mosaic3 = 'https://images.unsplash.com/photo-1585189241286-4d4ee9b4fdaf?crop=entropy&cs=srgb&fm=jpg&q=85'
+  const heroImage = 'https://images.unsplash.com/photo-1706033914690-9e4eec495528'
+  const mosaic1 = 'https://images.unsplash.com/photo-1706033914963-5b4c087b1456'
+  const mosaic2 = 'https://images.unsplash.com/photo-1612736118792-28544332c23c'
+  const mosaic3 = 'https://images.unsplash.com/photo-1585189241286-4d4ee9b4fdaf'
 
   const topLinks = [
     { label: 'Prendre rendez-vous', href: '/mairie/services', icon: <Clock className="w-4 h-4 mr-2" /> },
@@ -210,7 +210,7 @@ export default function AccueilRefonte() {
           </div>
           <div className="relative">
             <div className="absolute -inset-6 bg-red-100/40 blur-2xl rounded-[2rem] -z-10" />
-            <OptimizedImage src={heroImage} alt="Brest – patrimoine maritime" className="h-80 md:h-[28rem] w-full rounded-2xl shadow-2xl image-optimized" width={1280} height={720} quality={80} />
+            <OptimizedImage src={heroImage} alt="Brest – patrimoine maritime" className="h-80 md:h-[28rem] w-full rounded-2xl shadow-2xl image-optimized" width={1280} height={720} quality={85} priority loading="eager" />
             <div className="absolute bottom-3 left-3">
               <RedPill className="shadow-lg">Ville & Métropole</RedPill>
             </div>
@@ -251,9 +251,9 @@ export default function AccueilRefonte() {
       {/* Mosaïque visuelle – pour éviter le côté plat */}
       <section className="py-12 md:py-16 bg-red-50/60">
         <div className="container mx-auto px-6 grid md:grid-cols-3 gap-4 md:gap-6 items-stretch">
-          <OptimizedImage src={mosaic1} alt="Voiliers – Brest" className="h-56 md:h-72 w-full rounded-2xl shadow-lg" width={800} height={520} />
-          <OptimizedImage src={mosaic2} alt="Ville maritime" className="h-56 md:h-72 w-full rounded-2xl shadow-lg" width={800} height={520} />
-          <OptimizedImage src={mosaic3} alt="Skyline portuaire" className="h-56 md:h-72 w-full rounded-2xl shadow-lg" width={800} height={520} />
+          <OptimizedImage src={mosaic1} alt="Voiliers – Brest" className="h-56 md:h-72 w-full rounded-2xl shadow-lg" width={800} height={520} quality={80} />
+          <OptimizedImage src={mosaic2} alt="Ville maritime" className="h-56 md:h-72 w-full rounded-2xl shadow-lg" width={800} height={520} quality={80} />
+          <OptimizedImage src={mosaic3} alt="Skyline portuaire" className="h-56 md:h-72 w-full rounded-2xl shadow-lg" width={800} height={520} quality={80} />
         </div>
       </section>
 
