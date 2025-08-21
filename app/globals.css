@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './styles/edge-optimizations.css';
 
 body {
     margin: 0;
@@ -14,6 +15,31 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
+}
+
+/* Optimisations spécifiques pour les performances Edge */
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+/* Amélioration du rendering sur Edge */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Performance des animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .App {
@@ -54,8 +80,6 @@ code {
         transform: rotate(360deg);
     }
 }
-
-
 
 @layer base {
   body {
