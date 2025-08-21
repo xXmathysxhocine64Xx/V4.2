@@ -207,6 +207,9 @@ frontend:
         - working: true
           agent: "main"
           comment: "Script deploy-vps-fixed.sh étendu pour supporter 3 sites : (1) Site principal getyoursite.fr obligatoire, (2) Pizza.getyoursite.fr optionnel, (3) Mairie.getyoursite.fr optionnel avec questions interactives. Configuration SSL automatique pour tous les domaines sélectionnés, redirections Nginx adaptatives selon les choix utilisateur."
+        - working: true
+          agent: "main"
+          comment: "✅ CORRECTION SYNTAXE - Erreur de syntaxe 'unexpected end of file' corrigée à la ligne 448. Le problème était un EOF mal formaté dans la section de configuration Nginx (${REDIRECTIONS}EOF au lieu de ${REDIRECTIONS} + nouvelle ligne + EOF). Scripts obsolètes supprimés (deploy-vps.sh, deploy-simple.sh, fix-nginx-condition.sh, fix-nginx.sh). Script maintenant syntaxiquement correct et prêt pour l'utilisation."
 
   - task: "Script Correction Nginx Complet"
     implemented: true
