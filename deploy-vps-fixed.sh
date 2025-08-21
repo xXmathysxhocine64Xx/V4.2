@@ -254,7 +254,8 @@ fi
 if [[ -n "$REDIRECTIONS" ]]; then
 cat >> /etc/nginx/sites-available/${DOMAIN} << EOF
         
-${REDIRECTIONS}EOF
+${REDIRECTIONS}
+EOF
 fi
 
 cat >> /etc/nginx/sites-available/${DOMAIN} << EOF
