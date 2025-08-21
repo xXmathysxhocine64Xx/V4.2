@@ -31,7 +31,8 @@ import {
   ArrowRight,
   Star,
   Award,
-  Navigation
+  Navigation as NavigationIcon,
+  Search
 } from 'lucide-react'
 
 // Composants UI modernes et institutionnels
