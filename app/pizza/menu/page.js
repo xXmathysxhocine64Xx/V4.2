@@ -13,6 +13,8 @@ import {
   Menu as MenuIcon
 } from 'lucide-react'
 import Link from 'next/link'
+import OptimizedImage from '../components/OptimizedImage'
+import useEdgeOptimization from '../hooks/useEdgeOptimization'
 
 // Composants UI modernes
 const Button = ({ children, className = "", variant = "default", size = "default", onClick, loading, disabled }) => {
@@ -92,8 +94,9 @@ export default function MenuPage() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [paymentStatus, setPaymentStatus] = useState(null)
   const [isProcessingPayment, setIsProcessingPayment] = useState(false)
+  const { getOptimizedClasses, shouldReduceAnimations } = useEdgeOptimization()
 
-  // Menu des pizzas Lucky Pizza Lannilis
+  // Menu des pizzas Lucky Pizza Lannilis avec images optimisées
   const pizzaMenu = [
     {
       id: 1,
@@ -198,93 +201,39 @@ export default function MenuPage() {
           package_id: packageId,
           metadata: {
             pizza_name: pizzaName,
-            restaurant: 'Lucky Pizza Lannilis'
+            source: 'menu_page'
           }
         })
       })
 
       if (!response.ok) {
-        throw new Error('Erreur lors de la création du paiement')
+        throw new Error('Erreur lors de la création de la session')
       }
 
       const data = await response.json()
       
       if (data.url) {
-        // Redirection vers Stripe Checkout
-        window.location.href = data.url
+        setPaymentStatus({
+          type: 'success',
+          message: 'Redirection vers le paiement...'
+        })
+        
+        // Attendre un peu pour que l'utilisateur voie le message
+        setTimeout(() => {
+          window.location.href = data.url
+        }, 1000)
       } else {
-        throw new Error('URL de paiement non reçue')
+        throw new Error('Aucune URL de paiement reçue')
       }
     } catch (error) {
-      console.error('Erreur de paiement:', error)
-      setPaymentStatus({ type: 'error', message: 'Erreur lors du paiement: ' + error.message })
-    } finally {
+      console.error('Erreur paiement:', error)
+      setPaymentStatus({
+        type: 'error',
+        message: 'Erreur lors du paiement. Veuillez réessayer.'
+      })
       setIsProcessingPayment(false)
     }
   }
-
-  // Polling du statut de paiement
-  const pollPaymentStatus = async (sessionId, attempts = 0) => {
-    const maxAttempts = 5
-    const pollInterval = 2000
-
-    if (attempts >= maxAttempts) {
-      setPaymentStatus({ 
-        type: 'error', 
-        message: 'Vérification du paiement expirée. Veuillez vérifier votre email.' 
-      })
-      return
-    }
-
-    try {
-      const response = await fetch(`/api/payments/status/${sessionId}`)
-      if (!response.ok) {
-        throw new Error('Erreur lors de la vérification')
-      }
-
-      const data = await response.json()
-      
-      if (data.payment_status === 'paid') {
-        setPaymentStatus({ 
-          type: 'success', 
-          message: 'Paiement réussi ! Merci pour votre commande.' 
-        })
-        setCart([]) // Vider le panier
-        return
-      } else if (data.status === 'expired') {
-        setPaymentStatus({ 
-          type: 'error', 
-          message: 'Session de paiement expirée. Veuillez recommencer.' 
-        })
-        return
-      }
-
-      // Si le paiement est toujours en cours, continuer le polling
-      setPaymentStatus({ 
-        type: 'pending', 
-        message: 'Traitement du paiement en cours...' 
-      })
-      setTimeout(() => pollPaymentStatus(sessionId, attempts + 1), pollInterval)
-    } catch (error) {
-      console.error('Erreur lors de la vérification:', error)
-      setPaymentStatus({ 
-        type: 'error', 
-        message: 'Erreur de vérification. Veuillez réessayer.' 
-      })
-    }
-  }
-
-  // Vérifier si on revient de Stripe
-  useEffect(() => {
-    const sessionId = getUrlParameter('session_id')
-    if (sessionId) {
-      setPaymentStatus({ 
-        type: 'pending', 
-        message: 'Vérification du paiement...' 
-      })
-      pollPaymentStatus(sessionId)
-    }
-  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
@@ -312,15 +261,15 @@ export default function MenuPage() {
               {/* Panier */}
               <Button 
                 variant="outline" 
-                className="relative"
                 onClick={() => setIsCartOpen(true)}
+                className="relative"
               >
-                <ShoppingCart className="w-4 h-4 mr-2" />
+                <ShoppingCart className="w-5 h-5 mr-2" />
                 Panier
                 {getCartItemsCount() > 0 && (
-                  <Badge className="absolute -top-2 -right-2 bg-orange-600 text-white text-xs w-5 h-5 flex items-center justify-center p-0 rounded-full">
+                  <span className="absolute -top-2 -right-2 bg-orange-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
                     {getCartItemsCount()}
-                  </Badge>
+                  </span>
                 )}
               </Button>
 
@@ -345,7 +294,7 @@ export default function MenuPage() {
         </div>
       </nav>
 
-      {/* Status de paiement */}
+      {/* Notification de paiement */}
       {paymentStatus && (
         <div className={`fixed top-20 left-4 right-4 z-50 p-4 rounded-lg shadow-lg ${
           paymentStatus.type === 'success' 
@@ -367,7 +316,7 @@ export default function MenuPage() {
         </div>
       )}
 
-      {/* Menu Section */}
+      {/* Menu Section - Optimisé pour Edge */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
@@ -384,8 +333,16 @@ export default function MenuPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {pizzaMenu.map((pizza) => (
-              <Card key={pizza.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 group">
+            {pizzaMenu.map((pizza, index) => (
+              <Card 
+                key={pizza.id} 
+                className={getOptimizedClasses(
+                  "overflow-hidden group",
+                  shouldReduceAnimations 
+                    ? "hover:shadow-xl transition-shadow duration-300"
+                    : "hover:shadow-xl transition-all duration-300"
+                )}
+              >
                 {pizza.popular && (
                   <div className="absolute top-4 left-4 z-10">
                     <Badge variant="popular" className="shadow-md">
@@ -393,14 +350,30 @@ export default function MenuPage() {
                     </Badge>
                   </div>
                 )}
+                
                 <div className="relative h-56 overflow-hidden">
-                  <img 
+                  {/* Image optimisée avec lazy loading intelligent */}
+                  <OptimizedImage
                     src={pizza.image}
                     alt={pizza.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    className={getOptimizedClasses(
+                      "w-full h-full",
+                      shouldReduceAnimations 
+                        ? "group-hover:scale-105 transition-transform duration-200"
+                        : "group-hover:scale-110 transition-transform duration-300"
+                    )}
+                    width={400}
+                    height={224}
+                    quality={80}
+                    priority={index < 3} // Précharger les 3 premières images
+                    loading={index < 3 ? "eager" : "lazy"}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  {!shouldReduceAnimations && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  )}
                 </div>
+                
                 <CardHeader>
                   <div className="flex justify-between items-start mb-3">
                     <CardTitle className="text-xl text-gray-900">{pizza.name}</CardTitle>
@@ -408,14 +381,23 @@ export default function MenuPage() {
                   </div>
                   <p className="text-gray-600 text-sm leading-relaxed">{pizza.description}</p>
                 </CardHeader>
+                
                 <CardContent>
                   <div className="flex gap-3">
                     <Button 
                       onClick={() => addToCart(pizza)}
-                      className="flex-1 group/btn"
+                      className={getOptimizedClasses(
+                        "flex-1",
+                        shouldReduceAnimations ? "" : "group/btn"
+                      )}
                       size="default"
                     >
-                      <Plus className="w-4 h-4 mr-2 group-hover/btn:rotate-90 transition-transform" />
+                      <Plus className={getOptimizedClasses(
+                        "w-4 h-4 mr-2",
+                        shouldReduceAnimations 
+                          ? "transition-colors" 
+                          : "group-hover/btn:rotate-90 transition-transform"
+                      )} />
                       Ajouter au panier
                     </Button>
                     <Button 
@@ -435,6 +417,78 @@ export default function MenuPage() {
         </div>
       </section>
 
+      {/* Panier modal */}
+      {isCartOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b">
+              <h2 className="text-2xl font-bold text-gray-900">Votre Panier</h2>
+              <Button variant="ghost" onClick={() => setIsCartOpen(false)}>
+                <X className="w-6 h-6" />
+              </Button>
+            </div>
+
+            <div className="p-6 overflow-y-auto max-h-96">
+              {cart.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-6xl mb-4">🍕</div>
+                  <p className="text-gray-600 text-lg">Votre panier est vide</p>
+                  <Button 
+                    onClick={() => setIsCartOpen(false)}
+                    className="mt-4"
+                  >
+                    Parcourir le menu
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {cart.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900">{item.name}</h3>
+                        <p className="text-gray-600 text-sm">{item.price.toFixed(2)}€</p>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        >
+                          <Minus className="w-4 h-4" />
+                        </Button>
+                        <span className="font-semibold min-w-[2rem] text-center">{item.quantity}</span>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        >
+                          <Plus className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {cart.length > 0 && (
+              <div className="p-6 border-t bg-gray-50">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-xl font-bold">Total:</span>
+                  <span className="text-2xl font-bold text-orange-600">
+                    {getCartTotal().toFixed(2)}€
+                  </span>
+                </div>
+                <Button className="w-full" size="default">
+                  <CreditCard className="w-4 h-4 mr-2" />
+                  Passer commande
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 px-4">
         <div className="container mx-auto max-w-7xl">
@@ -453,6 +507,10 @@ export default function MenuPage() {
                 Pizzas artisanales, ingrédients d'exception, four à bois traditionnel. 
                 Une expérience authentique depuis 2018.
               </p>
+              <div className="text-sm text-gray-400">
+                <p>🍕 Site de démonstration - Refonte moderne par GetYourSite</p>
+                <p>Exemple de ce que nous créons pour votre business</p>
+              </div>
             </div>
             
             <div>
@@ -481,80 +539,6 @@ export default function MenuPage() {
           </div>
         </div>
       </footer>
-
-      {/* Panier Modal */}
-      {isCartOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full max-h-[80vh] overflow-y-auto shadow-2xl">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-900">Votre Panier</h3>
-                <Button variant="ghost" onClick={() => setIsCartOpen(false)}>
-                  <X className="w-5 h-5" />
-                </Button>
-              </div>
-              
-              {cart.length === 0 ? (
-                <div className="text-center py-8">
-                  <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-500">Votre panier est vide</p>
-                </div>
-              ) : (
-                <>
-                  <div className="space-y-4 mb-6">
-                    {cart.map((item) => (
-                      <div key={item.id} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg">
-                        <img 
-                          src={item.image} 
-                          alt={item.name}
-                          className="w-16 h-16 object-cover rounded-lg"
-                        />
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900">{item.name}</h4>
-                          <p className="text-sm text-gray-600">{item.price.toFixed(2)}€</p>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          >
-                            <Minus className="w-3 h-3" />
-                          </Button>
-                          <span className="w-8 text-center font-medium">{item.quantity}</span>
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          >
-                            <Plus className="w-3 h-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="border-t pt-6">
-                    <div className="flex justify-between items-center mb-6">
-                      <span className="text-xl font-bold text-gray-900">Total:</span>
-                      <span className="text-xl font-bold text-orange-600">
-                        {getCartTotal().toFixed(2)}€
-                      </span>
-                    </div>
-                    <Button className="w-full" size="lg">
-                      <CreditCard className="w-4 h-4 mr-2" />
-                      Commander Maintenant
-                    </Button>
-                    <p className="text-xs text-gray-500 text-center mt-3">
-                      Paiement sécurisé par Stripe - Livraison en 25-30 min
-                    </p>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
