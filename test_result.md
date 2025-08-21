@@ -158,6 +158,9 @@ backend:
         - working: true
           agent: "testing"
           comment: "✅ LUCKY PIZZA PAYMENT CHECKOUT FULLY TESTED AND WORKING - Comprehensive testing completed for Stripe payment integration. All critical tests successful: (1) POST /api/payments/checkout creates valid Stripe checkout sessions for all 6 predefined packages (margherita €12.90, napoletana €15.90, quattro_formaggi €18.90, diavola €17.90, vegetariana €16.90, prosciutto €19.90), (2) Server-side amount enforcement working - client cannot override predefined amounts (security verified), (3) Package validation working - only predefined package_ids accepted, (4) Dynamic success/cancel URLs generated correctly based on request origin, (5) MongoDB transaction records created with all required fields (session_id, package_id, amount, currency, payment_status, metadata), (6) Stripe API integration working with emergentintegrations library, (7) All checkout sessions return valid Stripe URLs and session IDs. Minor: Error handling returns 500 instead of 400 for invalid packages (non-critical as core functionality works perfectly)."
+        - working: true
+          agent: "main"
+          comment: "✅ PIZZA GRATUITE DE TEST AJOUTÉE - Nouvelle fonctionnalité pour tester le système sans frais réels : (1) Package 'test_free' ajouté avec prix 0€, (2) Traitement spécial en JavaScript - bypass complet de Stripe pour les commandes gratuites, (3) Génération automatique d'un faux session_id de test, (4) Redirection directe vers la page de succès sans paiement, (5) Réponse immédiate avec statut 'test_success', (6) Perfect pour valider l'intégration avant mise en production. La pizza gratuite permet aux utilisateurs de tester complètement le flux de commande sans configuration Stripe ni coûts."
 
   - task: "API Payment Status Lucky Pizza"
     implemented: true
