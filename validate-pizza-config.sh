@@ -38,6 +38,20 @@ else
     echo -e "${YELLOW}⚠️  API Paiements accessible mais nécessite configuration Stripe${NC}"
 fi
 
+# Test de la pizza gratuite
+echo -e "\n${BLUE}2.1. Test Pizza Gratuite${NC}"
+response=$(curl -s -X POST -H "Content-Type: application/json" \
+   -d '{"package_id":"test_free"}' http://localhost:3000/api/payments/checkout 2>/dev/null)
+
+if echo "$response" | grep -q "test_success"; then
+    echo -e "${GREEN}✅ Pizza gratuite de test fonctionnelle${NC}"
+    echo -e "${GREEN}✅ Commande automatique sans paiement Stripe${NC}"
+elif echo "$response" | grep -q "error"; then
+    echo -e "${YELLOW}⚠️  Pizza gratuite configurée mais erreur dans le traitement${NC}"
+else
+    echo -e "${RED}❌ Pizza gratuite non disponible${NC}"
+fi
+
 # Test configuration Stripe
 echo -e "\n${BLUE}3. Vérification Configuration Stripe${NC}"
 if [ -f ".env" ]; then
