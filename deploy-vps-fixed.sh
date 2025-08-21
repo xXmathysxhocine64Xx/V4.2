@@ -378,7 +378,7 @@ fi
 
 # 13. Configuration SSL (optionnelle)
 echo -e "\n${BLUE}🔐 Configuration SSL avec Let's Encrypt...${NC}"
-read -p "Voulez-vous configurer SSL automatiquement ? (o/n): " -n 1 -r
+read -t 30 -p "Voulez-vous configurer SSL automatiquement ? (o/n): " -n 1 -r || REPLY="n"
 echo
 
 if [[ $REPLY =~ ^[Oo]$ ]]; then
