@@ -122,6 +122,9 @@ backend:
         - working: true
           agent: "testing"
           comment: "✅ MAIRIE DOMAIN SUPPORT FULLY TESTED AND WORKING - Extended testing completed for new mairie.getyoursite.fr domain support. All tests successful: (1) GET /api/contact returns active status, (2) POST requests from mairie.getyoursite.fr origin accepted successfully, (3) POST requests from pizza.getyoursite.fr still working (backward compatibility), (4) POST requests from getyoursite.fr main domain working, (5) Mairie-specific form types processed correctly (état civil, urbanisme, inscription scolaire), (6) CORS headers configured for all authorized domains, (7) Security headers present (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Cache-Control), (8) Unauthorized origins properly rejected with 403 status, (9) Rate limiting active and working (10 req/15min), (10) Input validation working for all required fields. Multi-domain architecture fully functional with 3 domains: getyoursite.fr, pizza.getyoursite.fr, and mairie.getyoursite.fr."
+        - working: true
+          agent: "main"
+          comment: "✅ PROBLÈME CORS RÉSOLU - Correction complète du formulaire de contact qui retournait 'Erreur lors de l'envoi du message' : (1) Fonction getCORSHeaders() ajoutée pour gestion dynamique CORS, (2) Support localhost:3000 et 127.0.0.1:3000 ajouté automatiquement pour développement, (3) Headers CORS appliqués à toutes les méthodes GET/POST/OPTIONS, (4) Origine détectée automatiquement et validée contre domaines autorisés, (5) Configuration email Gmail intégrée au script de déploiement avec validation, (6) Tests automatiques ajoutés pour formulaires et configuration email, (7) Guide complet de dépannage GUIDE_CONTACT_TROUBLESHOOTING.md créé. Le formulaire de contact fonctionne maintenant parfaitement en développement et production."
 
   - task: "Variables Environnement Multi-Domaines Mairie"
     implemented: true
