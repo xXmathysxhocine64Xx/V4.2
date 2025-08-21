@@ -528,46 +528,92 @@ export default function MairiePage() {
         </div>
       </section>
 
-      {/* Démarches Section */}
-      <section id="demarches" className="py-20 px-4 bg-blue-600 text-white">
-        <div className="container mx-auto max-w-6xl">
+      {/* Démarches Section Tech */}
+      <section id="demarches" className="relative py-24 px-6 bg-gradient-to-br from-indigo-900/50 to-purple-900/50 backdrop-blur-sm">
+        <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Démarches en Ligne
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-400/30 text-cyan-200 text-sm mb-6">
+              <Zap className="w-4 h-4 mr-2" />
+              Technologies Émergentes
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+                Démarches
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                Nouvelle Génération
+              </span>
             </h2>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Simplifiez vos démarches administratives depuis chez vous, 24h/24 et 7j/7
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Découvrez nos services administratifs révolutionnés par l'IA, la blockchain et les technologies immersives
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
             {demarches.map((demarche, index) => (
-              <Card key={index} className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 transition-all duration-300">
-                <CardHeader className="pb-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <FileText className="w-6 h-6" />
+              <Card key={index} className="group relative overflow-hidden bg-gradient-to-br from-white/10 to-white/5 border-white/20">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <CardHeader className="relative z-10 pb-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 rounded-xl bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-400/30">
+                      {demarche.icon}
+                    </div>
                     {demarche.status === 'available' ? (
-                      <CheckCircle className="w-5 h-5 text-green-400" />
+                      <div className="flex items-center space-x-1">
+                        <CheckCircle className="w-5 h-5 text-green-400" />
+                        <span className="text-xs text-green-400 font-medium">ACTIF</span>
+                      </div>
                     ) : (
-                      <AlertCircle className="w-5 h-5 text-yellow-400" />
+                      <div className="flex items-center space-x-1">
+                        <AlertCircle className="w-5 h-5 text-yellow-400" />
+                        <span className="text-xs text-yellow-400 font-medium">BIENTÔT</span>
+                      </div>
                     )}
                   </div>
-                  <CardTitle className="text-base">
+                  
+                  <CardTitle className="text-white text-base mb-3 group-hover:scale-105 transition-transform duration-300">
                     {demarche.title}
                   </CardTitle>
-                  <p className="text-blue-100 text-sm">{demarche.description}</p>
+                  <p className="text-blue-100 text-sm leading-relaxed">{demarche.description}</p>
                 </CardHeader>
+                
                 <CardContent>
                   <Button 
-                    variant="outline" 
-                    className="w-full border-white text-white hover:bg-white hover:text-blue-600"
+                    variant={demarche.status === 'available' ? 'futuristic' : 'outline'}
+                    className={`w-full ${demarche.status === 'coming' ? 'opacity-50' : ''} group-hover:scale-105 transition-transform duration-300`}
                     disabled={demarche.status === 'coming'}
                   >
-                    {demarche.status === 'available' ? 'Commencer' : 'Bientôt'}
+                    {demarche.status === 'available' ? (
+                      <>
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        Démarrer
+                      </>
+                    ) : (
+                      'Prochainement'
+                    )}
                   </Button>
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* Section Innovation */}
+          <div className="mt-20 text-center">
+            <div className="bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20">
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent mb-4">
+                Expérience Citoyenne Révolutionnaire
+              </h3>
+              <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+                Nos services intègrent l'IA conversationnelle, la réalité augmentée et la blockchain 
+                pour vous offrir une expérience administrative sans précédent.
+              </p>
+              <Button variant="futuristic" size="lg">
+                <Globe className="w-5 h-5 mr-2" />
+                Découvrir la démo interactive
+              </Button>
+            </div>
           </div>
         </div>
       </section>
