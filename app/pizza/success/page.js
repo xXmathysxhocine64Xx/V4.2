@@ -251,3 +251,26 @@ function PaymentSuccessContent() {
     </div>
   )
 }
+
+// Composant principal avec Suspense boundary
+export default function PaymentSuccess() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 flex items-center justify-center">
+        <Card className="max-w-md w-full mx-4 p-8 text-center">
+          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Chargement...
+          </h1>
+          <p className="text-gray-600">
+            Préparation de votre page de confirmation.
+          </p>
+        </Card>
+      </div>
+    }>
+      <PaymentSuccessContent />
+    </Suspense>
+  )
+}
