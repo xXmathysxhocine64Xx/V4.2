@@ -77,6 +77,7 @@ const CardContent = ({ children, className = "" }) => (
 
 export default function AccueilPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { getOptimizedClasses, getOptimizedStyles, shouldReduceAnimations } = useEdgeOptimization()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
