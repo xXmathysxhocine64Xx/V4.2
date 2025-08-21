@@ -61,6 +61,43 @@ if [[ $mairie_choice =~ ^[Oo]$ ]]; then
     DEPLOY_MAIRIE="true"
 fi
 
+# Configuration Stripe pour la pizzeria si déployée
+CONFIGURE_STRIPE="false"
+STRIPE_PUBLISHABLE_KEY=""
+STRIPE_SECRET_KEY=""
+STRIPE_WEBHOOK_SECRET=""
+
+if [[ "$DEPLOY_PIZZA" == "true" ]]; then
+    echo ""
+    echo -e "${YELLOW}💳 Configuration Stripe pour la pizzeria Lucky Pizza${NC}"
+    echo -e "${BLUE}La pizzeria inclut un système de commande avec paiement Stripe${NC}"
+    read -t 30 -p "Souhaitez-vous configurer Stripe maintenant ? (o/n): " stripe_choice || stripe_choice="n"
+    
+    if [[ $stripe_choice =~ ^[Oo]$ ]]; then
+        CONFIGURE_STRIPE="true"
+        echo ""
+        echo -e "${BLUE}📝 Configuration des clés Stripe${NC}"
+        echo -e "${YELLOW}Vous pouvez obtenir ces clés sur: https://dashboard.stripe.com/apikeys${NC}"
+        
+        read -t 60 -p "Clé publique Stripe (pk_test_... ou pk_live_...): " STRIPE_PUBLISHABLE_KEY || STRIPE_PUBLISHABLE_KEY=""
+        read -t 60 -p "Clé secrète Stripe (sk_test_... ou sk_live_...): " STRIPE_SECRET_KEY || STRIPE_SECRET_KEY=""
+        
+        echo ""
+        echo -e "${BLUE}🔗 Configuration Webhook Stripe (optionnel)${NC}"
+        echo -e "${YELLOW}URL du webhook: https://pizza.getyoursite.fr/api/webhook/stripe${NC}"
+        read -t 60 -p "Secret webhook Stripe (whsec_... - optionnel): " STRIPE_WEBHOOK_SECRET || STRIPE_WEBHOOK_SECRET=""
+        
+        # Validation basique des clés
+        if [[ -n "$STRIPE_SECRET_KEY" && ! "$STRIPE_SECRET_KEY" =~ ^sk_[a-zA-Z0-9_]+ ]]; then
+            echo -e "${YELLOW}⚠️  Attention: La clé secrète ne semble pas avoir le format attendu${NC}"
+        fi
+        
+        if [[ -n "$STRIPE_PUBLISHABLE_KEY" && ! "$STRIPE_PUBLISHABLE_KEY" =~ ^pk_[a-zA-Z0-9_]+ ]]; then
+            echo -e "${YELLOW}⚠️  Attention: La clé publique ne semble pas avoir le format attendu${NC}"
+        fi
+    fi
+fi
+
 if [[ "$DEPLOY_PIZZA" == "true" && "$DEPLOY_MAIRIE" == "true" ]]; then
     echo -e "${GREEN}✅ Déploiement du site principal + démo pizzeria + démo mairie${NC}"
 elif [[ "$DEPLOY_PIZZA" == "true" ]]; then
@@ -69,6 +106,10 @@ elif [[ "$DEPLOY_MAIRIE" == "true" ]]; then
     echo -e "${GREEN}✅ Déploiement du site principal + démo mairie${NC}"
 else
     echo -e "${GREEN}✅ Déploiement du site principal uniquement${NC}"
+fi
+
+if [[ "$CONFIGURE_STRIPE" == "true" ]]; then
+    echo -e "${GREEN}✅ Configuration Stripe activée${NC}"
 fi
 
 echo -e "${BLUE}📍 Répertoire du projet: ${PROJECT_DIR}${NC}"
