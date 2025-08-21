@@ -88,7 +88,8 @@ curl -X POST -H "Content-Type: application/json" \
 
 ## 🍕 Produits Prédéfinis
 
-Le système inclut 6 pizzas avec prix fixes :
+Le système inclut 7 pizzas avec prix fixes :
+- **🎁 Pizza Test Gratuite** : 0,00 € *(pour tester le système sans frais)*
 - **Margherita** : 12,90 €
 - **Napoletana** : 15,90 €
 - **Quattro Formaggi** : 18,90 €
@@ -97,6 +98,14 @@ Le système inclut 6 pizzas avec prix fixes :
 - **Prosciutto** : 19,90 €
 
 Les prix sont définis côté serveur pour la sécurité.
+
+### 🎁 Pizza Gratuite de Test
+
+La pizza gratuite permet de tester complètement le flux de commande sans paiement réel :
+- **Package ID** : `test_free`
+- **Traitement** : Commande automatiquement validée sans passer par Stripe
+- **Base de données** : Transaction enregistrée avec statut `test_success`
+- **Parfait pour** : Valider l'intégration avant la mise en production
 
 ## 🔐 Sécurité
 
