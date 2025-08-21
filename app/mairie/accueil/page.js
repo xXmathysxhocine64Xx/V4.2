@@ -210,7 +210,7 @@ export default function AccueilRefonte() {
           </div>
           <div className="relative">
             <div className="absolute -inset-6 bg-red-100/40 blur-2xl rounded-[2rem] -z-10" />
-            <OptimizedImage src={heroImage} alt="Brest – patrimoine maritime" className="h-80 md:h-[28rem] w-full rounded-2xl shadow-2xl image-optimized" width={1280} height={720} quality={85} priority loading="eager" />
+            <OptimizedImage src={heroImage} alt="Brest – patrimoine maritime" className="h-80 md:h-[28rem] w-full rounded-2xl shadow-2xl" width={1280} height={720} quality={85} priority loading="eager" />
             <div className="absolute bottom-3 left-3">
               <RedPill className="shadow-lg">Ville & Métropole</RedPill>
             </div>
