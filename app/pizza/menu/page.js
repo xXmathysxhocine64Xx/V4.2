@@ -418,16 +418,22 @@ export default function MenuPage() {
                           ? "transition-colors" 
                           : "group-hover/btn:rotate-90 transition-transform"
                       )} />
-                      Ajouter au panier
+                      {pizza.isTest ? 'Tester Gratuitement' : 'Ajouter au panier'}
                     </Button>
                     <Button 
                       onClick={() => handlePayment(pizza.package_id, pizza.name)}
                       variant="secondary"
                       size="default"
                       loading={isProcessingPayment}
-                      className="px-4"
+                      className={`px-4 ${pizza.isTest ? 'bg-green-100 text-green-700 hover:bg-green-200' : ''}`}
                     >
-                      <CreditCard className="w-4 h-4" />
+                      {pizza.isTest ? (
+                        <>
+                          <span className="text-sm">🎁</span>
+                        </>
+                      ) : (
+                        <CreditCard className="w-4 h-4" />
+                      )}
                     </Button>
                   </div>
                 </CardContent>
