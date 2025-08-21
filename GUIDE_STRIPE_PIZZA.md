@@ -81,6 +81,14 @@ curl -X POST -H "Content-Type: application/json" \
   https://pizza.getyoursite.fr/api/payments/checkout
 ```
 
+#### Test Pizza Gratuite (Aucune configuration Stripe nécessaire)
+```bash
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"package_id":"test_free"}' \
+  https://pizza.getyoursite.fr/api/payments/checkout
+```
+*Cette pizza devrait retourner `"status": "test_success"` immédiatement.*
+
 #### Test depuis le Site
 1. Visitez `https://pizza.getyoursite.fr/pizza/menu`
 2. Ajoutez une pizza au panier
