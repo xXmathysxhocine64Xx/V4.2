@@ -120,7 +120,10 @@ const getCORSHeaders = (request) => {
 
 export async function GET(request) {
   try {
-    const headers = getSecurityHeaders();
+    const headers = {
+      ...getSecurityHeaders(),
+      ...getCORSHeaders(request)
+    };
     
     return NextResponse.json({
       message: 'API Contact GetYourSite',
@@ -136,7 +139,10 @@ export async function GET(request) {
       requestId: uuidv4()
     });
     
-    const headers = getSecurityHeaders();
+    const headers = {
+      ...getSecurityHeaders(),
+      ...getCORSHeaders(request)
+    };
     return NextResponse.json(
       { error: 'Erreur serveur' },
       { status: 500, headers }
