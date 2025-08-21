@@ -468,32 +468,32 @@ class GetYourSiteBackendTester:
         """Test multiple consecutive form submissions to verify rate limiting fix"""
         test_cases = [
             {
-                "name": "Client Pizza 1",
-                "email": "client1@test.fr",
+                "name": "Marie Dubois",
+                "email": "marie.dubois@test.fr",
                 "subject": "Commande Pizza Margherita",
                 "message": "Je souhaite commander une pizza Margherita pour ce soir."
             },
             {
-                "name": "Client Pizza 2", 
-                "email": "client2@test.fr",
+                "name": "Pierre Martin", 
+                "email": "pierre.martin@test.fr",
                 "subject": "Commande Pizza Napoletana",
                 "message": "Bonjour, je voudrais une pizza Napoletana avec livraison."
             },
             {
-                "name": "Citoyen Mairie 1",
-                "email": "citoyen1@test.fr",
+                "name": "Sophie Durand",
+                "email": "sophie.durand@test.fr",
                 "subject": "Demande acte de naissance",
                 "message": "Je souhaite obtenir un acte de naissance pour mes démarches."
             },
             {
-                "name": "Citoyen Mairie 2",
-                "email": "citoyen2@test.fr", 
+                "name": "Jean Moreau",
+                "email": "jean.moreau@test.fr", 
                 "subject": "Inscription scolaire",
                 "message": "Demande d'inscription de mon enfant à l'école primaire."
             },
             {
-                "name": "Client GetYourSite",
-                "email": "client@getyoursite.fr",
+                "name": "Lucie Bernard",
+                "email": "lucie.bernard@getyoursite.fr",
                 "subject": "Demande de devis",
                 "message": "Je souhaite obtenir un devis pour la création de mon site web."
             }
@@ -530,7 +530,7 @@ class GetYourSiteBackendTester:
                     self.log_test("API Multiple Consecutive Submissions", "FAIL", f"Rate limited at submission {i+1} from {domain} - new config should prevent this")
                     return False
                 else:
-                    self.log_test("API Multiple Consecutive Submissions", "FAIL", f"Submission {i+1} failed with status {response.status_code}")
+                    self.log_test("API Multiple Consecutive Submissions", "FAIL", f"Submission {i+1} failed with status {response.status_code}: {response.text}")
                     return False
                     
                 time.sleep(0.5)  # Small delay between submissions
