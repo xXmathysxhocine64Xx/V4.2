@@ -41,7 +41,8 @@ const Card = ({ children, className = "" }) => (
   </div>
 )
 
-export default function PaymentSuccess() {
+// Composant wrapper pour useSearchParams avec Suspense
+function PaymentSuccessContent() {
   const [paymentStatus, setPaymentStatus] = useState('checking')
   const [orderDetails, setOrderDetails] = useState(null)
   const searchParams = useSearchParams()
