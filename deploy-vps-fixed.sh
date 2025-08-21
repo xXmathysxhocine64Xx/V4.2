@@ -193,47 +193,69 @@ yarn install --silent
 echo -e "${BLUE}🔨 Build de l'application...${NC}"
 
 # Configuration du fichier .env avant le build
-if [[ "$CONFIGURE_STRIPE" == "true" ]]; then
-    echo -e "${BLUE}⚙️  Configuration des variables d'environnement Stripe...${NC}"
+if [[ "$CONFIGURE_STRIPE" == "true" || "$CONFIGURE_EMAIL" == "true" ]]; then
+    echo -e "${BLUE}⚙️  Configuration des variables d'environnement...${NC}"
     
     # Backup du fichier .env actuel
     cp .env .env.backup.$(date +%Y%m%d_%H%M%S) 2>/dev/null || true
     
-    # Mise à jour des clés Stripe
-    if [[ -n "$STRIPE_SECRET_KEY" ]]; then
-        # Suppression de l'ancienne clé s'il existe
-        sed -i '/^STRIPE_API_KEY=/d' .env
-        echo "STRIPE_API_KEY=${STRIPE_SECRET_KEY}" >> .env
-        echo -e "${GREEN}✓ Clé secrète Stripe configurée${NC}"
+    # Configuration Stripe
+    if [[ "$CONFIGURE_STRIPE" == "true" ]]; then
+        if [[ -n "$STRIPE_SECRET_KEY" ]]; then
+            sed -i '/^STRIPE_API_KEY=/d' .env
+            echo "STRIPE_API_KEY=${STRIPE_SECRET_KEY}" >> .env
+            echo -e "${GREEN}✓ Clé secrète Stripe configurée${NC}"
+        fi
+        
+        if [[ -n "$STRIPE_PUBLISHABLE_KEY" ]]; then
+            sed -i '/^NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=/d' .env
+            echo "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}" >> .env
+            echo -e "${GREEN}✓ Clé publique Stripe configurée${NC}"
+        fi
+        
+        if [[ -n "$STRIPE_WEBHOOK_SECRET" ]]; then
+            sed -i '/^STRIPE_WEBHOOK_SECRET=/d' .env
+            echo "STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}" >> .env
+            echo -e "${GREEN}✓ Secret webhook Stripe configuré${NC}"
+        fi
     fi
     
-    if [[ -n "$STRIPE_PUBLISHABLE_KEY" ]]; then
-        # Suppression de l'ancienne clé s'il existe
-        sed -i '/^NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=/d' .env
-        echo "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}" >> .env
-        echo -e "${GREEN}✓ Clé publique Stripe configurée${NC}"
-    fi
-    
-    if [[ -n "$STRIPE_WEBHOOK_SECRET" ]]; then
-        # Suppression de l'ancien secret s'il existe
-        sed -i '/^STRIPE_WEBHOOK_SECRET=/d' .env
-        echo "STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}" >> .env
-        echo -e "${GREEN}✓ Secret webhook Stripe configuré${NC}"
+    # Configuration Email
+    if [[ "$CONFIGURE_EMAIL" == "true" ]]; then
+        if [[ -n "$GMAIL_USER" ]]; then
+            sed -i '/^GMAIL_USER=/d' .env
+            echo "GMAIL_USER=${GMAIL_USER}" >> .env
+            echo -e "${GREEN}✓ Adresse Gmail configurée${NC}"
+        fi
+        
+        if [[ -n "$GMAIL_APP_PASSWORD" ]]; then
+            sed -i '/^GMAIL_APP_PASSWORD=/d' .env
+            echo "GMAIL_APP_PASSWORD=${GMAIL_APP_PASSWORD}" >> .env
+            # Set recipient to same address if not specified
+            sed -i '/^GMAIL_RECIPIENT=/d' .env
+            echo "GMAIL_RECIPIENT=${GMAIL_USER}" >> .env
+            echo -e "${GREEN}✓ Mot de passe Gmail configuré${NC}"
+        fi
     fi
     
     # Configuration MongoDB pour les transactions si pas déjà présent
     if ! grep -q "MONGO_URL=" .env; then
         echo "MONGO_URL=mongodb://localhost:27017" >> .env
-        echo -e "${GREEN}✓ URL MongoDB configurée pour les transactions${NC}"
+        echo -e "${GREEN}✓ URL MongoDB configurée${NC}"
     fi
     
-    echo -e "${BLUE}📋 Résumé de la configuration Stripe:${NC}"
-    echo -e "${GREEN}• Clé secrète: ${STRIPE_SECRET_KEY:0:12}...${NC}"
-    if [[ -n "$STRIPE_PUBLISHABLE_KEY" ]]; then
-        echo -e "${GREEN}• Clé publique: ${STRIPE_PUBLISHABLE_KEY:0:12}...${NC}"
+    echo -e "${BLUE}📋 Résumé de la configuration:${NC}"
+    if [[ "$CONFIGURE_STRIPE" == "true" ]]; then
+        echo -e "${GREEN}• Stripe configuré: ${STRIPE_SECRET_KEY:0:12}...${NC}"
+        if [[ -n "$STRIPE_PUBLISHABLE_KEY" ]]; then
+            echo -e "${GREEN}• Clé publique: ${STRIPE_PUBLISHABLE_KEY:0:12}...${NC}"
+        fi
+        if [[ -n "$STRIPE_WEBHOOK_SECRET" ]]; then
+            echo -e "${GREEN}• Webhook configuré: ${STRIPE_WEBHOOK_SECRET:0:8}...${NC}"
+        fi
     fi
-    if [[ -n "$STRIPE_WEBHOOK_SECRET" ]]; then
-        echo -e "${GREEN}• Webhook configuré: ${STRIPE_WEBHOOK_SECRET:0:8}...${NC}"
+    if [[ "$CONFIGURE_EMAIL" == "true" ]]; then
+        echo -e "${GREEN}• Email configuré: ${GMAIL_USER}${NC}"
     fi
 fi
 
