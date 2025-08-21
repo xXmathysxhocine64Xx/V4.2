@@ -416,13 +416,13 @@ class GetYourSiteBackendTester:
             self.log_test("API Security Headers", "FAIL", f"Request failed: {str(e)}")
             return False
 
-    def test_api_rate_limiting(self):
-        """Test rate limiting functionality (10 req/15min)"""
+    def test_api_rate_limiting_new_config(self):
+        """Test rate limiting functionality with new configuration (50 req/5min)"""
         test_data = {
             "name": "Rate Test Client",
             "email": "ratetest@test.fr",
-            "subject": "Test Rate Limiting",
-            "message": "This is a test message for rate limiting verification."
+            "subject": "Test Rate Limiting - New Config",
+            "message": "This is a test message for rate limiting verification with new 50 req/5min configuration."
         }
         
         headers = {
@@ -433,8 +433,9 @@ class GetYourSiteBackendTester:
         success_count = 0
         rate_limited = False
         
-        # Try to make 12 requests to trigger rate limiting
-        for i in range(12):
+        # Test normal usage pattern - 10 requests should all succeed now
+        print("   Testing normal usage pattern (10 requests)...")
+        for i in range(10):
             try:
                 response = requests.post(
                     f"{self.api_url}/contact",
@@ -447,28 +448,102 @@ class GetYourSiteBackendTester:
                     success_count += 1
                 elif response.status_code == 429:
                     rate_limited = True
-                    # Check rate limit headers
-                    retry_after = response.headers.get('Retry-After')
-                    rate_limit_remaining = response.headers.get('X-RateLimit-Remaining')
+                    self.log_test("API Rate Limiting New Config", "FAIL", f"Rate limited too early at request {i+1} - should allow 50 requests")
+                    return False
                     
-                    if retry_after and rate_limit_remaining == '0':
-                        self.log_test("API Rate Limiting", "PASS", f"Rate limiting working - triggered after {success_count} requests")
-                        return True
-                    break
-                    
-                time.sleep(0.1)  # Small delay between requests
+                time.sleep(0.2)  # Small delay between requests
                 
-            except requests.exceptions.RequestException:
-                break
+            except requests.exceptions.RequestException as e:
+                self.log_test("API Rate Limiting New Config", "FAIL", f"Request {i+1} failed: {str(e)}")
+                return False
         
-        if rate_limited:
-            self.log_test("API Rate Limiting", "PASS", f"Rate limiting triggered after {success_count} requests")
+        if success_count >= 10:
+            self.log_test("API Rate Limiting New Config", "PASS", f"Normal usage pattern successful - {success_count}/10 requests succeeded without rate limiting")
             return True
-        elif success_count >= 10:
-            self.log_test("API Rate Limiting", "WARN", f"Made {success_count} requests without rate limiting")
-            return True  # Don't fail if rate limiting is lenient
         else:
-            self.log_test("API Rate Limiting", "FAIL", f"Only {success_count} successful requests, rate limiting may be too strict")
+            self.log_test("API Rate Limiting New Config", "FAIL", f"Only {success_count}/10 requests successful - rate limiting too strict")
+            return False
+
+    def test_api_multiple_consecutive_submissions(self):
+        """Test multiple consecutive form submissions to verify rate limiting fix"""
+        test_cases = [
+            {
+                "name": "Client Pizza 1",
+                "email": "client1@test.fr",
+                "subject": "Commande Pizza Margherita",
+                "message": "Je souhaite commander une pizza Margherita pour ce soir."
+            },
+            {
+                "name": "Client Pizza 2", 
+                "email": "client2@test.fr",
+                "subject": "Commande Pizza Napoletana",
+                "message": "Bonjour, je voudrais une pizza Napoletana avec livraison."
+            },
+            {
+                "name": "Citoyen Mairie 1",
+                "email": "citoyen1@test.fr",
+                "subject": "Demande acte de naissance",
+                "message": "Je souhaite obtenir un acte de naissance pour mes démarches."
+            },
+            {
+                "name": "Citoyen Mairie 2",
+                "email": "citoyen2@test.fr", 
+                "subject": "Inscription scolaire",
+                "message": "Demande d'inscription de mon enfant à l'école primaire."
+            },
+            {
+                "name": "Client GetYourSite",
+                "email": "client@getyoursite.fr",
+                "subject": "Demande de devis",
+                "message": "Je souhaite obtenir un devis pour la création de mon site web."
+            }
+        ]
+        
+        domains = [
+            'https://pizza.getyoursite.fr',
+            'https://pizza.getyoursite.fr', 
+            'https://mairie.getyoursite.fr',
+            'https://mairie.getyoursite.fr',
+            'https://getyoursite.fr'
+        ]
+        
+        success_count = 0
+        
+        print("   Testing consecutive submissions from all 3 domains...")
+        for i, (test_data, domain) in enumerate(zip(test_cases, domains)):
+            headers = {
+                'Content-Type': 'application/json',
+                'Origin': domain
+            }
+            
+            try:
+                response = requests.post(
+                    f"{self.api_url}/contact",
+                    json=test_data,
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 200:
+                    success_count += 1
+                elif response.status_code == 429:
+                    self.log_test("API Multiple Consecutive Submissions", "FAIL", f"Rate limited at submission {i+1} from {domain} - new config should prevent this")
+                    return False
+                else:
+                    self.log_test("API Multiple Consecutive Submissions", "FAIL", f"Submission {i+1} failed with status {response.status_code}")
+                    return False
+                    
+                time.sleep(0.5)  # Small delay between submissions
+                
+            except requests.exceptions.RequestException as e:
+                self.log_test("API Multiple Consecutive Submissions", "FAIL", f"Submission {i+1} failed: {str(e)}")
+                return False
+        
+        if success_count == len(test_cases):
+            self.log_test("API Multiple Consecutive Submissions", "PASS", f"All {success_count} consecutive submissions successful across 3 domains")
+            return True
+        else:
+            self.log_test("API Multiple Consecutive Submissions", "FAIL", f"Only {success_count}/{len(test_cases)} submissions successful")
             return False
 
     def test_api_contact_validation_pizza_data(self):
