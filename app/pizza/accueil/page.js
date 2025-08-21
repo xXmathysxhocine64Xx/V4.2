@@ -178,14 +178,52 @@ export default function AccueilPage() {
             </div>
             
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-amber-500 rounded-3xl transform rotate-6 opacity-20"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-3xl transform rotate-3 opacity-30"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1713393281034-c7c9b046e1d3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwaXp6YXxlbnwwfHx8fDE3NTU3Nzc0Mzh8MA&ixlib=rb-4.1.0&q=85" 
+              {/* Arrière-plans décoratifs optimisés pour Edge */}
+              <div 
+                className={getOptimizedClasses(
+                  "absolute inset-0 rounded-3xl transform opacity-20",
+                  {
+                    transform: "rotate-6",
+                    edgeTransform: shouldReduceAnimations ? "rotate-3" : "rotate-6"
+                  }
+                )}
+                style={getOptimizedStyles({
+                  background: shouldReduceAnimations 
+                    ? 'linear-gradient(45deg, #f97316, #f59e0b)' 
+                    : 'linear-gradient(90deg, #f97316, #f59e0b)'
+                })}
+              ></div>
+              <div 
+                className={getOptimizedClasses(
+                  "absolute inset-0 rounded-3xl transform opacity-30",
+                  {
+                    transform: "rotate-3",
+                    edgeTransform: shouldReduceAnimations ? "rotate-1" : "rotate-3"
+                  }
+                )}
+                style={getOptimizedStyles({
+                  background: shouldReduceAnimations 
+                    ? 'linear-gradient(45deg, #f97316, #dc2626)' 
+                    : 'linear-gradient(90deg, #f97316, #dc2626)'
+                })}
+              ></div>
+              
+              {/* Image optimisée */}
+              <OptimizedImage
+                src="https://images.unsplash.com/photo-1713393281034-c7c9b046e1d3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwaXp6YXxlbnwwfHx8fDE3NTU3Nzc0Mzh8MA&ixlib=rb-4.1.0&q=85"
                 alt="Pizza artisanale Lucky Pizza"
-                className="relative rounded-3xl shadow-2xl w-full h-[500px] object-cover"
+                className="relative rounded-3xl shadow-2xl w-full h-[500px]"
+                width={600}
+                height={500}
+                quality={85}
+                priority={true}
+                loading="eager"
               />
-              <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-4 shadow-xl">
+              
+              <div className={getOptimizedClasses(
+                "absolute -bottom-6 -right-6 bg-white rounded-2xl p-4 shadow-xl",
+                shouldReduceAnimations ? "" : "hover:shadow-2xl transition-shadow duration-200"
+              )}>
                 <div className="flex items-center space-x-2">
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                     <ChefHat className="w-6 h-6 text-green-600" />
