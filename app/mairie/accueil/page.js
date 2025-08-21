@@ -215,7 +215,7 @@ export default function AccueilPage() {
     {
       title: "Se déplacer",
       description: "Transport et stationnement",
-      icon: <Navigation className="w-5 h-5" />,
+      icon: <NavigationIcon className="w-5 h-5" />,
       href: "/mairie/services#transport"
     }
   ]
