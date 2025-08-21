@@ -40,15 +40,15 @@ import {
   Users2
 } from 'lucide-react'
 
-// Composants UI réutilisables
+// Composants UI réutilisables - Palette Rouge Brest
 const Button = ({ children, className = "", variant = "default", size = "default", onClick, type, disabled, href }) => {
   const baseStyles = "inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
   const variants = {
-    default: "bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md",
-    outline: "border border-blue-200 bg-white text-blue-600 hover:bg-blue-50 hover:border-blue-300",
-    ghost: "hover:bg-blue-50 text-blue-600",
+    default: "bg-red-600 text-white hover:bg-red-700 shadow-sm hover:shadow-md",
+    outline: "border border-red-200 bg-white text-red-600 hover:bg-red-50 hover:border-red-300",
+    ghost: "hover:bg-red-50 text-red-600",
     secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-    primary: "bg-blue-700 text-white hover:bg-blue-800 shadow-lg"
+    primary: "bg-red-700 text-white hover:bg-red-800 shadow-lg"
   }
   const sizes = {
     default: "h-10 px-6 py-2",
@@ -109,7 +109,7 @@ const Badge = ({ children, className = "" }) => (
   </span>
 )
 
-// Composant Navigation
+// Composant Navigation - Thème Rouge
 const Navigation = ({ currentPage = "actualites" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -127,12 +127,12 @@ const Navigation = ({ currentPage = "actualites" }) => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           <Link href="/mairie/accueil" className="flex items-center space-x-3">
-            <div className="p-2 rounded-lg bg-blue-600">
+            <div className="p-2 rounded-lg bg-red-600">
               <Building2 className="w-6 h-6 text-white" />
             </div>
             <div>
               <div className="text-xl font-bold text-gray-900">Ville de Brest</div>
-              <div className="text-xs text-blue-600">Métropole • Finistère</div>
+              <div className="text-xs text-red-600">Métropole • Finistère</div>
             </div>
           </Link>
           
@@ -141,8 +141,8 @@ const Navigation = ({ currentPage = "actualites" }) => {
               <Link
                 key={item.id}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                  currentPage === item.id ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
+                className={`text-sm font-medium transition-colors hover:text-red-600 ${
+                  currentPage === item.id ? 'text-red-600 border-b-2 border-red-600 pb-1' : 'text-gray-700'
                 }`}
               >
                 {item.name}
@@ -172,7 +172,7 @@ const Navigation = ({ currentPage = "actualites" }) => {
               <Link
                 key={item.id}
                 href={item.href}
-                className="block py-2 text-gray-700 hover:text-blue-600"
+                className="block py-2 text-gray-700 hover:text-red-600"
               >
                 {item.name}
               </Link>
@@ -198,7 +198,7 @@ export default function ActualitesPage() {
       description: "Depuis le mois de mars 2025, le département du Finistère connaît un déficit régulier de précipitations qui conduit aujourd'hui à une situation sèche se caractérisant par des débits saisonniers faibles dans les principaux cours d'eau et dans les nappes phréatiques.",
       image: "https://images.unsplash.com/photo-1661846141572-e52810543f57?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwzfHxicmVzdCUyMGJyaXR0YW55fGVufDB8fHxibHVlfDE3NTU3NzQ3ODd8MA&ixlib=rb-4.1.0&q=85",
       featured: true,
-      badge: "bg-orange-100 text-orange-700"
+      badge: "bg-red-100 text-red-700"
     },
     {
       id: 2,
@@ -209,7 +209,7 @@ export default function ActualitesPage() {
       description: "Après une première étape bretonne le 26 juillet, les femmes du Tour de France avaient rendez-vous à Brest ce 27 juillet, pour une deuxième étape 100% finistérienne. Un nouveau succès monstre dans l'histoire du Tour à Brest !",
       image: "https://images.unsplash.com/photo-1561467602-bff7f676c706?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxicmVzdCUyMGJyaXR0YW55fGVufDB8fHxibHVlfDE3NTU3NzQ3ODd8MA&ixlib=rb-4.1.0&q=85",
       featured: true,
-      badge: "bg-purple-100 text-purple-700"
+      badge: "bg-red-100 text-red-700"
     },
     {
       id: 3,
@@ -220,7 +220,7 @@ export default function ActualitesPage() {
       description: "Fabriquées au sein de l'usine Alstom de la Rochelle, les rames de la future ligne B du tramway sont quasi prêtes ! La première fera son entrée à Brest mi-septembre.",
       image: "https://images.unsplash.com/photo-1651516467730-963b2346e174?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwyfHxjaXR5JTIwaGFsbCUyMG1vZGVybnxlbnwwfHx8Ymx1ZXwxNzU1Nzc0Nzk5fDA&ixlib=rb-4.1.0&q=85",
       featured: false,
-      badge: "bg-blue-100 text-blue-700"
+      badge: "bg-rose-100 text-rose-700"
     },
     {
       id: 4,
@@ -231,7 +231,7 @@ export default function ActualitesPage() {
       description: "Suite à l'arrêt de l'activité d'Abi 29, Brest métropole se voit dans l'obligation de fermer l'accès aux bornes de collecte textile. D'autres solutions de recyclage sont malgré tout disponibles sur le territoire.",
       image: "https://images.unsplash.com/photo-1620413810275-da973d8d7e28?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwzfHxjaXR5JTIwaGFsbCUyMG1vZGVybnxlbnwwfHx8Ymx1ZXwxNzU1Nzc0Nzk5fDA&ixlib=rb-4.1.0&q=85",
       featured: false,
-      badge: "bg-green-100 text-green-700"
+      badge: "bg-red-50 text-red-600"
     },
     {
       id: 5,
@@ -242,7 +242,7 @@ export default function ActualitesPage() {
       description: "Brest métropole lance un nouveau service de vélos électriques en libre-service avec 50 stations connectées dans toute la métropole. Un service moderne et écologique pour vos déplacements quotidiens.",
       image: "https://images.unsplash.com/photo-1705082121134-4c9314fae148?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwyfHxicmVzdCUyMGJyaXR0YW55fGVufDB8fHxibHVlfDE3NTU3NzQ3ODd8MA&ixlib=rb-4.1.0&q=85",
       featured: false,
-      badge: "bg-cyan-100 text-cyan-700"
+      badge: "bg-red-100 text-red-700"
     },
     {
       id: 6,
@@ -253,7 +253,7 @@ export default function ActualitesPage() {
       description: "D'importants travaux de rénovation débutent au centre aquatique Foch pour moderniser les équipements et améliorer l'accueil du public. Réouverture prévue en janvier 2026.",
       image: "https://images.unsplash.com/photo-1561467602-bff7f676c706?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxicmVzdCUyMGJyaXR0YW55fGVufDB8fHxibHVlfDE3NTU3NzQ3ODd8MA&ixlib=rb-4.1.0&q=85",
       featured: false,
-      badge: "bg-indigo-100 text-indigo-700"
+      badge: "bg-rose-100 text-rose-700"
     }
   ]
 
@@ -326,7 +326,7 @@ export default function ActualitesPage() {
                 </div>
                 <CardContent>
                   <p className="text-gray-600 leading-relaxed mb-4">{actualite.description}</p>
-                  <Button variant="ghost" className="w-full justify-between group-hover:bg-blue-50 transition-colors">
+                  <Button variant="ghost" className="w-full justify-between group-hover:bg-red-50 transition-colors">
                     Lire l'article complet
                     <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
@@ -347,7 +347,7 @@ export default function ActualitesPage() {
                 onClick={() => setFilterCategory(category.id)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   filterCategory === category.id
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-red-600 text-white'
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                 }`}
               >
@@ -386,7 +386,7 @@ export default function ActualitesPage() {
                 </div>
                 <CardHeader>
                   <div className="text-sm text-gray-500 mb-2">{actualite.date}</div>
-                  <CardTitle className="text-lg leading-tight group-hover:text-blue-600 transition-colors">
+                  <CardTitle className="text-lg leading-tight group-hover:text-red-600 transition-colors">
                     {actualite.title}
                   </CardTitle>
                   <p className="text-gray-600 text-sm leading-relaxed">
@@ -394,7 +394,7 @@ export default function ActualitesPage() {
                   </p>
                 </CardHeader>
                 <CardContent>
-                  <Button variant="ghost" size="sm" className="w-full justify-between group-hover:bg-blue-50 transition-colors">
+                  <Button variant="ghost" size="sm" className="w-full justify-between group-hover:bg-red-50 transition-colors">
                     Lire la suite
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
@@ -432,7 +432,7 @@ export default function ActualitesPage() {
               <input 
                 type="email" 
                 placeholder="Votre adresse email" 
-                className="flex-1 px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
               />
               <Button size="lg" variant="primary">
                 <Mail className="w-4 h-4 mr-2" />
@@ -449,7 +449,7 @@ export default function ActualitesPage() {
           <div className="grid lg:grid-cols-4 gap-8">
             <div className="col-span-2">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="p-2 rounded-lg bg-blue-600">
+                <div className="p-2 rounded-lg bg-red-600">
                   <Building2 className="w-6 h-6 text-white" />
                 </div>
                 <div>

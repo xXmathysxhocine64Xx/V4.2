@@ -28,15 +28,15 @@ import {
   Anchor
 } from 'lucide-react'
 
-// Composants UI réutilisables
+// Composants UI réutilisables - Palette Rouge Brest
 const Button = ({ children, className = "", variant = "default", size = "default", onClick, type, disabled, href }) => {
   const baseStyles = "inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
   const variants = {
-    default: "bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md",
-    outline: "border border-blue-200 bg-white text-blue-600 hover:bg-blue-50 hover:border-blue-300",
-    ghost: "hover:bg-blue-50 text-blue-600",
+    default: "bg-red-600 text-white hover:bg-red-700 shadow-sm hover:shadow-md",
+    outline: "border border-red-200 bg-white text-red-600 hover:bg-red-50 hover:border-red-300",
+    ghost: "hover:bg-red-50 text-red-600",
     secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-    primary: "bg-blue-700 text-white hover:bg-blue-800 shadow-lg"
+    primary: "bg-red-700 text-white hover:bg-red-800 shadow-lg"
   }
   const sizes = {
     default: "h-10 px-6 py-2",
@@ -97,7 +97,7 @@ const Badge = ({ children, className = "" }) => (
   </span>
 )
 
-// Composant Navigation
+// Composant Navigation - Thème Rouge
 const Navigation = ({ currentPage = "metropole" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -115,12 +115,12 @@ const Navigation = ({ currentPage = "metropole" }) => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           <Link href="/mairie/accueil" className="flex items-center space-x-3">
-            <div className="p-2 rounded-lg bg-blue-600">
+            <div className="p-2 rounded-lg bg-red-600">
               <Building2 className="w-6 h-6 text-white" />
             </div>
             <div>
               <div className="text-xl font-bold text-gray-900">Ville de Brest</div>
-              <div className="text-xs text-blue-600">Métropole • Finistère</div>
+              <div className="text-xs text-red-600">Métropole • Finistère</div>
             </div>
           </Link>
           
@@ -129,8 +129,8 @@ const Navigation = ({ currentPage = "metropole" }) => {
               <Link
                 key={item.id}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                  currentPage === item.id ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-700'
+                className={`text-sm font-medium transition-colors hover:text-red-600 ${
+                  currentPage === item.id ? 'text-red-600 border-b-2 border-red-600 pb-1' : 'text-gray-700'
                 }`}
               >
                 {item.name}
@@ -160,7 +160,7 @@ const Navigation = ({ currentPage = "metropole" }) => {
               <Link
                 key={item.id}
                 href={item.href}
-                className="block py-2 text-gray-700 hover:text-blue-600"
+                className="block py-2 text-gray-700 hover:text-red-600"
               >
                 {item.name}
               </Link>
@@ -187,10 +187,10 @@ export default function MetropolePage() {
 
   // Chiffres clés
   const chiffres = [
-    { label: "Habitants", valeur: "213 653", description: "Population municipale", icon: <Users className="w-8 h-8" />, couleur: "blue" },
-    { label: "Communes", valeur: "8", description: "Métropole océane", icon: <Building className="w-8 h-8" />, couleur: "green" },
-    { label: "Superficie", valeur: "487 km²", description: "Territoire métropolitain", icon: <Globe className="w-8 h-8" />, couleur: "purple" },
-    { label: "Emplois", valeur: "108 000", description: "Premier pôle d'emploi breton", icon: <TrendingUp className="w-8 h-8" />, couleur: "orange" }
+    { label: "Habitants", valeur: "213 653", description: "Population municipale", icon: <Users className="w-8 h-8" />, couleur: "red" },
+    { label: "Communes", valeur: "8", description: "Métropole océane", icon: <Building className="w-8 h-8" />, couleur: "rose" },
+    { label: "Superficie", valeur: "487 km²", description: "Territoire métropolitain", icon: <Globe className="w-8 h-8" />, couleur: "burgundy" },
+    { label: "Emplois", valeur: "108 000", description: "Premier pôle d'emploi breton", icon: <TrendingUp className="w-8 h-8" />, couleur: "crimson" }
   ]
 
   // Grands projets
@@ -202,7 +202,7 @@ export default function MetropolePage() {
       echeance: "2026",
       budget: "180 M€",
       icon: <Building className="w-6 h-6" />,
-      couleur: "blue"
+      couleur: "red"
     },
     {
       titre: "Téléphérique urbain",
@@ -211,7 +211,7 @@ export default function MetropolePage() {
       echeance: "2027",
       budget: "65 M€", 
       icon: <Waves className="w-6 h-6" />,
-      couleur: "cyan"
+      couleur: "rose"
     },
     {
       titre: "Reconversion des Capucins",
@@ -220,7 +220,7 @@ export default function MetropolePage() {
       echeance: "2017",
       budget: "95 M€",
       icon: <Factory className="w-6 h-6" />,
-      couleur: "green"
+      couleur: "burgundy"
     },
     {
       titre: "Campus Brest-Iroise",
@@ -229,7 +229,7 @@ export default function MetropolePage() {
       echeance: "2025",
       budget: "120 M€",
       icon: <GraduationCap className="w-6 h-6" />,
-      couleur: "purple"
+      couleur: "crimson"
     }
   ]
 
@@ -242,11 +242,10 @@ export default function MetropolePage() {
   ]
 
   const couleursClasses = {
-    blue: "bg-blue-50 text-blue-600 border-blue-200",
-    green: "bg-green-50 text-green-600 border-green-200", 
-    purple: "bg-purple-50 text-purple-600 border-purple-200",
-    orange: "bg-orange-50 text-orange-600 border-orange-200",
-    cyan: "bg-cyan-50 text-cyan-600 border-cyan-200"
+    red: "bg-red-50 text-red-600 border-red-200",
+    rose: "bg-rose-50 text-rose-600 border-rose-200", 
+    burgundy: "bg-red-100 text-red-700 border-red-300",
+    crimson: "bg-red-50 text-red-700 border-red-200"
   }
 
   return (
@@ -259,12 +258,12 @@ export default function MetropolePage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-6">
-                <Badge className="bg-blue-50 text-blue-700 border border-blue-200">
+                <Badge className="bg-red-50 text-red-700 border border-red-200">
                   Finistère • Bretagne
                 </Badge>
                 <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
                   Brest 
-                  <span className="text-blue-600"> Métropole</span>
+                  <span className="text-red-600"> Métropole</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
                   Une métropole océane de 213 000 habitants au bout du Finistère. 
@@ -290,7 +289,7 @@ export default function MetropolePage() {
                 alt="Brest - Vue sur la rade"
                 className="rounded-xl shadow-lg w-full h-96 object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent rounded-xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-red-900/20 to-transparent rounded-xl"></div>
             </div>
           </div>
         </div>
@@ -338,7 +337,7 @@ export default function MetropolePage() {
                       <div className="flex items-center space-x-3 mb-2">
                         <h3 className="text-xl font-semibold text-gray-900">{commune.nom}</h3>
                         {commune.statut === "Ville-centre" && (
-                          <Badge className="bg-blue-100 text-blue-700">
+                          <Badge className="bg-red-100 text-red-700">
                             Ville-centre
                           </Badge>
                         )}
@@ -348,7 +347,7 @@ export default function MetropolePage() {
                         <div>Maire : {commune.maire}</div>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-red-600 transition-colors" />
                   </div>
                 </CardHeader>
               </Card>
@@ -378,8 +377,8 @@ export default function MetropolePage() {
                         <h3 className="text-lg font-semibold text-gray-900">{projet.titre}</h3>
                         <Badge className={`${
                           projet.statut === 'Livré' ? 'bg-green-100 text-green-700' :
-                          projet.statut === 'En construction' ? 'bg-blue-100 text-blue-700' :
-                          projet.statut === 'En cours' ? 'bg-orange-100 text-orange-700' :
+                          projet.statut === 'En construction' ? 'bg-red-100 text-red-700' :
+                          projet.statut === 'En cours' ? 'bg-rose-100 text-rose-700' :
                           'bg-gray-100 text-gray-700'
                         }`}>
                           {projet.statut}
@@ -388,7 +387,7 @@ export default function MetropolePage() {
                       <p className="text-gray-600 text-sm mb-3">{projet.description}</p>
                       <div className="flex justify-between text-sm">
                         <span className="text-gray-500">Échéance : <strong>{projet.echeance}</strong></span>
-                        <span className="text-blue-600 font-semibold">{projet.budget}</span>
+                        <span className="text-red-600 font-semibold">{projet.budget}</span>
                       </div>
                     </div>
                   </div>
@@ -417,7 +416,7 @@ export default function MetropolePage() {
                       <p className="text-gray-600 mb-3">{secteur.description}</p>
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-gray-500">
-                          <strong className="text-blue-600">{secteur.emplois}</strong> emplois
+                          <strong className="text-red-600">{secteur.emplois}</strong> emplois
                         </span>
                         <span className={`text-sm font-medium ${
                           parseFloat(secteur.croissance) > 0 ? 'text-green-600' : 'text-red-600'
@@ -426,7 +425,7 @@ export default function MetropolePage() {
                         </span>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-red-600 transition-colors" />
                   </div>
                 </CardHeader>
               </Card>
@@ -436,7 +435,7 @@ export default function MetropolePage() {
       </section>
 
       {/* Qualité de vie */}
-      <section className="py-16 bg-blue-50">
+      <section className="py-16 bg-red-50">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -450,7 +449,7 @@ export default function MetropolePage() {
               
               <div className="space-y-4 mb-8">
                 <div className="flex items-center space-x-3">
-                  <Waves className="w-5 h-5 text-blue-600" />
+                  <Waves className="w-5 h-5 text-red-600" />
                   <span className="text-gray-700">13 plages surveillées l'été</span>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -458,11 +457,11 @@ export default function MetropolePage() {
                   <span className="text-gray-700">40% d'espaces verts</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Anchor className="w-5 h-5 text-purple-600" />
+                  <Anchor className="w-5 h-5 text-red-700" />
                   <span className="text-gray-700">1er port de plaisance du Finistère</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Award className="w-5 h-5 text-orange-600" />
+                  <Award className="w-5 h-5 text-rose-600" />
                   <span className="text-gray-700">Label French Tech</span>
                 </div>
               </div>
@@ -490,7 +489,7 @@ export default function MetropolePage() {
           <div className="grid lg:grid-cols-4 gap-8">
             <div className="col-span-2">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="p-2 rounded-lg bg-blue-600">
+                <div className="p-2 rounded-lg bg-red-600">
                   <Building2 className="w-6 h-6 text-white" />
                 </div>
                 <div>
