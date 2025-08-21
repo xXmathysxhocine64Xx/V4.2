@@ -460,6 +460,14 @@ if [ "$SUCCESS" = true ]; then
                     echo -e "${YELLOW}⚠️  API paiement pizza: vérifiez les clés Stripe${NC}"
                 fi
             fi
+            
+            # Test de la pizza gratuite (fonctionne sans configuration Stripe)
+            if curl -s -X POST -H "Host: pizza.getyoursite.fr" -H "Content-Type: application/json" \
+               -d '{"package_id":"test_free"}' http://localhost/api/payments/checkout | grep -q "test_success" 2>/dev/null; then
+                echo -e "${GREEN}✅ Pizza gratuite de test fonctionnelle${NC}"
+            else
+                echo -e "${YELLOW}⚠️  Pizza gratuite de test non accessible${NC}"
+            fi
         else
             echo -e "${YELLOW}⚠️  Site pizza configuré mais test échoué${NC}"
         fi
