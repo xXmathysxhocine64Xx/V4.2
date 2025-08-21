@@ -618,89 +618,124 @@ export default function MairiePage() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 bg-white">
-        <div className="container mx-auto max-w-6xl">
+      {/* Contact Section Moderne */}
+      <section id="contact" className="relative py-24 px-6">
+        <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Nous Contacter
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-400/30 text-green-200 text-sm mb-6">
+              <Mail className="w-4 h-4 mr-2" />
+              Contact & Support
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                Nous sommes là
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                pour vous accompagner
+              </span>
             </h2>
-            <p className="text-xl text-gray-600">
-              Notre équipe municipale est à votre service
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Notre équipe municipale digitale est à votre service via l'IA, le chat en direct ou les canaux traditionnels
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Informations de contact */}
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Informations de contact futuristes */}
             <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-semibold text-gray-800 mb-6">
-                  Mairie de Brest
-                </h3>
-                
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <MapPin className="w-6 h-6 text-blue-600 mt-1" />
-                    <div>
-                      <p className="font-medium text-gray-800">Adresse</p>
-                      <p className="text-gray-600">2 rue Frézier<br />29200 Brest, France</p>
+              <Card className="bg-gradient-to-br from-white/10 to-white/5 border-white/20">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center mb-6">
+                    <div className="p-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 mr-3">
+                      <Building2 className="w-6 h-6 text-white" />
                     </div>
-                  </div>
+                    Mairie Connectée de Brest
+                  </CardTitle>
                   
-                  <div className="flex items-center space-x-4">
-                    <Phone className="w-6 h-6 text-blue-600" />
-                    <div>
-                      <p className="font-medium text-gray-800">Téléphone</p>
-                      <p className="text-gray-600">02 98 00 80 80</p>
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="p-2 rounded-xl bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-purple-400/30 mt-1">
+                        <MapPin className="w-5 h-5 text-purple-400" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-white">Adresse</p>
+                        <p className="text-blue-200">2 rue Frézier<br />29200 Brest, France</p>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <Clock className="w-6 h-6 text-blue-600 mt-1" />
-                    <div>
-                      <p className="font-medium text-gray-800">Horaires d'ouverture</p>
-                      <div className="text-gray-600 text-sm">
-                        <p>Lun-Ven: 8h30 - 17h00</p>
-                        <p>Samedi: 9h00 - 12h00 (état civil uniquement)</p>
-                        <p>Dimanche: Fermé</p>
+                    
+                    <div className="flex items-center space-x-4">
+                      <div className="p-2 rounded-xl bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-400/30">
+                        <Phone className="w-5 h-5 text-green-400" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-white">Téléphone</p>
+                        <p className="text-blue-200">02 98 00 80 80</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-4">
+                      <div className="p-2 rounded-xl bg-gradient-to-r from-orange-600/20 to-red-600/20 border border-orange-400/30 mt-1">
+                        <Clock className="w-5 h-5 text-orange-400" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-white">Horaires d'ouverture</p>
+                        <div className="text-blue-200 text-sm space-y-1">
+                          <p>Lun-Ven: 8h30 - 17h00</p>
+                          <p>Samedi: 9h00 - 12h00 (état civil uniquement)</p>
+                          <p>Dimanche: Fermé</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-4">
+                      <div className="p-2 rounded-xl bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border border-cyan-400/30">
+                        <Mail className="w-5 h-5 text-cyan-400" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-white">Email</p>
+                        <p className="text-blue-200">contact@brest.fr</p>
                       </div>
                     </div>
                   </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <Mail className="w-6 h-6 text-blue-600" />
-                    <div>
-                      <p className="font-medium text-gray-800">Email</p>
-                      <p className="text-gray-600">contact@brest.fr</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                </CardHeader>
+              </Card>
 
-              <div className="bg-blue-50 p-6 rounded-lg">
-                <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
-                  <AlertCircle className="w-5 h-5 text-blue-600 mr-2" />
-                  Services d'urgence
-                </h4>
-                <div className="text-gray-600 text-sm space-y-1">
-                  <p><strong>État civil urgent:</strong> 02 98 00 81 00</p>
-                  <p><strong>Urgences techniques:</strong> 02 98 00 82 00</p>
-                  <p><strong>Astreinte weekend:</strong> 02 98 00 80 80</p>
-                </div>
-              </div>
+              <Card className="bg-gradient-to-br from-violet-600/10 to-purple-600/10 border-violet-400/30">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center mb-4">
+                    <Zap className="w-5 h-5 text-yellow-400 mr-2" />
+                    Services d'urgence & IA
+                  </CardTitle>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-blue-200"><strong>Assistant IA 24/7:</strong></span>
+                      <Button size="sm" variant="futuristic" className="text-xs">
+                        <Cpu className="w-3 h-3 mr-1" />
+                        Démarrer
+                      </Button>
+                    </div>
+                    <p className="text-violet-200"><strong>État civil urgent:</strong> 02 98 00 81 00</p>
+                    <p className="text-violet-200"><strong>Urgences techniques:</strong> 02 98 00 82 00</p>
+                    <p className="text-violet-200"><strong>Astreinte weekend:</strong> 02 98 00 80 80</p>
+                  </div>
+                </CardHeader>
+              </Card>
             </div>
 
-            {/* Formulaire de contact */}
-            <Card>
+            {/* Formulaire de contact moderne */}
+            <Card className="bg-gradient-to-br from-white/15 to-white/5 border-white/30">
               <CardHeader>
-                <CardTitle>Contactez-nous</CardTitle>
-                <p className="text-gray-600">Envoyez-nous votre demande, nous vous répondrons rapidement.</p>
+                <CardTitle className="text-white flex items-center">
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Contactez-nous
+                </CardTitle>
+                <p className="text-blue-200">Envoyez-nous votre demande, notre IA ou notre équipe vous répondra rapidement.</p>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleContactSubmit} className="space-y-4">
+                <form onSubmit={handleContactSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2 text-gray-700">
+                      <label className="block text-sm font-medium mb-3 text-blue-200">
                         Nom complet *
                       </label>
                       <Input
@@ -709,10 +744,11 @@ export default function MairiePage() {
                         onChange={handleInputChange}
                         placeholder="Votre nom"
                         required
+                        className="bg-white/10 border-white/30 text-white placeholder:text-blue-300"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2 text-gray-700">
+                      <label className="block text-sm font-medium mb-3 text-blue-200">
                         Téléphone
                       </label>
                       <Input
@@ -720,12 +756,13 @@ export default function MairiePage() {
                         value={contactForm.phone}
                         onChange={handleInputChange}
                         placeholder="02 98 00 00 00"
+                        className="bg-white/10 border-white/30 text-white placeholder:text-blue-300"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-gray-700">
+                    <label className="block text-sm font-medium mb-3 text-blue-200">
                       Email *
                     </label>
                     <Input
@@ -735,17 +772,19 @@ export default function MairiePage() {
                       onChange={handleInputChange}
                       placeholder="votre@email.com"
                       required
+                      className="bg-white/10 border-white/30 text-white placeholder:text-blue-300"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-gray-700">
+                    <label className="block text-sm font-medium mb-3 text-blue-200">
                       Type de demande
                     </label>
                     <Select
                       name="subject"
                       value={contactForm.subject}
                       onChange={handleInputChange}
+                      className="bg-white/10 border-white/30 text-white"
                     >
                       <option value="demande-generale">Demande générale</option>
                       <option value="etat-civil">État civil</option>
@@ -759,7 +798,7 @@ export default function MairiePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-gray-700">
+                    <label className="block text-sm font-medium mb-3 text-blue-200">
                       Votre message *
                     </label>
                     <Textarea
@@ -769,14 +808,15 @@ export default function MairiePage() {
                       placeholder="Décrivez votre demande en détail..."
                       rows={5}
                       required
+                      className="bg-white/10 border-white/30 text-white placeholder:text-blue-300"
                     />
                   </div>
 
                   {submitStatus && (
-                    <div className={`p-4 rounded-md text-sm ${
+                    <div className={`p-4 rounded-xl text-sm border ${
                       submitStatus.type === 'success' 
-                        ? 'bg-green-50 text-green-800 border border-green-200' 
-                        : 'bg-red-50 text-red-800 border border-red-200'
+                        ? 'bg-green-600/20 text-green-200 border-green-400/30' 
+                        : 'bg-red-600/20 text-red-200 border-red-400/30'
                     }`}>
                       {submitStatus.message}
                     </div>
@@ -784,14 +824,26 @@ export default function MairiePage() {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-blue-600 hover:bg-blue-700"
+                    variant="futuristic"
+                    size="lg"
+                    className="w-full"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? 'Envoi en cours...' : 'Envoyer ma demande'}
+                    {isSubmitting ? (
+                      <>
+                        <Cpu className="w-5 h-5 mr-2 animate-spin" />
+                        Traitement IA en cours...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-5 h-5 mr-2" />
+                        Envoyer ma demande
+                      </>
+                    )}
                   </Button>
                   
-                  <p className="text-xs text-gray-500 text-center">
-                    Nous nous engageons à vous répondre sous 48h ouvrées
+                  <p className="text-xs text-blue-300 text-center">
+                    ⚡ Réponse automatique IA instantanée • Suivi humain sous 2h ouvrées
                   </p>
                 </form>
               </CardContent>
