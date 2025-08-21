@@ -471,42 +471,55 @@ export default function MairiePage() {
         </div>
       </section>
 
-      {/* Actualités Section */}
-      <section id="actualites" className="py-20 px-4 bg-gray-50">
-        <div className="container mx-auto max-w-6xl">
+      {/* Actualités Section Moderne */}
+      <section id="actualites" className="relative py-24 px-6 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm">
+        <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Actualités de la Ville
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-violet-600/20 to-purple-600/20 border border-violet-400/30 text-violet-200 text-sm mb-6">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Innovation & Actualités
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                L'avenir de Brest
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">
+                Se dessine aujourd'hui
+              </span>
             </h2>
-            <p className="text-xl text-gray-600">
-              Restez informé des dernières nouvelles et événements brestois
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Découvrez les dernières innovations technologiques et projets smart city de notre métropole
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8">
             {actualites.map((actualite) => (
-              <Card key={actualite.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div className="relative h-48 overflow-hidden">
+              <Card key={actualite.id} className="group overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                   <img 
                     src={actualite.image}
                     alt={actualite.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <Badge className="absolute top-4 left-4 bg-blue-600 text-white">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                  <Badge className={`absolute top-4 left-4 ${actualite.badge} border-0`}>
                     {actualite.category}
                   </Badge>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="text-white/80 text-sm mb-2">{actualite.date}</div>
+                  </div>
                 </div>
                 <CardHeader>
-                  <div className="text-sm text-gray-500 mb-2">{actualite.date}</div>
-                  <CardTitle className="text-lg leading-tight">
+                  <CardTitle className="text-lg leading-tight group-hover:scale-105 transition-transform duration-300">
                     {actualite.title}
                   </CardTitle>
-                  <p className="text-gray-600 text-sm">{actualite.description}</p>
+                  <p className="text-gray-600 leading-relaxed">{actualite.description}</p>
                 </CardHeader>
                 <CardContent>
-                  <Button variant="ghost" className="w-full justify-between">
-                    Lire la suite
-                    <ChevronRight className="w-4 h-4" />
+                  <Button variant="ghost" className="w-full justify-between group-hover:bg-gradient-to-r group-hover:from-blue-50 group-hover:to-purple-50 transition-all duration-300">
+                    Lire l'article complet
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
                 </CardContent>
               </Card>
