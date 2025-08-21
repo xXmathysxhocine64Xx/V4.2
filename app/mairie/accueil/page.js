@@ -297,20 +297,18 @@ export default function AccueilPage() {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-3 gap-6 pt-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">140K+</div>
-                  <div className="text-sm text-gray-600">Habitants</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600">8</div>
-                  <div className="text-sm text-gray-600">Communes</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600">24h/7j</div>
-                  <div className="text-sm text-gray-600">Services</div>
-                </div>
-              </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600">140K+</div>
+              <div className="text-sm text-gray-600">Habitants</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-green-600">8</div>
+              <div className="text-sm text-gray-600">Communes</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-purple-600">24h/7j</div>
+              <div className="text-sm text-gray-600">Services</div>
+            </div>
             </div>
             
             <div className="relative">
