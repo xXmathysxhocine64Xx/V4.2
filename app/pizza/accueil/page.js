@@ -252,9 +252,19 @@ export default function AccueilPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center group hover:scale-105 transition-transform duration-200">
+            <Card className={getOptimizedClasses(
+              "text-center group",
+              shouldReduceAnimations 
+                ? "hover:shadow-lg transition-shadow duration-200" 
+                : "hover:scale-105 transition-all duration-200"
+            )}>
               <CardContent className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <div className={getOptimizedClasses(
+                  "w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-6",
+                  shouldReduceAnimations 
+                    ? "hover:shadow-md transition-shadow" 
+                    : "group-hover:scale-110 transition-transform"
+                )}>
                   <Award className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Authenticité Napolitaine</h3>
@@ -265,9 +275,19 @@ export default function AccueilPage() {
               </CardContent>
             </Card>
 
-            <Card className="text-center group hover:scale-105 transition-transform duration-200">
+            <Card className={getOptimizedClasses(
+              "text-center group",
+              shouldReduceAnimations 
+                ? "hover:shadow-lg transition-shadow duration-200" 
+                : "hover:scale-105 transition-all duration-200"
+            )}>
               <CardContent className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <div className={getOptimizedClasses(
+                  "w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-6",
+                  shouldReduceAnimations 
+                    ? "hover:shadow-md transition-shadow" 
+                    : "group-hover:scale-110 transition-transform"
+                )}>
                   <MapPin className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Produits Locaux</h3>
@@ -278,9 +298,19 @@ export default function AccueilPage() {
               </CardContent>
             </Card>
 
-            <Card className="text-center group hover:scale-105 transition-transform duration-200">
+            <Card className={getOptimizedClasses(
+              "text-center group",
+              shouldReduceAnimations 
+                ? "hover:shadow-lg transition-shadow duration-200" 
+                : "hover:scale-105 transition-all duration-200"
+            )}>
               <CardContent className="p-8">
-                <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <div className={getOptimizedClasses(
+                  "w-16 h-16 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-6",
+                  shouldReduceAnimations 
+                    ? "hover:shadow-md transition-shadow" 
+                    : "group-hover:scale-110 transition-transform"
+                )}>
                   <Clock className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Service Express</h3>
