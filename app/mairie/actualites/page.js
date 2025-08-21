@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import OptimizedImage from '../../components/OptimizedImage'
 import {
   Building2,
   Mail,
@@ -34,12 +35,12 @@ export default function ActualitesRefonte() {
   ]
 
   const articles = [
-    { tag: 'Culture', title: 'Exposition estivale au Musée des Beaux-Arts', excerpt: 'Un été sous le signe de la création…', date: '12 juillet', href: '#' },
-    { tag: 'Travaux', title: 'Réaménagement du centre – phases et déviations', excerpt: 'Point d’étape et circulation…', date: '20 juillet', href: '#' },
-    { tag: 'Jeunesse', title: 'Inscriptions périscolaires : dossier en ligne', excerpt: 'Simplifiez vos démarches…', date: '25 juillet', href: '#' },
-    { tag: 'Sport', title: 'Nouveaux équipements sportifs', excerpt: 'Des investissements pour tous', date: '01 août', href: '#' },
-    { tag: 'Environnement', title: 'Déchetteries : horaires d’été', excerpt: 'Anticipez vos dépôts…', date: '03 août', href: '#' },
-    { tag: 'Transports', title: 'Bibus : renforts lignes d’été', excerpt: 'Fréquences adaptées…', date: '05 août', href: '#' },
+    { tag: 'Culture', title: 'Exposition estivale au Musée des Beaux-Arts', excerpt: 'Un été sous le signe de la création…', date: '12 juillet', href: '#', img: 'https://images.unsplash.com/photo-1561212837-0b49e1ffc57e' },
+    { tag: 'Travaux', title: 'Réaménagement du centre – phases et déviations', excerpt: 'Point d’étape et circulation…', date: '20 juillet', href: '#', img: 'https://images.unsplash.com/photo-1501856054482-8b7f23f54f8d' },
+    { tag: 'Jeunesse', title: 'Inscriptions périscolaires : dossier en ligne', excerpt: 'Simplifiez vos démarches…', date: '25 juillet', href: '#', img: 'https://images.unsplash.com/photo-1588072432836-e10032774350' },
+    { tag: 'Sport', title: 'Nouveaux équipements sportifs', excerpt: 'Des investissements pour tous', date: '01 août', href: '#', img: 'https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb' },
+    { tag: 'Environnement', title: 'Déchetteries : horaires d’été', excerpt: 'Anticipez vos dépôts…', date: '03 août', href: '#', img: 'https://images.unsplash.com/photo-1520975922324-535178d2c6bb' },
+    { tag: 'Transports', title: 'Bibus : renforts lignes d’été', excerpt: 'Fréquences adaptées…', date: '05 août', href: '#', img: 'https://images.unsplash.com/photo-1501706362039-c06b2d715385' },
   ]
 
   return (
@@ -67,17 +68,30 @@ export default function ActualitesRefonte() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-white" />
         <div className="container relative mx-auto px-6 py-12">
-          <div className="mb-8 md:mb-12">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">Actualités</h1>
-            <p className="text-gray-600 mt-2">Toute l'actualité de la métropole</p>
+          <div className="mb-8 md:mb-12 flex items-end justify-between">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">Actualités</h1>
+              <p className="text-gray-600 mt-2">Toute l'actualité de la métropole</p>
+            </div>
+            <Button variant="ghost" href="#">S’abonner <ChevronRight className="w-4 h-4 ml-1" /></Button>
           </div>
+
           <div className="grid md:grid-cols-3 gap-6">
             {articles.map((a, i) => (
-              <Link key={i} href={a.href} className="group rounded-2xl border border-gray-200 p-5 hover:border-red-200 hover:bg-red-50/40 transition-all">
+              <Link key={i} href={a.href} className="group rounded-2xl border border-gray-200 p-3 hover:border-red-200 hover:bg-red-50/40 transition-all">
+                <OptimizedImage
+                  src={a.img}
+                  alt={a.title}
+                  className="h-40 md:h-44 w-full rounded-xl mb-3 shadow-sm"
+                  width={800}
+                  height={480}
+                  quality={80}
+                  priority={i < 3}
+                />
                 <div className="text-[11px] font-bold tracking-wide text-red-700 uppercase mb-2">{a.tag}</div>
-                <div className="font-semibold text-gray-900 group-hover:text-red-800 text-lg">{a.title}</div>
+                <div className="font-semibold text-gray-900 group-hover:text-red-800 text-lg leading-snug">{a.title}</div>
                 <div className="text-sm text-gray-600 mt-2">{a.excerpt}</div>
-                <div className="mt-4 text-xs text-gray-500">{a.date}</div>
+                <div className="mt-3 text-xs text-gray-500">{a.date}</div>
                 <div className="mt-2 inline-flex items-center text-sm text-red-700 font-semibold">Lire <ArrowRight className="w-4 h-4 ml-1" /></div>
               </Link>
             ))}
